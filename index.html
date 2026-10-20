@@ -67,7 +67,7 @@
     #week-label { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 2px; }
     #week-dates { font-size: 12px; font-weight: 600; color: var(--subtext); }
 
-    /* Календарь Supershift (Мобильный фикс) */
+    /* Календарь Supershift */
     .cal-weekdays {
       display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
       margin-bottom: 8px; text-align: center; font-size: 12px;
@@ -97,7 +97,7 @@
       white-space: nowrap; overflow: hidden; text-overflow: clip;
     }
 
-    /* Сводка (Мобильный фикс) */
+    /* Сводка */
     .summary-banner {
       background: var(--card-auto); border: 1px solid var(--auto-border);
       border-radius: 18px; padding: 14px; margin-bottom: 16px;
@@ -150,7 +150,7 @@
       color: var(--subtext); font-size: 15px; font-weight: 600;
     }
 
-    /* Плавающие кнопки (Мобильный фикс) */
+    /* Плавающие кнопки */
     .fab-bar {
       position: fixed; bottom: calc(env(safe-area-inset-bottom, 16px) + 12px);
       left: 12px; right: 12px; display: flex; gap: 10px; z-index: 20;
@@ -228,7 +228,7 @@
     <button class="btn-secondary" id="toggle-auto-btn" onclick="toggleAutoCommute()">⚡ Авто: ВКЛ</button>
   </div>
 
-  <!-- Модальное окно добавления -->
+  <!-- Модалка добавления -->
   <div class="modal-backdrop" id="modal">
     <div class="modal">
       <h2 id="modal-title">Новый блок</h2>
@@ -264,7 +264,7 @@
     </div>
   </div>
 
-  <!-- Модальное окно настроек -->
+  <!-- Модалка настроек -->
   <div class="modal-backdrop" id="settings-modal">
     <div class="modal">
       <h2>⚙️ Настройки</h2>
@@ -298,6 +298,17 @@
         <div style="flex:1">
           <div class="field-label" style="margin-bottom:4px">Б.М. ↔ Лен. (мин)</div>
           <input type="number" id="set-transit" min="20" max="90" step="5" value="45">
+        </div>
+      </div>
+
+      <div class="row">
+        <div style="flex:1">
+          <div class="field-label" style="margin-bottom:4px">Сборы в зал (мин)</div>
+          <input type="number" id="set-gym-prep" min="5" max="60" step="5" value="20">
+        </div>
+        <div style="flex:1">
+          <div class="field-label" style="margin-bottom:4px">До зала пешком (мин)</div>
+          <input type="number" id="set-gym-walk" min="5" max="60" step="5" value="15">
         </div>
       </div>
 
@@ -354,8 +365,9 @@
     }
   };
 
-  let state = JSON.parse(localStorage.getItem('schedule_1647_v4')) || JSON.parse(JSON.stringify(DEFAULT_DATA));
-  let settings = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(localStorage.getItem('settings_1647_v4')) || {});
+  // Загружаем версию v5 или берем данные из v4, чтобы ничего не потерялось
+  let state = JSON.parse(localStorage.getItem('schedule_1647_v5')) || JSON.parse(localStorage.getItem('schedule_1647_v4')) || JSON.parse(JSON.stringify(DEFAULT_DATA));
+  let settings = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(localStorage.getItem('settings_1647_v5')) || JSON.parse(localStorage.getItem('settings_1647_v4')) || {});
 
   function getMondayOfWeek(offset = 0) {
     const now = new Date(); now.setHours(0,0,0,0);
@@ -399,18 +411,28 @@
     if (campus === 'GAST' || campus === 'LEN') return Number(settings.timeGastLen) || 115;
     return 0;
   }
+  function isLocalGym(item) { return getCampus(item.loc) === null && item.type === 'gym'; }
 
   function buildAutoLogistics(dayItems) {
     if (!dayItems || dayItems.length === 0) return { summary: null, autoBlocks: [] };
     const sorted = [...dayItems].sort((a, b) => a.start.localeCompare(b.start));
     const firstItem = sorted[0];
     const uniClasses = sorted.filter(x => getCampus(x.loc) !== null);
+    const gymSessions = sorted.filter(x => isLocalGym(x));
+    
     const prepUni = Number(settings.prepTime) || 40;
+    const gymPrep = Number(settings.gymPrep) || 20;
+    const gymWalk = Number(settings.gymWalk) || 15;
     const autoBlocks = [];
     
     let wakeM = null, firstLeaveText = 'Дома';
 
-    if (getCampus(firstItem.loc) !== null) {
+    // 1. ПОДЪЕМ
+    if (isLocalGym(firstItem)) {
+      const leaveForGym = toMins(firstItem.start) - gymWalk;
+      wakeM = leaveForGym - gymPrep;
+      firstLeaveText = `${fromMins(leaveForGym)} (в зал)`;
+    } else if (getCampus(firstItem.loc) !== null) {
       const c = getCampus(firstItem.loc);
       const leaveM = toMins(firstItem.start) - getTravelMinutes(c);
       wakeM = leaveM - prepUni;
@@ -420,13 +442,45 @@
       if (settings.showAutoBlocks) autoBlocks.push({ id: 'a_w', isAuto: true, start: fromMins(wakeM), end: firstItem.start, type: 'commute', title: '⏰ Подъем', loc: settings.homeAddress });
     }
 
+    // 2. ЗАЛ
+    gymSessions.forEach((g, idx) => {
+      const gStart = toMins(g.start);
+      const leaveGymM = gStart - gymWalk;
+      const prepGymM = leaveGymM - gymPrep;
+      const backHomeM = toMins(g.end) + gymWalk;
+      if (settings.showAutoBlocks) {
+        autoBlocks.push({ id: 'g_p_'+idx, isAuto: true, start: fromMins(prepGymM), end: fromMins(leaveGymM), type: 'commute', title: g.id === firstItem.id ? '⏰ Подъем и сборы' : '🎒 Сборы в зал', loc: settings.homeAddress });
+        autoBlocks.push({ id: 'g_to_'+idx, isAuto: true, start: fromMins(leaveGymM), end: g.start, type: 'commute', title: '🚶 В зал', loc: 'Дом → Зал' });
+        autoBlocks.push({ id: 'g_b_'+idx, isAuto: true, start: g.end, end: fromMins(backHomeM), type: 'commute', title: '🚶 Домой', loc: 'Зал → Дом' });
+        
+        // Окно на душ/обед перед вузом
+        if (uniClasses.length > 0) {
+          const leaveUniM = toMins(uniClasses[0].start) - getTravelMinutes(getCampus(uniClasses[0].loc));
+          if (leaveUniM > backHomeM && leaveUniM - backHomeM <= 120) {
+            autoBlocks.push({ id: 'h_ref_'+idx, isAuto: true, start: fromMins(backHomeM), end: fromMins(leaveUniM), type: 'commute', title: '🚿 Душ и обед', loc: settings.homeAddress });
+          }
+        }
+      }
+    });
+
+    // 3. ВУЗ
     if (uniClasses.length > 0 && settings.showAutoBlocks) {
       const fU = uniClasses[0], lU = uniClasses[uniClasses.length - 1];
       const leaveUniM = toMins(fU.start) - getTravelMinutes(getCampus(fU.loc));
       const arrHomeM = toMins(lU.end) + getTravelMinutes(getCampus(lU.loc));
       
       if (fU.id === firstItem.id) autoBlocks.push({ id: 'u_w', isAuto: true, start: fromMins(leaveUniM - prepUni), end: fromMins(leaveUniM), type: 'commute', title: '⏰ Подъем и сборы', loc: settings.homeAddress });
-      autoBlocks.push({ id: 'u_l', isAuto: true, start: fromMins(leaveUniM), end: fU.start, type: 'commute', title: `🚇 Выезд в вуз (${fU.loc.split(' ')[0]})`, loc: `Дом → ${fU.loc}` });
+      autoBlocks.push({ id: 'u_l', isAuto: true, start: fromMins(leaveUniM), end: fU.start, type: 'commute', title: `🚇 В вуз (${fU.loc.split(' ')[0]})`, loc: `Дом → ${fU.loc}` });
+      
+      for (let i = 0; i < uniClasses.length - 1; i++) {
+        const c1 = getCampus(uniClasses[i].loc), c2 = getCampus(uniClasses[i+1].loc);
+        if (c1 && c2 && c1 !== c2) {
+          const trStart = toMins(uniClasses[i].end);
+          const trMins = (c1 !== 'BM' && c2 !== 'BM') ? 15 : (Number(settings.transitBMLen) || 45);
+          autoBlocks.push({ id: 'u_tr_'+i, isAuto: true, start: uniClasses[i].end, end: fromMins(Math.min(toMins(uniClasses[i+1].start), trStart + trMins)), type: 'commute', title: trMins===15?'🚶 Переход':'🚇 Переезд + обед', loc: `${uniClasses[i].loc.split(' ')[0]} → ${uniClasses[i+1].loc.split(' ')[0]}` });
+        }
+      }
+
       autoBlocks.push({ id: 'u_h', isAuto: true, start: lU.end, end: fromMins(arrHomeM), type: 'commute', title: '🏠 Дорога домой', loc: `Вуз → Дом` });
     }
 
@@ -439,7 +493,7 @@
     document.getElementById('toggle-auto-btn').innerText = settings.showAutoBlocks ? '⚡ Авто: ВКЛ' : '⚡ Авто: ВЫКЛ';
   }
   function previewTheme(val) { document.documentElement.setAttribute('data-theme', val); }
-  function toggleAutoCommute() { settings.showAutoBlocks = !settings.showAutoBlocks; localStorage.setItem('settings_1647_v4', JSON.stringify(settings)); applyTheme(); renderAll(); }
+  function toggleAutoCommute() { settings.showAutoBlocks = !settings.showAutoBlocks; localStorage.setItem('settings_1647_v5', JSON.stringify(settings)); applyTheme(); renderAll(); }
 
   function renderAll() {
     const datesArr = generateWeekDays(weekOffset);
@@ -510,8 +564,8 @@
   }
 
   function selectDay(d) { currentDay = d; renderAll(); }
-  function toggleDone(id) { const i = state[currentWeekParity][currentDay].find(x => x.id === id); if(i){ i.done = !i.done; localStorage.setItem('schedule_1647_v4', JSON.stringify(state)); renderAll(); } }
-  function deleteItem(id) { state[currentWeekParity][currentDay] = state[currentWeekParity][currentDay].filter(x => x.id !== id); localStorage.setItem('schedule_1647_v4', JSON.stringify(state)); renderAll(); }
+  function toggleDone(id) { const i = state[currentWeekParity][currentDay].find(x => x.id === id); if(i){ i.done = !i.done; localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); renderAll(); } }
+  function deleteItem(id) { state[currentWeekParity][currentDay] = state[currentWeekParity][currentDay].filter(x => x.id !== id); localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); renderAll(); }
 
   function openModal(item = null) {
     editingId = item ? item.id : null;
@@ -533,7 +587,7 @@
     const newItem = { id: editingId || 'id_' + Date.now(), title, start: document.getElementById('inp-start').value, end: document.getElementById('inp-end').value, type: document.getElementById('inp-type').value, loc: document.getElementById('inp-loc').value.trim(), note: document.getElementById('inp-note').value.trim(), done: false };
     if (editingId) { const idx = state[currentWeekParity][currentDay].findIndex(x => x.id === editingId); if (idx > -1) state[currentWeekParity][currentDay][idx] = newItem; }
     else state[currentWeekParity][currentDay].push(newItem);
-    localStorage.setItem('schedule_1647_v4', JSON.stringify(state)); closeModal(); renderAll();
+    localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); closeModal(); renderAll();
   }
 
   function openSettings() {
@@ -541,6 +595,7 @@
     document.getElementById('set-home').value = settings.homeAddress;
     document.getElementById('set-bm').value = settings.timeBM; document.getElementById('set-gast').value = settings.timeGastLen;
     document.getElementById('set-prep').value = settings.prepTime; document.getElementById('set-transit').value = settings.transitBMLen;
+    document.getElementById('set-gym-prep').value = settings.gymPrep; document.getElementById('set-gym-walk').value = settings.gymWalk;
     document.getElementById('settings-modal').classList.add('open');
   }
   function saveSettings() {
@@ -550,11 +605,13 @@
     settings.timeGastLen = Number(document.getElementById('set-gast').value) || 115;
     settings.prepTime = Number(document.getElementById('set-prep').value) || 40;
     settings.transitBMLen = Number(document.getElementById('set-transit').value) || 45;
-    localStorage.setItem('settings_1647_v4', JSON.stringify(settings)); applyTheme(); document.getElementById('settings-modal').classList.remove('open'); renderAll();
+    settings.gymPrep = Number(document.getElementById('set-gym-prep').value) || 20;
+    settings.gymWalk = Number(document.getElementById('set-gym-walk').value) || 15;
+    localStorage.setItem('settings_1647_v5', JSON.stringify(settings)); applyTheme(); document.getElementById('settings-modal').classList.remove('open'); renderAll();
   }
   function resetSchedule() {
     if (confirm('Вернуть расписание пар? Свои дела удалятся!')) {
-      state = JSON.parse(JSON.stringify(DEFAULT_DATA)); localStorage.setItem('schedule_1647_v4', JSON.stringify(state));
+      state = JSON.parse(JSON.stringify(DEFAULT_DATA)); localStorage.setItem('schedule_1647_v5', JSON.stringify(state));
       document.getElementById('settings-modal').classList.remove('open'); renderAll();
     }
   }
