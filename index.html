@@ -1,119 +1,90 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="cyber">
+<html lang="ru" data-theme="oled">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="1647 OS">
-  <title>1647 // TACTICAL OS</title>
+  <meta name="apple-mobile-web-app-title" content="Режим 1647">
+  <title>1647 • Распорядок и Дедлайны</title>
   <style>
-    :root[data-theme="cyber"] {
-      --bg: #030305;
-      --surface: rgba(18, 19, 28, 0.72);
-      --card: rgba(24, 26, 38, 0.65);
-      --card-auto: rgba(12, 22, 42, 0.55);
+    :root[data-theme="oled"] {
+      --bg: #000000;
+      --surface: #111114;
+      --card: #16161a;
+      --card-auto: #12151e;
       --card-border: rgba(255, 255, 255, 0.08);
-      --auto-border: rgba(0, 210, 255, 0.35);
-      --text: #ffffff;
-      --subtext: #8b92a5;
-      --accent: #00e5ff;
-      --accent-glow: rgba(0, 229, 255, 0.45);
-      --orb-1: #00e5ff;
-      --orb-2: #7000ff;
-      --pill-bg: rgba(255, 255, 255, 0.07);
-      --pill-text: #d8dee9;
+      --auto-border: rgba(56, 139, 253, 0.28);
+      --text: #f5f5f7;
+      --subtext: #86868b;
+      --accent: #2997ff;
+      --pill-bg: #222228;
+      --pill-text: #d2d2d7;
+      --cell-bg: #0d0d10;
+      --cell-active: #1a2233;
     }
-    :root[data-theme="egoist"] {
-      --bg: #050203;
-      --surface: rgba(28, 12, 16, 0.75);
-      --card: rgba(36, 14, 20, 0.68);
-      --card-auto: rgba(45, 10, 18, 0.55);
-      --card-border: rgba(255, 42, 85, 0.14);
-      --auto-border: rgba(255, 42, 85, 0.45);
-      --text: #ffffff;
-      --subtext: #a38990;
-      --accent: #ff1e56;
-      --accent-glow: rgba(255, 30, 86, 0.5);
-      --orb-1: #ff1e56;
-      --orb-2: #ff7b00;
-      --pill-bg: rgba(255, 30, 86, 0.12);
-      --pill-text: #ffd1dc;
+    :root[data-theme="graphite"] {
+      --bg: #0e0e11;
+      --surface: #18181c;
+      --card: #1f1f24;
+      --card-auto: #19202e;
+      --card-border: rgba(255, 255, 255, 0.09);
+      --auto-border: rgba(56, 139, 253, 0.32);
+      --text: #f5f5f7;
+      --subtext: #98989d;
+      --accent: #0a84ff;
+      --pill-bg: #2c2c34;
+      --pill-text: #e5e5ea;
+      --cell-bg: #16161a;
+      --cell-active: #222c40;
     }
-    :root[data-theme="vision"] {
-      --bg: #0c0f17;
-      --surface: rgba(255, 255, 255, 0.08);
-      --card: rgba(255, 255, 255, 0.07);
-      --card-auto: rgba(120, 180, 255, 0.08);
-      --card-border: rgba(255, 255, 255, 0.16);
-      --auto-border: rgba(140, 200, 255, 0.4);
-      --text: #f5f7fa;
-      --subtext: #9aa5b8;
-      --accent: #5ac8fa;
-      --accent-glow: rgba(90, 200, 250, 0.4);
-      --orb-1: #3a7bd5;
-      --orb-2: #00d2ff;
-      --pill-bg: rgba(255, 255, 255, 0.12);
-      --pill-text: #ffffff;
+    :root[data-theme="light"] {
+      --bg: #f5f5f7;
+      --surface: #ffffff;
+      --card: #ffffff;
+      --card-auto: #f0f6ff;
+      --card-border: rgba(0, 0, 0, 0.08);
+      --auto-border: rgba(0, 122, 255, 0.25);
+      --text: #1d1d1f;
+      --subtext: #6e6e73;
+      --accent: #0071e3;
+      --pill-bg: #eef0f4;
+      --pill-text: #3a3a3c;
+      --cell-bg: #ffffff;
+      --cell-active: #e8f2ff;
     }
 
     :root {
-      --lab: #00e5ff;
-      --lec: #c651ff;
-      --prac: #ff9f0a;
-      --gym: #00ff87;
-      --code: #ffe600;
-      --hw: #ff5e3a;
-      --rest: #00f5d4;
-      --commute: #5ac8fa;
-      --danger: #ff2a55;
+      --lab: #38bdf8;
+      --lec: #a855f7;
+      --prac: #f59e0b;
+      --gym: #34d399;
+      --code: #eab308;
+      --hw: #f97316;
+      --rest: #2dd4bf;
+      --social: #818cf8;
+      --commute: #60a5fa;
+      --danger: #ef4444;
     }
 
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      scrollbar-width: none;
+    }
+    *::-webkit-scrollbar { display: none; }
 
     body {
       margin: 0;
-      padding: env(safe-area-inset-top, 20px) 12px calc(env(safe-area-inset-bottom, 20px) + 105px);
+      padding: env(safe-area-inset-top, 18px) 12px calc(env(safe-area-inset-bottom, 20px) + 96px);
       background-color: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif;
       user-select: none;
-      overflow-x: hidden;
       min-height: 100vh;
-      position: relative;
-    }
-
-    /* Кибер-сетка и живое фоновое свечение */
-    .cyber-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background-image: 
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 28px 28px;
-      pointer-events: none;
-    }
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(85px);
-      opacity: 0.28;
-      z-index: -1;
-      pointer-events: none;
-      animation: floatOrb 12s infinite alternate ease-in-out;
-    }
-    .orb-1 { width: 260px; height: 260px; background: var(--orb-1); top: -60px; left: -60px; }
-    .orb-2 { width: 280px; height: 280px; background: var(--orb-2); bottom: 10%; right: -80px; animation-delay: -5s; }
-
-    @keyframes floatOrb {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(30px, 40px) scale(1.18); }
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(14px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* Шапка */
@@ -123,119 +94,106 @@
       align-items: center;
       padding: 6px 0 12px;
     }
-    .brand {
-      display: flex;
-      flex-direction: column;
-    }
+    .brand { display: flex; flex-direction: column; gap: 2px; }
     .brand-sub {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: var(--accent);
-      text-transform: uppercase;
-      text-shadow: 0 0 10px var(--accent-glow);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--subtext);
+      letter-spacing: 0.3px;
     }
     h1 {
-      font-size: 25px;
+      font-size: 22px;
       margin: 0;
-      font-weight: 900;
-      letter-spacing: -0.7px;
-      background: linear-gradient(95deg, #fff 40%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      letter-spacing: -0.4px;
     }
     .header-controls { display: flex; gap: 8px; }
     .btn-icon {
+      position: relative;
       background: var(--surface);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--card-border);
       color: var(--text);
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      font-size: 18px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      font-size: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: transform 0.15s, border-color 0.2s;
+      transition: transform 0.12s, background 0.15s;
     }
-    .btn-icon:active { transform: scale(0.9); border-color: var(--accent); }
+    .btn-icon:active { transform: scale(0.92); }
+    .badge-count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 4px;
+      border-radius: 99px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-    /* ЖИВОЙ РАДАР (LIVE TACTICAL HUD) */
+    /* Компактный статус-бар (текущий/следующий блок) */
     .live-hud {
       background: var(--surface);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
       border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 13px 15px;
-      margin-bottom: 14px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.1);
-    }
-    .live-hud::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
     }
     .hud-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
     .hud-status {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
+      font-weight: 700;
       color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
     }
     .pulse-dot {
-      width: 8px; height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 10px var(--accent);
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.5; }
     }
     .hud-clock {
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 700;
       font-variant-numeric: tabular-nums;
       color: var(--subtext);
     }
     .hud-main {
-      font-size: 16px;
-      font-weight: 800;
+      font-size: 15px;
+      font-weight: 700;
       margin-bottom: 8px;
       line-height: 1.25;
     }
     .hud-bar-wrap {
       width: 100%;
-      height: 6px;
-      background: rgba(255,255,255,0.07);
+      height: 4px;
+      background: rgba(255,255,255,0.06);
       border-radius: 99px;
       overflow: hidden;
-      display: flex;
     }
     .hud-bar-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--accent), #c651ff);
-      box-shadow: 0 0 12px var(--accent-glow);
+      background: var(--accent);
       border-radius: 99px;
-      transition: width 0.4s ease;
+      transition: width 0.35s ease;
     }
 
     /* Навигация недель */
@@ -244,80 +202,65 @@
       justify-content: space-between;
       align-items: center;
       background: var(--surface);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
       border: 1px solid var(--card-border);
-      border-radius: 18px;
-      padding: 6px;
-      margin-bottom: 14px;
+      border-radius: 15px;
+      padding: 5px;
+      margin-bottom: 12px;
     }
     .nav-btn {
-      background: var(--pill-bg);
+      background: var(--card);
       border: 1px solid var(--card-border);
       color: var(--text);
-      width: 42px;
-      height: 42px;
-      border-radius: 13px;
-      font-size: 20px;
-      font-weight: 700;
+      width: 40px;
+      height: 38px;
+      border-radius: 11px;
+      font-size: 18px;
+      font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.12s;
     }
-    .nav-btn:active { transform: scale(0.88); }
+    .nav-btn:active { transform: scale(0.92); }
     .week-title { text-align: center; flex: 1; }
-    #week-label {
-      font-size: 13px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      margin-bottom: 2px;
-    }
-    #week-dates { font-size: 12px; font-weight: 600; color: var(--subtext); }
+    #week-label { font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+    #week-dates { font-size: 11px; font-weight: 600; color: var(--subtext); }
 
-    /* Сетка календаря Supershift 2.0 */
+    /* Сетка календаря Supershift */
     .cal-weekdays {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
+      gap: 4px;
       margin-bottom: 6px;
       text-align: center;
       font-size: 11px;
-      font-weight: 800;
+      font-weight: 700;
       color: var(--subtext);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
     .cal-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-      margin-bottom: 16px;
+      gap: 4px;
+      margin-bottom: 14px;
     }
     .cal-cell {
-      background: var(--surface);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: var(--cell-bg);
       border: 1px solid var(--card-border);
-      border-radius: 14px;
-      min-height: 88px;
+      border-radius: 12px;
+      min-height: 82px;
       padding: 6px 3px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 4px;
       cursor: pointer;
-      transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
       position: relative;
+      transition: border-color 0.15s, background 0.15s;
     }
-    .cal-cell:active { transform: scale(0.92); }
     .cal-cell.active {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--cell-active);
       border: 1.5px solid var(--accent);
-      box-shadow: 0 0 18px var(--accent-glow);
-      transform: translateY(-2px);
     }
     .cal-cell.today::after {
       content: "";
@@ -326,11 +269,10 @@
       width: 5px; height: 5px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 6px var(--accent);
     }
     .cell-day-num {
       font-size: 14px;
-      font-weight: 900;
+      font-weight: 800;
       color: var(--text);
       margin-bottom: 1px;
     }
@@ -342,37 +284,30 @@
       align-items: center;
     }
     .shift-bar {
-      width: 92%;
+      width: 90%;
       font-size: 9px;
       font-weight: 800;
       padding: 3px 0;
       border-radius: 5px;
       text-align: center;
-      color: #050508;
-      letter-spacing: -0.2px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      color: #0b0b0e;
     }
 
-    /* Сводка маршрута и прогресса дня */
+    /* Сводка дня (Подъем, Выход, Сон, Дома) */
     .summary-banner {
-      background: var(--card-auto);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--auto-border);
-      border-radius: 20px;
-      padding: 14px;
-      margin-bottom: 16px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 12px;
+      margin-bottom: 14px;
     }
     .summary-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 10px;
-      color: var(--accent);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
+      font-size: 11px;
+      color: var(--subtext);
+      font-weight: 700;
       margin-bottom: 10px;
     }
     .summary-grid {
@@ -381,54 +316,46 @@
       gap: 8px;
     }
     .stat-box {
-      background: rgba(0, 0, 0, 0.32);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 13px;
-      padding: 9px 11px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 11px;
+      padding: 8px 10px;
     }
-    .stat-label { font-size: 11px; color: var(--subtext); margin-bottom: 3px; font-weight: 600; }
-    .stat-val { font-size: 15px; font-weight: 900; color: var(--text); font-variant-numeric: tabular-nums; }
+    .stat-label { font-size: 11px; color: var(--subtext); margin-bottom: 2px; font-weight: 500; }
+    .stat-val { font-size: 14px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; }
 
     /* Таймлайн карточек */
-    .timeline { display: flex; flex-direction: column; gap: 11px; }
+    .timeline { display: flex; flex-direction: column; gap: 10px; }
     .item-card {
       background: var(--card);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
       border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 14px 12px 14px 15px;
+      border-radius: 16px;
+      padding: 13px 12px 13px 14px;
       display: grid;
-      grid-template-columns: 58px 1fr auto;
-      gap: 12px;
+      grid-template-columns: 56px 1fr auto;
+      gap: 11px;
       align-items: center;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-      animation: slideUp 0.28s cubic-bezier(0.2, 0.9, 0.3, 1) backwards;
-      transition: transform 0.15s, opacity 0.2s, border-color 0.2s;
+      transition: opacity 0.2s;
     }
     .item-card::before {
       content: "";
       position: absolute;
-      left: 0; top: 10px; bottom: 10px;
-      width: 4px;
+      left: 0; top: 12px; bottom: 12px;
+      width: 3.5px;
       border-radius: 0 4px 4px 0;
       background: var(--item-color, var(--accent));
-      box-shadow: 0 0 12px var(--item-color, var(--accent));
     }
     .item-card.auto-card {
       background: var(--card-auto);
       border: 1px dashed var(--auto-border);
     }
     .item-card.live-now {
-      border: 1.5px solid var(--accent);
-      box-shadow: 0 0 22px var(--accent-glow);
+      border-color: var(--accent);
     }
-    .item-card.done {
-      opacity: 0.38;
-      filter: grayscale(0.4);
-    }
+    .item-card.done { opacity: 0.42; }
+
     .time-col {
       display: flex;
       flex-direction: column;
@@ -437,44 +364,40 @@
       padding-right: 10px;
       font-variant-numeric: tabular-nums;
     }
-    .time-start { font-size: 15px; font-weight: 900; letter-spacing: -0.3px; }
-    .time-end { font-size: 12px; color: var(--subtext); margin-top: 3px; font-weight: 600; }
+    .time-start { font-size: 14px; font-weight: 800; }
+    .time-end { font-size: 11.5px; color: var(--subtext); margin-top: 2px; font-weight: 600; }
     .dur-tag {
       font-size: 9px;
       color: var(--subtext);
-      background: rgba(255,255,255,0.05);
+      background: var(--pill-bg);
       padding: 2px 5px;
       border-radius: 4px;
-      margin-top: 5px;
-      font-weight: 700;
+      margin-top: 4px;
+      font-weight: 600;
     }
     .badge-row {
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .badge {
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
+      font-size: 10.5px;
+      font-weight: 700;
     }
     .live-pill {
       background: var(--accent);
-      color: #000;
+      color: #fff;
       font-size: 9px;
-      font-weight: 900;
-      padding: 2px 6px;
+      font-weight: 800;
+      padding: 1px 5px;
       border-radius: 4px;
-      text-transform: uppercase;
-      box-shadow: 0 0 8px var(--accent);
     }
     .title {
       font-size: 15px;
-      font-weight: 800;
-      margin-bottom: 6px;
-      line-height: 1.28;
+      font-weight: 700;
+      margin-bottom: 5px;
+      line-height: 1.25;
     }
     .meta {
       display: flex;
@@ -486,91 +409,83 @@
     }
     .pill {
       background: var(--pill-bg);
-      border: 1px solid rgba(255,255,255,0.06);
       padding: 3px 8px;
-      border-radius: 7px;
+      border-radius: 6px;
       color: var(--pill-text);
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 600;
     }
-    .actions { display: flex; flex-direction: column; gap: 7px; }
+    .actions { display: flex; flex-direction: column; gap: 6px; }
     .icon-btn {
       background: var(--pill-bg);
       border: 1px solid var(--card-border);
       color: var(--text);
-      width: 34px;
-      height: 34px;
-      border-radius: 11px;
-      font-size: 14px;
-      font-weight: 800;
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.12s, background 0.2s;
     }
-    .icon-btn:active { transform: scale(0.85); }
     .icon-btn.check.checked {
       background: var(--gym);
       color: #000;
       border-color: var(--gym);
-      box-shadow: 0 0 12px rgba(0, 255, 135, 0.5);
     }
     .icon-btn.del { color: var(--danger); }
 
     .empty-state {
       background: var(--surface);
-      backdrop-filter: blur(16px);
-      border: 1px dashed var(--card-border);
-      border-radius: 22px;
-      padding: 40px 20px;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 34px 18px;
       text-align: center;
       color: var(--subtext);
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 14px;
+      font-weight: 600;
     }
 
-    /* Нижний стеклянный док */
+    /* Нижняя панель */
     .fab-bar {
       position: fixed;
       bottom: calc(env(safe-area-inset-bottom, 16px) + 10px);
       left: 12px;
       right: 12px;
+      max-width: 696px;
+      margin: 0 auto;
       display: flex;
-      gap: 10px;
+      gap: 8px;
       z-index: 30;
-      background: rgba(10, 12, 18, 0.75);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background: rgba(18, 18, 22, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       padding: 8px;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.65);
+      border-radius: 18px;
+      border: 1px solid var(--card-border);
     }
     .btn-main {
       flex: 1.5;
-      background: linear-gradient(135deg, var(--accent), #7000ff);
+      background: var(--accent);
       color: #fff;
       border: none;
-      padding: 15px;
-      border-radius: 15px;
+      padding: 14px;
+      border-radius: 12px;
       font-size: 15px;
-      font-weight: 900;
-      letter-spacing: 0.2px;
-      box-shadow: 0 4px 18px var(--accent-glow);
+      font-weight: 700;
       cursor: pointer;
-      transition: transform 0.12s;
     }
-    .btn-main:active { transform: scale(0.96); }
     .btn-secondary {
       flex: 1;
       background: var(--pill-bg);
       color: var(--text);
       border: 1px solid var(--card-border);
-      padding: 15px 12px;
-      border-radius: 15px;
+      padding: 14px 12px;
+      border-radius: 12px;
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 600;
       cursor: pointer;
     }
 
@@ -578,89 +493,128 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       display: none;
       align-items: flex-end;
+      justify-content: center;
       z-index: 100;
     }
     .modal-backdrop.open { display: flex; }
     .modal {
-      background: #12131c;
-      border-top: 1px solid rgba(255,255,255,0.15);
+      background: var(--surface);
+      border-top: 1px solid var(--card-border);
       width: 100%;
-      border-radius: 28px 28px 0 0;
-      padding: 22px 16px calc(env(safe-area-inset-bottom, 20px) + 20px);
+      max-width: 600px;
+      border-radius: 24px 24px 0 0;
+      padding: 20px 16px calc(env(safe-area-inset-bottom, 20px) + 18px);
       display: flex;
       flex-direction: column;
-      gap: 13px;
-      max-height: 92vh;
+      gap: 12px;
+      max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 -10px 40px rgba(0,0,0,0.7);
     }
-    .modal h2 { margin: 0 0 2px; font-size: 20px; font-weight: 900; }
-    .row { display: flex; gap: 10px; }
-    .field-label { font-size: 12px; color: var(--subtext); margin-bottom: -6px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+    .modal h2 { margin: 0; font-size: 18px; font-weight: 800; }
+    .row { display: flex; gap: 8px; align-items: center; }
+    .field-label { font-size: 11px; color: var(--subtext); margin-bottom: -6px; font-weight: 700; text-transform: uppercase; }
     input, select {
       width: 100%;
-      background: rgba(255,255,255,0.06);
+      background: var(--card);
       border: 1px solid var(--card-border);
       color: var(--text);
-      padding: 14px;
-      border-radius: 14px;
+      padding: 13px;
+      border-radius: 12px;
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 500;
       outline: none;
     }
     input:focus, select:focus { border-color: var(--accent); }
+
+    /* Быстрые чипы без полосы прокрутки */
     .quick-chips {
       display: flex;
-      gap: 8px;
+      gap: 7px;
       overflow-x: auto;
-      padding-bottom: 6px;
+      padding: 2px 0;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
+    .quick-chips::-webkit-scrollbar { display: none; }
     .chip {
-      background: rgba(255,255,255,0.07);
+      background: var(--card);
       border: 1px solid var(--card-border);
       color: var(--text);
-      padding: 9px 13px;
-      border-radius: 12px;
+      padding: 8px 12px;
+      border-radius: 10px;
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 600;
       white-space: nowrap;
       cursor: pointer;
     }
-    .chip:active { background: var(--accent); color: #000; }
+    .chip:active { background: var(--accent); color: #fff; }
+
+    .dur-presets {
+      display: flex;
+      gap: 6px;
+    }
+    .dur-btn {
+      flex: 1;
+      background: var(--pill-bg);
+      border: 1px solid var(--card-border);
+      color: var(--pill-text);
+      padding: 7px 0;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .dur-btn:active { background: var(--accent); color: #fff; }
+
+    /* Список дедлайнов */
+    .todo-list { display: flex; flex-direction: column; gap: 8px; max-height: 45vh; overflow-y: auto; }
+    .todo-item {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .todo-item.done { opacity: 0.45; text-decoration: line-through; }
+    .todo-text { font-size: 14px; font-weight: 600; flex: 1; }
+    .todo-subj { font-size: 11px; color: var(--accent); font-weight: 700; display: block; margin-bottom: 2px; }
   </style>
 </head>
 <body>
 
-  <div class="cyber-bg"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-
   <header>
     <div class="brand">
-      <span class="brand-sub">GUAP // GROUP 1647</span>
-      <h1>TACTICAL OS</h1>
+      <span class="brand-sub">ГУАП • ГРУППА 1647</span>
+      <h1>Мой Режим</h1>
     </div>
     <div class="header-controls">
-      <button class="btn-icon" onclick="resetToToday()" title="Сегодня">🎯</button>
+      <button class="btn-icon" onclick="openDeadlines()" title="Дедлайны и хвосты">
+        📌
+        <span class="badge-count" id="dl-badge" style="display:none">0</span>
+      </button>
+      <button class="btn-icon" onclick="resetToToday()" title="Сегодня">📅</button>
       <button class="btn-icon" onclick="openSettings()" title="Настройки">⚙️</button>
     </div>
   </header>
 
-  <!-- ЖИВОЙ РАДАР РЕАЛЬНОГО ВРЕМЕНИ -->
+  <!-- СТАТУС-БАР РЕАЛЬНОГО ВРЕМЕНИ -->
   <div class="live-hud" id="live-hud">
     <div class="hud-top">
       <div class="hud-status">
         <span class="pulse-dot"></span>
-        <span id="hud-tag">LIVE RADAR</span>
+        <span id="hud-tag">СТАТУС ДНЯ</span>
       </div>
-      <div class="hud-clock" id="hud-clock">--:--:--</div>
+      <div class="hud-clock" id="hud-clock">--:--</div>
     </div>
-    <div class="hud-main" id="hud-main">Синхронизация таймлайна...</div>
+    <div class="hud-main" id="hud-main">Загрузка расписания...</div>
     <div class="hud-bar-wrap">
       <div class="hud-bar-fill" id="hud-bar" style="width: 0%"></div>
     </div>
@@ -670,7 +624,7 @@
   <div class="week-nav">
     <button class="nav-btn" onclick="changeWeek(-1)">‹</button>
     <div class="week-title">
-      <div id="week-label">🔵 ЧЕТНАЯ НЕДЕЛЯ</div>
+      <div id="week-label">🔵 Четная неделя</div>
       <div id="week-dates">...</div>
     </div>
     <button class="nav-btn" onclick="changeWeek(1)">›</button>
@@ -686,60 +640,101 @@
   <div class="timeline" id="timeline"></div>
 
   <div class="fab-bar">
-    <button class="btn-main" onclick="openModal()">＋ НОВЫЙ БЛОК</button>
+    <button class="btn-main" onclick="openModal()">+ Добавить блок</button>
     <button class="btn-secondary" id="toggle-auto-btn" onclick="toggleAutoCommute()">⚡ Авто: ВКЛ</button>
   </div>
 
-  <!-- Модалка добавления -->
+  <!-- Модалка добавления / редактирования блока -->
   <div class="modal-backdrop" id="modal">
     <div class="modal">
-      <h2 id="modal-title">Новый блок</h2>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 id="modal-title">Новый блок</h2>
+        <button class="dur-btn" id="dup-week-btn" style="display:none; padding:6px 10px; flex:unset;" onclick="duplicateToOtherWeek()">⇄ На др. неделю</button>
+      </div>
+
       <div class="quick-chips">
         <span class="chip" onclick="fillTemplate('Тренировка в зале', 'gym', 'Спортзал', 'Силовая')">💪 Зал</span>
-        <span class="chip" onclick="fillTemplate('Python / ML и алгоритмы', 'code', 'Дом', 'Deep Work')">💻 Код / ML</span>
-        <span class="chip" onclick="fillTemplate('ДЗ / Отчеты по лабам', 'hw', 'Дом', 'Учеба')">📝 Лабы / ДЗ</span>
-        <span class="chip" onclick="fillTemplate('Отдых / CS2 / Аниме', 'rest', 'Дом', 'Чилл')">🎮 Отдых</span>
-        <span class="chip" onclick="fillTemplate('Вышмат / Матан', 'hw', 'Дом', 'Практика')">📐 Вышмат</span>
+        <span class="chip" onclick="fillTemplate('Саморазвитие', 'code', 'Дом', 'Фокус')">🧠 Саморазвитие</span>
+        <span class="chip" onclick="fillTemplate('Лабы / ДЗ', 'hw', 'Дом', 'Учеба')">📝 Лабы / ДЗ</span>
+        <span class="chip" onclick="fillTemplate('Отдых / CS2 / Dota 2', 'rest', 'Дом', 'Чилл')">🎮 Отдых</span>
+        <span class="chip" onclick="fillTemplate('Встреча с друзьями / Прогулка', 'social', 'Город', 'Прогулка')">🚶 Встречи / Прогулки</span>
       </div>
+
       <input type="text" id="inp-title" placeholder="Название (например: Тренировка в зале)">
+
       <div class="row">
         <input type="time" id="inp-start" value="10:00">
         <input type="time" id="inp-end" value="12:30">
       </div>
+
+      <!-- Быстрый выбор длительности -->
+      <div class="dur-presets">
+        <button class="dur-btn" onclick="setDuration(45)">45м</button>
+        <button class="dur-btn" onclick="setDuration(60)">1ч</button>
+        <button class="dur-btn" onclick="setDuration(90)">1.5ч</button>
+        <button class="dur-btn" onclick="setDuration(120)">2ч</button>
+        <button class="dur-btn" onclick="shiftBlock(30)">Сдвиг +30м</button>
+      </div>
+
       <div class="row">
         <select id="inp-type">
           <option value="gym">💪 Тренировка в зале</option>
-          <option value="code">💻 Саморазвитие / Код</option>
-          <option value="hw">📝 ДЗ / Лабораторные</option>
-          <option value="rest">🎮 Отдых / Восстановление</option>
+          <option value="code">🧠 Саморазвитие</option>
+          <option value="hw">📝 Лабы / ДЗ</option>
+          <option value="rest">🎮 Отдых / CS2 / Dota 2</option>
+          <option value="social">🚶 Встречи / Прогулки</option>
           <option value="commute">🚇 Режим / Обед</option>
           <option value="prac">🟠 Практика (Вуз)</option>
           <option value="lab">🔵 Лабораторная (Вуз)</option>
           <option value="lec">🟣 Лекция (Вуз)</option>
         </select>
-        <input type="text" id="inp-loc" placeholder="Локация">
+        <input type="text" id="inp-loc" placeholder="Место (Дом / Зал / Город)">
       </div>
+
       <input type="text" id="inp-note" placeholder="Заметка или преподаватель">
-      <div class="row" style="margin-top:6px;">
+
+      <div class="row" style="margin-top:4px;">
         <button class="btn-secondary" onclick="closeModal()">Отмена</button>
         <button class="btn-main" onclick="saveItem()">Сохранить</button>
       </div>
     </div>
   </div>
 
+  <!-- Модалка: Дедлайны и хвосты по учебе -->
+  <div class="modal-backdrop" id="deadlines-modal">
+    <div class="modal">
+      <h2>📌 Дедлайны и хвосты</h2>
+      <div class="row">
+        <select id="dl-subj" style="flex:0.9">
+          <option value="Информатика">Информатика</option>
+          <option value="ОЦГ">ОЦГ</option>
+          <option value="Физика">Физика</option>
+          <option value="Матан / Анал.геом">Вышмат</option>
+          <option value="История / ОРГ">История / ОРГ</option>
+          <option value="БЖД">БЖД</option>
+          <option value="Личное">Личное</option>
+        </select>
+        <input type="text" id="dl-text" placeholder="Что нужно сдать / сделать..." style="flex:1.5">
+      </div>
+      <button class="btn-main" style="padding:12px;" onclick="addDeadline()">+ Добавить в список</button>
+      <div class="todo-list" id="todo-list"></div>
+      <button class="btn-secondary" onclick="closeDeadlines()">Закрыть</button>
+    </div>
+  </div>
+
   <!-- Модалка настроек -->
   <div class="modal-backdrop" id="settings-modal">
     <div class="modal">
-      <h2>⚙️ Настройки системы</h2>
+      <h2>⚙️ Настройки</h2>
 
-      <div class="field-label">Визуальный скин</div>
+      <div class="field-label">Оформление</div>
       <select id="set-theme" onchange="previewTheme(this.value)">
-        <option value="cyber">⚡ Cyber Neon (OLED)</option>
-        <option value="egoist">🩸 Egoist Overdrive (Red)</option>
-        <option value="vision">💎 Spatial Glass (VisionOS)</option>
+        <option value="oled">🌑 OLED Чёрная (Строгая)</option>
+        <option value="graphite">🪨 Графитовая iOS Pro</option>
+        <option value="light">☀️ Светлая</option>
       </select>
 
-      <div class="field-label">Точка старта (Дом)</div>
+      <div class="field-label">Домашний адрес</div>
       <input type="text" id="set-home" value="Арцеуловская аллея, 17">
 
       <div class="row">
@@ -775,7 +770,7 @@
         </div>
       </div>
 
-      <div class="field-label" style="margin-top: 6px;">Бэкап данных (.JSON)</div>
+      <div class="field-label" style="margin-top: 4px;">Резервная копия (.JSON)</div>
       <div class="row">
         <button class="btn-secondary" style="flex:1; font-size:13px;" onclick="exportBackup()">📥 Скачать</button>
         <label class="btn-secondary" style="flex:1; font-size:13px; text-align:center; cursor:pointer;">
@@ -784,9 +779,9 @@
         </label>
       </div>
 
-      <div class="row" style="margin-top:8px;">
-        <button class="btn-secondary" style="color:var(--danger); flex:1" onclick="resetSchedule()">Сброс</button>
-        <button class="btn-main" style="flex:1.5" onclick="saveSettings()">Применить</button>
+      <div class="row" style="margin-top:6px;">
+        <button class="btn-secondary" style="color:var(--danger); flex:1" onclick="resetSchedule()">Сброс пар</button>
+        <button class="btn-main" style="flex:1.5" onclick="saveSettings()">Сохранить</button>
       </div>
     </div>
   </div>
@@ -802,18 +797,19 @@
   let editingId = null;
 
   const TYPE_LABELS = {
-    lab:     { text: 'Лабораторная работа', hex: '#00e5ff' },
-    lec:     { text: 'Лекция', hex: '#c651ff' },
-    prac:    { text: 'Практическая работа', hex: '#ff9f0a' },
-    gym:     { text: 'Спорт / Тренировка', hex: '#00ff87' },
-    code:    { text: 'Саморазвитие / Код', hex: '#ffe600' },
-    hw:      { text: 'ДЗ / Лабораторные', hex: '#ff5e3a' },
-    rest:    { text: 'Отдых / Восстановление', hex: '#00f5d4' },
-    commute: { text: 'Логистика / Режим (Авто)', hex: '#5ac8fa' }
+    lab:     { text: 'Лабораторная работа', hex: '#38bdf8' },
+    lec:     { text: 'Лекция', hex: '#a855f7' },
+    prac:    { text: 'Практическая работа', hex: '#f59e0b' },
+    gym:     { text: 'Спорт / Тренировка', hex: '#34d399' },
+    code:    { text: 'Саморазвитие', hex: '#eab308' },
+    hw:      { text: 'Лабы / ДЗ', hex: '#f97316' },
+    rest:    { text: 'Отдых / Игры', hex: '#2dd4bf' },
+    social:  { text: 'Встречи / Прогулки', hex: '#818cf8' },
+    commute: { text: 'Маршрут / Режим (Авто)', hex: '#60a5fa' }
   };
 
   const DEFAULT_SETTINGS = {
-    theme: 'cyber', homeAddress: 'Арцеуловская аллея, 17',
+    theme: 'oled', homeAddress: 'Арцеуловская аллея, 17',
     timeBM: 90, timeGastLen: 115, prepTime: 40, transitBMLen: 45, gymPrep: 20, gymWalk: 15, showAutoBlocks: true
   };
 
@@ -839,7 +835,8 @@
 
   let state = JSON.parse(localStorage.getItem('schedule_1647_v5')) || JSON.parse(localStorage.getItem('schedule_1647_v4')) || JSON.parse(JSON.stringify(DEFAULT_DATA));
   let settings = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(localStorage.getItem('settings_1647_v5')) || {});
-  if (!['cyber', 'egoist', 'vision'].includes(settings.theme)) settings.theme = 'cyber';
+  let deadlines = JSON.parse(localStorage.getItem('deadlines_1647_v1')) || [];
+  if (!['oled', 'graphite', 'light'].includes(settings.theme)) settings.theme = 'oled';
 
   function getMondayOfWeek(offset = 0) {
     const now = new Date(); now.setHours(0,0,0,0);
@@ -873,8 +870,7 @@
   function formatDuration(start, end) {
     const diff = toMins(end) - toMins(start);
     if (diff <= 0) return '';
-    const h = Math.floor(diff / 60);
-    const m = diff % 60;
+    const h = Math.floor(diff / 60), m = diff % 60;
     return h > 0 ? (m > 0 ? `${h}ч ${m}м` : `${h}ч`) : `${m}м`;
   }
 
@@ -927,13 +923,13 @@
       const backHomeM = toMins(g.end) + gymWalk;
       if (settings.showAutoBlocks) {
         autoBlocks.push({ id: 'g_p_'+idx, isAuto: true, start: fromMins(prepGymM), end: fromMins(leaveGymM), type: 'commute', title: g.id === firstItem.id ? '⏰ Подъем и сборы в зал' : '🎒 Сборы в зал', loc: settings.homeAddress });
-        autoBlocks.push({ id: 'g_to_'+idx, isAuto: true, start: fromMins(leaveGymM), end: g.start, type: 'commute', title: '🚶 Дорога в зал', loc: 'Пешком 15 мин' });
-        autoBlocks.push({ id: 'g_b_'+idx, isAuto: true, start: g.end, end: fromMins(backHomeM), type: 'commute', title: '🚶 Дорога из зала домой', loc: 'Пешком 15 мин' });
+        autoBlocks.push({ id: 'g_to_'+idx, isAuto: true, start: fromMins(leaveGymM), end: g.start, type: 'commute', title: '🚶 Дорога в зал', loc: `Пешком ${gymWalk} мин` });
+        autoBlocks.push({ id: 'g_b_'+idx, isAuto: true, start: g.end, end: fromMins(backHomeM), type: 'commute', title: '🚶 Дорога из зала домой', loc: `Пешком ${gymWalk} мин` });
         
         if (uniClasses.length > 0) {
           const leaveUniM = toMins(uniClasses[0].start) - getTravelMinutes(getCampus(uniClasses[0].loc));
           if (leaveUniM > backHomeM && leaveUniM - backHomeM <= 300) {
-            autoBlocks.push({ id: 'h_ref_'+idx, isAuto: true, start: fromMins(backHomeM), end: fromMins(leaveUniM), type: 'commute', title: '🚿 Дома: душ, еда и отдых перед вузом', loc: settings.homeAddress });
+            autoBlocks.push({ id: 'h_ref_'+idx, isAuto: true, start: fromMins(backHomeM), end: fromMins(leaveUniM), type: 'commute', title: '🚿 Дома: душ и обед перед вузом', loc: settings.homeAddress });
           }
         }
       }
@@ -962,24 +958,23 @@
       if (gymSessions.length === 0 || toMins(lU.end) > toMins(gymSessions[gymSessions.length - 1].end)) homeTimeText = `~${fromMins(arrHomeM)}`;
     }
 
-    return { summary: { wakeTime: wakeM !== null ? fromMins(wakeM) : 'Свободный', firstLeave: firstLeaveText, homeTime: homeTimeText }, autoBlocks };
+    const sleepTimeText = wakeM !== null ? fromMins(wakeM - 480) : '—';
+    return { summary: { wakeTime: wakeM !== null ? fromMins(wakeM) : 'Свободный', sleepTime: sleepTimeText, firstLeave: firstLeaveText, homeTime: homeTimeText }, autoBlocks };
   }
 
   function applyTheme() {
-    document.documentElement.setAttribute('data-theme', settings.theme || 'cyber');
+    document.documentElement.setAttribute('data-theme', settings.theme || 'oled');
     document.getElementById('toggle-auto-btn').style.opacity = settings.showAutoBlocks ? '1' : '0.55';
     document.getElementById('toggle-auto-btn').innerText = settings.showAutoBlocks ? '⚡ Авто: ВКЛ' : '⚡ Авто: ВЫКЛ';
   }
   function previewTheme(val) { document.documentElement.setAttribute('data-theme', val); }
   function toggleAutoCommute() { settings.showAutoBlocks = !settings.showAutoBlocks; localStorage.setItem('settings_1647_v5', JSON.stringify(settings)); applyTheme(); renderAll(); }
 
-  /* Живой Радар реального времени */
   function updateLiveRadar() {
     const now = new Date();
     const hh = String(now.getHours()).padStart(2, '0');
     const mm = String(now.getMinutes()).padStart(2, '0');
-    const ss = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById('hud-clock').innerText = `${hh}:${mm}:${ss}`;
+    document.getElementById('hud-clock').innerText = `${hh}:${mm}`;
 
     const nowMins = now.getHours() * 60 + now.getMinutes();
     const baseList = state[currentWeekParity][currentDay] || [];
@@ -991,8 +986,8 @@
     if (!isTodaySelected) {
       const doneCount = baseList.filter(x => x.done).length;
       const pct = baseList.length ? Math.round((doneCount / baseList.length) * 100) : 0;
-      document.getElementById('hud-tag').innerText = `ОБЗОР ДНЯ • ВЫПОЛНЕНО ${pct}%`;
-      document.getElementById('hud-main').innerText = baseList.length ? `Запланировано блоков: ${baseList.length}` : 'Полностью свободный день';
+      document.getElementById('hud-tag').innerText = `ПРОГРЕСС ДНЯ • ${pct}%`;
+      document.getElementById('hud-main').innerText = baseList.length ? `Запланировано блоков: ${baseList.length}` : 'Свободный день';
       document.getElementById('hud-bar').style.width = `${pct}%`;
       return;
     }
@@ -1011,21 +1006,33 @@
     } else if (next) {
       const diff = toMins(next.start) - nowMins;
       const h = Math.floor(diff / 60), m = diff % 60;
-      document.getElementById('hud-tag').innerText = `СЛЕДУЮЩИЙ БЛОК ЧЕРЕЗ ${h > 0 ? h+'Ч ' : ''}${m}М`;
+      document.getElementById('hud-tag').innerText = `ДАЛЕЕ ЧЕРЕЗ ${h > 0 ? h+'Ч ' : ''}${m}М`;
       document.getElementById('hud-main').innerText = `${next.start} — ${next.title}`;
-      document.getElementById('hud-bar').style.width = `15%`;
+      document.getElementById('hud-bar').style.width = `12%`;
     } else {
       document.getElementById('hud-tag').innerText = `ДЕНЬ ЗАВЕРШЕН`;
-      document.getElementById('hud-main').innerText = `Все задачи на сегодня позади — время отдыхать!`;
+      document.getElementById('hud-main').innerText = `Все дела на сегодня выполнены`;
       document.getElementById('hud-bar').style.width = `100%`;
     }
   }
 
+  function renderDeadlinesBadge() {
+    const pending = deadlines.filter(d => !d.done).length;
+    const badge = document.getElementById('dl-badge');
+    if (pending > 0) {
+      badge.style.display = 'flex';
+      badge.innerText = pending;
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
   function renderAll() {
+    renderDeadlinesBadge();
     const datesArr = generateWeekDays(weekOffset);
     currentWeekParity = isEvenWeek(datesArr[0].raw) ? 'even' : 'odd';
 
-    document.getElementById('week-label').innerText = currentWeekParity === 'even' ? '🔵 ЧЕТНАЯ НЕДЕЛЯ' : '🔴 НЕЧЕТНАЯ НЕДЕЛЯ';
+    document.getElementById('week-label').innerText = currentWeekParity === 'even' ? '🔵 Четная неделя' : '🔴 Нечетная неделя';
     document.getElementById('week-dates').innerText = `${datesArr[0].num} ${datesArr[0].month} — ${datesArr[6].num} ${datesArr[6].month}`;
 
     const todayDate = new Date(); todayDate.setHours(0,0,0,0);
@@ -1050,15 +1057,13 @@
 
     const baseList = state[currentWeekParity][currentDay] || [];
     const { summary, autoBlocks } = buildAutoLogistics(baseList);
-    const doneCount = baseList.filter(x => x.done).length;
-    const progressPct = baseList.length ? Math.round((doneCount / baseList.length) * 100) : 0;
 
     if (summary && baseList.length > 0) {
       document.getElementById('summary-container').innerHTML = `
         <div class="summary-banner">
           <div class="summary-header">
             <span>📍 ${settings.homeAddress}</span>
-            <span>ВЫПОЛНЕНО: ${progressPct}%</span>
+            <span>💤 Отбой (8ч сна): ${summary.sleepTime}</span>
           </div>
           <div class="summary-grid">
             <div class="stat-box"><div class="stat-label">Подъем</div><div class="stat-val">${summary.wakeTime}</div></div>
@@ -1069,19 +1074,18 @@
 
     const combined = [...baseList, ...autoBlocks].sort((a, b) => a.start.localeCompare(b.start));
     if (combined.length === 0) {
-      document.getElementById('timeline').innerHTML = `<div class="empty-state">⚡ Свободный день! Никаких пар — время для зала, кода или отдыха.</div>`;
+      document.getElementById('timeline').innerHTML = `<div class="empty-state">Свободный день. Добавь тренировку, саморазвитие, прогулку или отдых.</div>`;
       updateLiveRadar();
       return;
     }
 
-    document.getElementById('timeline').innerHTML = combined.map((item, idx) => {
+    document.getElementById('timeline').innerHTML = combined.map(item => {
       const t = TYPE_LABELS[item.type] || TYPE_LABELS.code;
       const dur = formatDuration(item.start, item.end);
       const isLive = isTodaySelected && (nowMins >= toMins(item.start) && nowMins < toMins(item.end));
-      const delay = idx * 0.04;
 
       if (item.isAuto) return `
-        <div class="item-card auto-card ${isLive ? 'live-now' : ''}" style="--item-color:${t.hex}; animation-delay:${delay}s" onclick="openSettings()">
+        <div class="item-card auto-card ${isLive ? 'live-now' : ''}" style="--item-color:${t.hex}" onclick="openSettings()">
           <div class="time-col">
             <span class="time-start">${item.start}</span>
             <span class="time-end">${item.end}</span>
@@ -1090,7 +1094,7 @@
           <div>
             <div class="badge-row">
               <span class="badge" style="color:${t.hex}">${t.text}</span>
-              ${isLive ? `<span class="live-pill">LIVE</span>` : ''}
+              ${isLive ? `<span class="live-pill">СЕЙЧАС</span>` : ''}
             </div>
             <div class="title">${item.title}</div>
             <div class="meta"><span class="pill">${item.loc}</span></div>
@@ -1099,7 +1103,7 @@
         </div>`;
 
       return `
-        <div class="item-card ${item.done ? 'done' : ''} ${isLive ? 'live-now' : ''}" style="--item-color:${t.hex}; animation-delay:${delay}s">
+        <div class="item-card ${item.done ? 'done' : ''} ${isLive ? 'live-now' : ''}" style="--item-color:${t.hex}">
           <div class="time-col" onclick="editItem('${item.id}')">
             <span class="time-start">${item.start}</span>
             <span class="time-end">${item.end}</span>
@@ -1108,7 +1112,7 @@
           <div onclick="editItem('${item.id}')">
             <div class="badge-row">
               <span class="badge" style="color:${t.hex}">${t.text}</span>
-              ${isLive ? `<span class="live-pill">LIVE</span>` : ''}
+              ${isLive ? `<span class="live-pill">СЕЙЧАС</span>` : ''}
             </div>
             <div class="title">${item.title}</div>
             <div class="meta">${item.loc ? `<span class="pill">${item.loc}</span>` : ''}${item.note ? `<span>${item.note}</span>` : ''}</div>
@@ -1127,9 +1131,34 @@
   function toggleDone(id) { const i = state[currentWeekParity][currentDay].find(x => x.id === id); if(i){ i.done = !i.done; localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); renderAll(); } }
   function deleteItem(id) { state[currentWeekParity][currentDay] = state[currentWeekParity][currentDay].filter(x => x.id !== id); localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); renderAll(); }
 
+  /* Быстрые кнопки длительности и сдвига */
+  function setDuration(mins) {
+    const startVal = document.getElementById('inp-start').value || '10:00';
+    document.getElementById('inp-end').value = fromMins(toMins(startVal) + mins);
+  }
+  function shiftBlock(mins) {
+    const s = document.getElementById('inp-start').value || '10:00';
+    const e = document.getElementById('inp-end').value || '11:30';
+    document.getElementById('inp-start').value = fromMins(toMins(s) + mins);
+    document.getElementById('inp-end').value = fromMins(toMins(e) + mins);
+  }
+
+  function duplicateToOtherWeek() {
+    if (!editingId) return;
+    const item = state[currentWeekParity][currentDay].find(x => x.id === editingId);
+    if (!item) return;
+    const targetWeek = currentWeekParity === 'even' ? 'odd' : 'even';
+    const copy = Object.assign({}, item, { id: 'id_' + Date.now(), done: false });
+    state[targetWeek][currentDay].push(copy);
+    localStorage.setItem('schedule_1647_v5', JSON.stringify(state));
+    closeModal();
+    alert(`Скопировано на ${targetWeek === 'even' ? 'четную' : 'нечетную'} неделю!`);
+  }
+
   function openModal(item = null) {
     editingId = item ? item.id : null;
     document.getElementById('modal-title').innerText = item ? 'Редактировать блок' : 'Новый блок';
+    document.getElementById('dup-week-btn').style.display = item ? 'block' : 'none';
     document.getElementById('inp-title').value = item ? item.title : '';
     document.getElementById('inp-start').value = item ? item.start : '10:00';
     document.getElementById('inp-end').value = item ? item.end : '12:30';
@@ -1150,8 +1179,54 @@
     localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); closeModal(); renderAll();
   }
 
+  /* Дедлайны и хвосты */
+  function openDeadlines() {
+    renderDeadlinesList();
+    document.getElementById('deadlines-modal').classList.add('open');
+  }
+  function closeDeadlines() {
+    document.getElementById('deadlines-modal').classList.remove('open');
+  }
+  function addDeadline() {
+    const text = document.getElementById('dl-text').value.trim();
+    const subj = document.getElementById('dl-subj').value;
+    if (!text) return;
+    deadlines.unshift({ id: 'dl_' + Date.now(), subj, text, done: false });
+    document.getElementById('dl-text').value = '';
+    localStorage.setItem('deadlines_1647_v1', JSON.stringify(deadlines));
+    renderDeadlinesList();
+    renderDeadlinesBadge();
+  }
+  function toggleDeadline(id) {
+    const dl = deadlines.find(x => x.id === id);
+    if (dl) { dl.done = !dl.done; localStorage.setItem('deadlines_1647_v1', JSON.stringify(deadlines)); renderDeadlinesList(); renderDeadlinesBadge(); }
+  }
+  function removeDeadline(id) {
+    deadlines = deadlines.filter(x => x.id !== id);
+    localStorage.setItem('deadlines_1647_v1', JSON.stringify(deadlines));
+    renderDeadlinesList();
+    renderDeadlinesBadge();
+  }
+  function renderDeadlinesList() {
+    const box = document.getElementById('todo-list');
+    if (deadlines.length === 0) {
+      box.innerHTML = `<div style="text-align:center;color:var(--subtext);padding:18px;font-size:13px;">Хвостов и дедлайнов нет!</div>`;
+      return;
+    }
+    box.innerHTML = deadlines.map(d => `
+      <div class="todo-item ${d.done ? 'done' : ''}">
+        <div class="todo-text" onclick="toggleDeadline('${d.id}')">
+          <span class="todo-subj">${d.subj}</span>
+          ${d.text}
+        </div>
+        <button class="icon-btn check ${d.done ? 'checked' : ''}" onclick="toggleDeadline('${d.id}')">✓</button>
+        <button class="icon-btn del" onclick="removeDeadline('${d.id}')">✕</button>
+      </div>
+    `).join('');
+  }
+
   function openSettings() {
-    document.getElementById('set-theme').value = settings.theme || 'cyber';
+    document.getElementById('set-theme').value = settings.theme || 'oled';
     document.getElementById('set-home').value = settings.homeAddress;
     document.getElementById('set-bm').value = settings.timeBM; document.getElementById('set-gast').value = settings.timeGastLen;
     document.getElementById('set-prep').value = settings.prepTime; document.getElementById('set-transit').value = settings.transitBMLen;
@@ -1177,12 +1252,12 @@
   }
 
   function exportBackup() {
-    const dataStr = JSON.stringify({ state, settings });
+    const dataStr = JSON.stringify({ state, settings, deadlines });
     const blob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `1647_os_backup_${new Date().toLocaleDateString('ru-RU')}.json`;
+    a.download = `1647_backup_${new Date().toLocaleDateString('ru-RU')}.json`;
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -1197,12 +1272,14 @@
         if (imported.state && imported.settings) {
           state = imported.state;
           settings = imported.settings;
+          if (imported.deadlines) deadlines = imported.deadlines;
           localStorage.setItem('schedule_1647_v5', JSON.stringify(state));
           localStorage.setItem('settings_1647_v5', JSON.stringify(settings));
+          localStorage.setItem('deadlines_1647_v1', JSON.stringify(deadlines));
           applyTheme();
           renderAll();
           document.getElementById('settings-modal').classList.remove('open');
-          alert('Система успешно восстановлена!');
+          alert('Данные успешно восстановлены!');
         }
       } catch (err) {
         alert('Ошибка чтения файла!');
@@ -1213,7 +1290,7 @@
 
   applyTheme();
   renderAll();
-  setInterval(updateLiveRadar, 1000);
+  setInterval(updateLiveRadar, 10000);
 </script>
 </body>
 </html>
