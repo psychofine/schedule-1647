@@ -6,393 +6,192 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Режим 1647">
-  <title>Supershift 1647 — Распорядок дня</title>
+  <title>Supershift 1647</title>
   <style>
     :root[data-theme="oled"] {
-      --bg: #000000;
-      --surface: #121215;
-      --card: #18181c;
-      --card-auto: #101520;
-      --card-border: #28282f;
-      --auto-border: #1e3a5f;
-      --text: #ffffff;
-      --subtext: #8e8e93;
-      --pill-bg: #26262e;
-      --pill-text: #d1d1d6;
-      --cell-bg: #111115;
-      --cell-active: #1e2436;
+      --bg: #000000; --surface: #121215; --card: #18181c; --card-auto: #101520;
+      --card-border: #28282f; --auto-border: #1e3a5f; --text: #ffffff;
+      --subtext: #8e8e93; --pill-bg: #26262e; --pill-text: #d1d1d6;
+      --cell-bg: #111115; --cell-active: #1e2436;
     }
     :root[data-theme="dark"] {
-      --bg: #111116;
-      --surface: #1c1c22;
-      --card: #24242c;
-      --card-auto: #1e2433;
-      --card-border: #363640;
-      --auto-border: #2b4c7e;
-      --text: #f2f2f7;
-      --subtext: #98989f;
-      --pill-bg: #34343e;
-      --pill-text: #e5e5ea;
-      --cell-bg: #1a1a22;
-      --cell-active: #283046;
+      --bg: #111116; --surface: #1c1c22; --card: #24242c; --card-auto: #1e2433;
+      --card-border: #363640; --auto-border: #2b4c7e; --text: #f2f2f7;
+      --subtext: #98989f; --pill-bg: #34343e; --pill-text: #e5e5ea;
+      --cell-bg: #1a1a22; --cell-active: #283046;
     }
     :root[data-theme="light"] {
-      --bg: #f2f2f7;
-      --surface: #ffffff;
-      --card: #ffffff;
-      --card-auto: #eef5ff;
-      --card-border: #e5e5ea;
-      --auto-border: #b6d4fe;
-      --text: #1c1c1e;
-      --subtext: #6c6c70;
-      --pill-bg: #e5e5ea;
-      --pill-text: #3a3a3c;
-      --cell-bg: #ffffff;
-      --cell-active: #e8f0fe;
+      --bg: #f2f2f7; --surface: #ffffff; --card: #ffffff; --card-auto: #eef5ff;
+      --card-border: #e5e5ea; --auto-border: #b6d4fe; --text: #1c1c1e;
+      --subtext: #6c6c70; --pill-bg: #e5e5ea; --pill-text: #3a3a3c;
+      --cell-bg: #ffffff; --cell-active: #e8f0fe;
     }
 
     :root {
-      --accent: #0a84ff;
-      --lab: #5ac8fa;
-      --lec: #bf5af2;
-      --prac: #ff9f0a;
-      --gym: #30d158;
-      --code: #ffd60a;
-      --hw: #ff6b35;
-      --rest: #00c7be;
-      --commute: #64d2ff;
-      --danger: #ff453a;
+      --accent: #0a84ff; --lab: #5ac8fa; --lec: #bf5af2; --prac: #ff9f0a;
+      --gym: #30d158; --code: #ffd60a; --hw: #ff6b35; --rest: #00c7be;
+      --commute: #64d2ff; --danger: #ff453a;
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
       margin: 0;
-      padding: env(safe-area-inset-top, 16px) 14px calc(env(safe-area-inset-bottom, 20px) + 85px);
+      padding: env(safe-area-inset-top, 20px) 12px calc(env(safe-area-inset-bottom, 20px) + 95px);
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
       user-select: none;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0 16px;
-      gap: 8px;
-    }
-    h1 { font-size: 22px; margin: 0; font-weight: 800; letter-spacing: -0.3px; }
-    .header-controls { display: flex; align-items: center; gap: 8px; }
-
+    header { display: flex; justify-content: space-between; align-items: center; padding: 5px 0 15px; }
+    h1 { font-size: 24px; margin: 0; font-weight: 800; letter-spacing: -0.5px; }
+    .header-controls { display: flex; gap: 8px; }
     .btn-icon {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      color: var(--text);
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
+      background: var(--card); border: 1px solid var(--card-border); color: var(--text);
+      width: 40px; height: 40px; border-radius: 12px; font-size: 18px;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
     }
 
-    /* Навигация по неделям */
+    /* Навигация недель */
     .week-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--surface);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 4px;
-      margin-bottom: 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--surface); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 6px; margin-bottom: 16px;
     }
     .nav-btn {
-      background: var(--card);
-      border: none;
-      color: var(--text);
-      width: 44px;
-      height: 36px;
-      border-radius: 10px;
-      font-size: 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: var(--card); border: none; color: var(--text);
+      width: 44px; height: 44px; border-radius: 12px; font-size: 20px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
     }
-    .week-title {
-      text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    #week-label { font-size: 13px; font-weight: 800; color: var(--text); }
-    #week-dates { font-size: 11px; font-weight: 500; color: var(--subtext); margin-top: 2px; }
+    .week-title { text-align: center; flex: 1; display: flex; flex-direction: column; }
+    #week-label { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 2px; }
+    #week-dates { font-size: 12px; font-weight: 600; color: var(--subtext); }
 
-    /* SUPERSHIFT КАЛЕНДАРЬ */
+    /* Календарь Supershift (Мобильный фикс) */
     .cal-weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
-      margin-bottom: 6px;
-      text-align: center;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--subtext);
-      text-transform: uppercase;
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+      margin-bottom: 8px; text-align: center; font-size: 12px;
+      font-weight: 800; color: var(--subtext); text-transform: uppercase;
     }
     .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
-      margin-bottom: 16px;
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 20px;
     }
     .cal-cell {
-      background: var(--cell-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      min-height: 96px;
-      padding: 6px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      cursor: pointer;
-      transition: all 0.15s;
-      overflow: hidden;
+      background: var(--cell-bg); border: 1px solid var(--card-border);
+      border-radius: 12px; min-height: 85px; padding: 6px 3px;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      cursor: pointer; transition: all 0.15s;
     }
-    .cal-cell:active { transform: scale(0.96); }
+    .cal-cell:active { transform: scale(0.94); }
     .cal-cell.active {
-      background: var(--cell-active);
-      border: 2px solid var(--accent);
-      box-shadow: 0 0 12px rgba(10, 132, 255, 0.25);
+      background: var(--cell-active); border: 2px solid var(--accent);
+      box-shadow: 0 0 15px rgba(10, 132, 255, 0.2);
     }
-    .cal-cell.today {
-      background: rgba(10, 132, 255, 0.1);
-    }
-    .cell-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 2px;
-    }
-    .cell-day-num { color: var(--text); }
-    .cell-wake { font-size: 10px; color: var(--commute); font-weight: 700; }
-    .shift-bars { display: flex; flex-direction: column; gap: 3px; }
+    .cal-cell.today { background: rgba(10, 132, 255, 0.15); }
+    .cell-day-num { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 2px; }
+    
+    .shift-bars { display: flex; flex-direction: column; gap: 4px; width: 100%; align-items: center; }
     .shift-bar {
-      font-size: 9.5px;
-      font-weight: 800;
-      padding: 3px 5px;
-      border-radius: 5px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: #000;
-      line-height: 1.2;
+      width: 90%; font-size: 9px; font-weight: 800; padding: 4px 0;
+      border-radius: 6px; text-align: center; color: #000;
+      white-space: nowrap; overflow: hidden; text-overflow: clip;
     }
 
-    /* Сводка маршрута и подъема */
+    /* Сводка (Мобильный фикс) */
     .summary-banner {
-      background: var(--card-auto);
-      border: 1px solid var(--auto-border);
-      border-radius: 16px;
-      padding: 12px 14px;
-      margin-bottom: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      background: var(--card-auto); border: 1px solid var(--auto-border);
+      border-radius: 18px; padding: 14px; margin-bottom: 16px;
     }
     .summary-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      color: var(--commute);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      flex-wrap: wrap;
-      gap: 4px;
+      font-size: 11px; color: var(--commute); font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;
     }
     .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-      gap: 8px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
     }
-    .stat-box {
-      background: rgba(255,255,255,0.03);
-      border-radius: 10px;
-      padding: 8px 10px;
-    }
-    .stat-label { font-size: 11px; color: var(--subtext); margin-bottom: 2px; }
-    .stat-val { font-size: 14px; font-weight: 800; color: var(--text); }
+    .stat-box { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 10px; }
+    .stat-label { font-size: 12px; color: var(--subtext); margin-bottom: 4px; font-weight: 500; }
+    .stat-val { font-size: 15px; font-weight: 800; color: var(--text); }
 
     /* Таймлайн */
-    .timeline { display: flex; flex-direction: column; gap: 10px; }
+    .timeline { display: flex; flex-direction: column; gap: 12px; }
     .item-card {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 13px 14px;
-      display: grid;
-      grid-template-columns: 64px 1fr auto;
-      gap: 12px;
-      align-items: center;
-      transition: opacity 0.2s;
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 18px; padding: 14px 12px;
+      display: grid; grid-template-columns: 60px 1fr auto; gap: 10px; align-items: center;
     }
-    .item-card.auto-card {
-      background: var(--card-auto);
-      border: 1px dashed var(--auto-border);
-    }
+    .item-card.auto-card { background: var(--card-auto); border: 1px dashed var(--auto-border); }
     .item-card.done { opacity: 0.4; }
     .time-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border-right: 1px solid var(--card-border);
-      padding-right: 10px;
+      display: flex; flex-direction: column; align-items: center;
+      border-right: 1px solid var(--card-border); padding-right: 10px;
     }
     .time-start { font-size: 15px; font-weight: 800; }
     .time-end { font-size: 12px; color: var(--subtext); margin-top: 4px; }
-    .badge { font-size: 11px; font-weight: 700; margin-bottom: 3px; display: inline-block; }
-    .title { font-size: 15px; font-weight: 700; margin-bottom: 5px; line-height: 1.25; }
+    .badge { font-size: 11px; font-weight: 700; margin-bottom: 4px; display: inline-block; }
+    .title { font-size: 15px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
     .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--subtext); align-items: center; }
     .pill {
-      background: var(--pill-bg);
-      padding: 3px 8px;
-      border-radius: 6px;
-      color: var(--pill-text);
-      font-size: 11px;
-      font-weight: 600;
+      background: var(--pill-bg); padding: 4px 8px; border-radius: 6px;
+      color: var(--pill-text); font-size: 11px; font-weight: 600;
     }
-    .actions { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+    .actions { display: flex; flex-direction: column; gap: 8px; }
     .icon-btn {
-      background: var(--pill-bg);
-      border: none;
-      color: var(--text);
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: var(--pill-bg); border: none; color: var(--text);
+      width: 34px; height: 34px; border-radius: 10px; font-size: 15px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
     }
     .icon-btn.check.checked { background: var(--gym); color: #000; }
     .icon-btn.del { color: var(--danger); }
 
     .empty-state {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 32px 16px;
-      text-align: center;
-      color: var(--subtext);
-      font-size: 15px;
-      font-weight: 500;
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 18px; padding: 35px 20px; text-align: center;
+      color: var(--subtext); font-size: 15px; font-weight: 600;
     }
 
+    /* Плавающие кнопки (Мобильный фикс) */
     .fab-bar {
-      position: fixed;
-      bottom: env(safe-area-inset-bottom, 16px);
-      left: 16px;
-      right: 16px;
-      max-width: 1172px;
-      margin: 0 auto;
-      display: flex;
-      gap: 10px;
-      z-index: 20;
+      position: fixed; bottom: calc(env(safe-area-inset-bottom, 16px) + 12px);
+      left: 12px; right: 12px; display: flex; gap: 10px; z-index: 20;
     }
     .btn-main {
-      flex: 1;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 16px;
-      border-radius: 14px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 4px 16px rgba(10, 132, 255, 0.35);
+      flex: 1.5; background: var(--accent); color: #fff; border: none;
+      padding: 18px; border-radius: 16px; font-size: 16px; font-weight: 800;
+      box-shadow: 0 8px 20px rgba(10, 132, 255, 0.4); cursor: pointer;
     }
     .btn-secondary {
-      background: var(--card);
-      color: var(--text);
-      border: 1px solid var(--card-border);
-      padding: 16px 14px;
-      border-radius: 14px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
+      flex: 1; background: var(--card); color: var(--text);
+      border: 1px solid var(--card-border); padding: 18px; border-radius: 16px;
+      font-size: 15px; font-weight: 700; cursor: pointer;
     }
 
-    /* Модальные окна */
+    /* Модалки */
     .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.72);
-      backdrop-filter: blur(4px);
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      z-index: 100;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(5px); display: none; align-items: flex-end; z-index: 100;
     }
     .modal-backdrop.open { display: flex; }
     .modal {
-      background: var(--surface);
-      border: 1px solid var(--card-border);
-      width: 100%;
-      max-width: 600px;
-      border-radius: 22px 22px 0 0;
-      padding: 20px 16px calc(env(safe-area-inset-bottom, 20px) + 16px);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      max-height: 90vh;
-      overflow-y: auto;
+      background: var(--surface); border-top: 1px solid var(--card-border);
+      width: 100%; border-radius: 26px 26px 0 0;
+      padding: 24px 16px calc(env(safe-area-inset-bottom, 20px) + 24px);
+      display: flex; flex-direction: column; gap: 14px; max-height: 92vh; overflow-y: auto;
     }
-    .modal h2 { margin: 0 0 2px; font-size: 19px; font-weight: 800; }
-    .row { display: flex; gap: 10px; align-items: center; }
-    .field-label { font-size: 12px; color: var(--subtext); margin-bottom: -6px; font-weight: 700; }
+    .modal h2 { margin: 0 0 4px; font-size: 20px; font-weight: 800; }
+    .row { display: flex; gap: 10px; }
+    .field-label { font-size: 13px; color: var(--subtext); margin-bottom: -6px; font-weight: 700; }
     input, select {
-      width: 100%;
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      color: var(--text);
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 500;
+      width: 100%; background: var(--card); border: 1px solid var(--card-border);
+      color: var(--text); padding: 15px; border-radius: 14px; font-size: 16px; font-weight: 500;
     }
     .quick-chips {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 6px;
+      display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px;
     }
     .chip {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      color: var(--text);
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-
-    @media (max-width: 640px) {
-      .cal-cell { min-height: 80px; padding: 5px; }
-      .shift-bar { font-size: 8.5px; padding: 2px 4px; }
-      .cell-wake { display: none; }
+      background: var(--card); border: 1px solid var(--card-border);
+      color: var(--text); padding: 10px 14px; border-radius: 12px;
+      font-size: 14px; font-weight: 700; white-space: nowrap; cursor: pointer;
     }
   </style>
 </head>
@@ -401,8 +200,8 @@
   <header>
     <h1>1647 • Supershift</h1>
     <div class="header-controls">
-      <button class="btn-icon" onclick="resetToToday()" title="Вернуться к сегодня">📅</button>
-      <button class="btn-icon" onclick="openSettings()" title="Настройки">⚙️</button>
+      <button class="btn-icon" onclick="resetToToday()">📅</button>
+      <button class="btn-icon" onclick="openSettings()">⚙️</button>
     </div>
   </header>
 
@@ -425,7 +224,7 @@
   <div class="timeline" id="timeline"></div>
 
   <div class="fab-bar">
-    <button class="btn-main" onclick="openModal()">+ Добавить задачу</button>
+    <button class="btn-main" onclick="openModal()">+ Добавить</button>
     <button class="btn-secondary" id="toggle-auto-btn" onclick="toggleAutoCommute()">⚡ Авто: ВКЛ</button>
   </div>
 
@@ -435,10 +234,9 @@
       <h2 id="modal-title">Новый блок</h2>
       <div class="quick-chips">
         <span class="chip" onclick="fillTemplate('Тренировка в зале', 'gym', 'Спортзал', 'Силовая')">💪 Зал</span>
-        <span class="chip" onclick="fillTemplate('Python / ML и алгоритмы', 'code', 'Дом', 'Фокус')">💻 Код</span>
-        <span class="chip" onclick="fillTemplate('ДЗ / Отчеты по лабам', 'hw', 'Дом', 'Учеба')">📝 ДЗ</span>
-        <span class="chip" onclick="fillTemplate('Отдых / Игры', 'rest', 'Дом', 'Восстановление')">🎮 Отдых</span>
-        <span class="chip" onclick="fillTemplate('Матан / Линал', 'hw', 'Дом', 'Практика')">📐 Вышмат</span>
+        <span class="chip" onclick="fillTemplate('Python / Код', 'code', 'Дом', 'Фокус')">💻 Код</span>
+        <span class="chip" onclick="fillTemplate('ДЗ / Лабы', 'hw', 'Дом', 'Учеба')">📝 ДЗ</span>
+        <span class="chip" onclick="fillTemplate('Отдых', 'rest', 'Дом', 'Восстановление')">🎮 Отдых</span>
       </div>
       <input type="text" id="inp-title" placeholder="Название (например: Тренировка)">
       <div class="row">
@@ -452,16 +250,16 @@
           <option value="hw">📝 ДЗ / Лабораторные</option>
           <option value="rest">🎮 Отдых / Восстановление</option>
           <option value="commute">🚇 Режим / Обед</option>
-          <option value="prac">🟠 Практическая работа</option>
-          <option value="lab">🔵 Лабораторная работа</option>
-          <option value="lec">🟣 Лекция</option>
+          <option value="prac">🟠 Практика (Вуз)</option>
+          <option value="lab">🔵 Лабораторная (Вуз)</option>
+          <option value="lec">🟣 Лекция (Вуз)</option>
         </select>
-        <input type="text" id="inp-loc" placeholder="Место (Зал / Дом / Вуз)">
+        <input type="text" id="inp-loc" placeholder="Место">
       </div>
-      <input type="text" id="inp-note" placeholder="Заметка">
-      <div class="row">
-        <button class="btn-secondary" style="flex:1" onclick="closeModal()">Отмена</button>
-        <button class="btn-main" style="flex:1" onclick="saveItem()">Сохранить</button>
+      <input type="text" id="inp-note" placeholder="Заметка (необязательно)">
+      <div class="row" style="margin-top:4px;">
+        <button class="btn-secondary" onclick="closeModal()">Отмена</button>
+        <button class="btn-main" onclick="saveItem()">Сохранить</button>
       </div>
     </div>
   </div>
@@ -469,11 +267,11 @@
   <!-- Модальное окно настроек -->
   <div class="modal-backdrop" id="settings-modal">
     <div class="modal">
-      <h2>⚙️ Настройки и логистика</h2>
+      <h2>⚙️ Настройки</h2>
 
       <div class="field-label">Тема оформления</div>
       <select id="set-theme" onchange="previewTheme(this.value)">
-        <option value="oled">🌑 OLED Чёрная (Supershift)</option>
+        <option value="oled">🌑 OLED Чёрная</option>
         <option value="dark">🌚 Тёмно-серая iOS</option>
         <option value="light">☀️ Светлая</option>
       </select>
@@ -487,36 +285,25 @@
           <input type="number" id="set-bm" min="30" max="180" step="5" value="90">
         </div>
         <div style="flex:1">
-          <div class="field-label" style="margin-bottom:4px">До «Гаст./Лен.» (мин)</div>
+          <div class="field-label" style="margin-bottom:4px">До «Гаст/Лен» (мин)</div>
           <input type="number" id="set-gast" min="60" max="180" step="5" value="115">
         </div>
       </div>
 
       <div class="row">
         <div style="flex:1">
-          <div class="field-label" style="margin-bottom:4px">Сборы в вуз (мин)</div>
+          <div class="field-label" style="margin-bottom:4px">Сборы утром (мин)</div>
           <input type="number" id="set-prep" min="15" max="120" step="5" value="40">
         </div>
         <div style="flex:1">
-          <div class="field-label" style="margin-bottom:4px">Переезд Б.М. ↔ Лен.</div>
+          <div class="field-label" style="margin-bottom:4px">Б.М. ↔ Лен. (мин)</div>
           <input type="number" id="set-transit" min="20" max="90" step="5" value="45">
         </div>
       </div>
 
-      <div class="row">
-        <div style="flex:1">
-          <div class="field-label" style="margin-bottom:4px">Сборы в зал (мин)</div>
-          <input type="number" id="set-gym-prep" min="5" max="60" step="5" value="20">
-        </div>
-        <div style="flex:1">
-          <div class="field-label" style="margin-bottom:4px">До зала пешком (мин)</div>
-          <input type="number" id="set-gym-walk" min="5" max="60" step="5" value="15">
-        </div>
-      </div>
-
-      <div class="row" style="margin-top:4px">
-        <button class="btn-secondary" style="color:var(--danger)" onclick="resetSchedule()">Сброс расписания</button>
-        <button class="btn-main" onclick="saveSettings()">Сохранить</button>
+      <div class="row" style="margin-top:10px;">
+        <button class="btn-secondary" style="color:var(--danger); flex:1" onclick="resetSchedule()">Сброс</button>
+        <button class="btn-main" style="flex:1.5" onclick="saveSettings()">Сохранить</button>
       </div>
     </div>
   </div>
@@ -524,28 +311,27 @@
 <script>
   const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
   const MONTHS = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-  const SEMESTER_START = new Date(2026, 8, 1); // 1 сентября 2026
+  const SEMESTER_START = new Date(2026, 8, 1); 
 
-  let weekOffset = 0; // 0 = текущая неделя
-  let currentWeekParity = 'even'; // Обновляется автоматически
+  let weekOffset = 0; 
+  let currentWeekParity = 'even'; 
   let currentDay = (new Date().getDay() + 6) % 7;
   let editingId = null;
 
   const TYPE_LABELS = {
-    lab:     { text: 'Лабораторная работа', color: 'var(--lab)', hex: '#5ac8fa' },
-    lec:     { text: 'Лекция', color: 'var(--lec)', hex: '#bf5af2' },
-    prac:    { text: 'Практическая работа', color: 'var(--prac)', hex: '#ff9f0a' },
-    gym:     { text: 'Спорт / Тренировка', color: 'var(--gym)', hex: '#30d158' },
-    code:    { text: 'Саморазвитие / Код', color: 'var(--code)', hex: '#ffd60a' },
-    hw:      { text: 'ДЗ / Лабораторные', color: 'var(--hw)', hex: '#ff6b35' },
-    rest:    { text: 'Отдых / Восстановление', color: 'var(--rest)', hex: '#00c7be' },
-    commute: { text: 'Маршрут / Режим (Авто)', color: 'var(--commute)', hex: '#64d2ff' }
+    lab:     { text: 'Лабораторная работа', hex: '#5ac8fa' },
+    lec:     { text: 'Лекция', hex: '#bf5af2' },
+    prac:    { text: 'Практическая работа', hex: '#ff9f0a' },
+    gym:     { text: 'Спорт / Тренировка', hex: '#30d158' },
+    code:    { text: 'Саморазвитие / Код', hex: '#ffd60a' },
+    hw:      { text: 'ДЗ / Лабораторные', hex: '#ff6b35' },
+    rest:    { text: 'Отдых', hex: '#00c7be' },
+    commute: { text: 'Маршрут / Режим (Авто)', hex: '#64d2ff' }
   };
 
   const DEFAULT_SETTINGS = {
     theme: 'oled', homeAddress: 'Арцеуловская аллея, 17',
-    timeBM: 90, timeGastLen: 115, prepTime: 40, transitBMLen: 45,
-    gymPrep: 20, gymWalk: 15, showAutoBlocks: true
+    timeBM: 90, timeGastLen: 115, prepTime: 40, transitBMLen: 45, gymPrep: 20, gymWalk: 15, showAutoBlocks: true
   };
 
   const DEFAULT_DATA = {
@@ -568,13 +354,11 @@
     }
   };
 
-  let state = JSON.parse(localStorage.getItem('schedule_1647_v3')) || JSON.parse(JSON.stringify(DEFAULT_DATA));
-  let settings = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(localStorage.getItem('settings_1647_v3')) || {});
+  let state = JSON.parse(localStorage.getItem('schedule_1647_v4')) || JSON.parse(JSON.stringify(DEFAULT_DATA));
+  let settings = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(localStorage.getItem('settings_1647_v4')) || {});
 
-  /* Движок бесконечного календаря */
   function getMondayOfWeek(offset = 0) {
-    const now = new Date();
-    now.setHours(0,0,0,0);
+    const now = new Date(); now.setHours(0,0,0,0);
     const day = (now.getDay() + 6) % 7;
     return new Date(now.getFullYear(), now.getMonth(), now.getDate() - day + (offset * 7));
   }
@@ -584,9 +368,7 @@
     const monday = new Date(date.getFullYear(), date.getMonth(), date.getDate() - day);
     const sDay = (SEMESTER_START.getDay() + 6) % 7;
     const sMonday = new Date(SEMESTER_START.getFullYear(), SEMESTER_START.getMonth(), SEMESTER_START.getDate() - sDay);
-    
-    const diffTime = monday.getTime() - sMonday.getTime();
-    const diffWeeks = Math.round(diffTime / (7 * 24 * 60 * 60 * 1000));
+    const diffWeeks = Math.round((monday.getTime() - sMonday.getTime()) / (7 * 24 * 60 * 60 * 1000));
     return (diffWeeks % 2 !== 0);
   }
 
@@ -600,23 +382,10 @@
     return daysArr;
   }
 
-  function changeWeek(dir) {
-    weekOffset += dir;
-    currentDay = dir > 0 ? 0 : 6; // Если листаем вперед -> выбираем Пн, если назад -> Вс
-    renderAll();
-  }
-
-  function resetToToday() {
-    weekOffset = 0;
-    currentDay = (new Date().getDay() + 6) % 7;
-    renderAll();
-  }
-
+  function changeWeek(dir) { weekOffset += dir; currentDay = dir > 0 ? 0 : 6; renderAll(); }
+  function resetToToday() { weekOffset = 0; currentDay = (new Date().getDay() + 6) % 7; renderAll(); }
   function toMins(t) { const [h, m] = t.split(':').map(Number); return h * 60 + m; }
-  function fromMins(m) {
-    const cl = ((m % 1440) + 1440) % 1440;
-    return `${String(Math.floor(cl / 60)).padStart(2, '0')}:${String(cl % 60).padStart(2, '0')}`;
-  }
+  function fromMins(m) { const cl = ((m % 1440) + 1440) % 1440; return `${String(Math.floor(cl / 60)).padStart(2, '0')}:${String(cl % 60).padStart(2, '0')}`; }
 
   function getCampus(loc = '') {
     const l = loc.toLowerCase();
@@ -625,102 +394,43 @@
     if (l.includes('лен')) return 'LEN';
     return null;
   }
-  function isLocalGym(item) { return getCampus(item.loc) === null && item.type === 'gym'; }
-
   function getTravelMinutes(campus) {
     if (campus === 'BM') return Number(settings.timeBM) || 90;
     if (campus === 'GAST' || campus === 'LEN') return Number(settings.timeGastLen) || 115;
     return 0;
   }
 
-  /* Авто-логистика (Умный расчет) */
   function buildAutoLogistics(dayItems) {
     if (!dayItems || dayItems.length === 0) return { summary: null, autoBlocks: [] };
     const sorted = [...dayItems].sort((a, b) => a.start.localeCompare(b.start));
     const firstItem = sorted[0];
     const uniClasses = sorted.filter(x => getCampus(x.loc) !== null);
-    const gymSessions = sorted.filter(x => isLocalGym(x));
     const prepUni = Number(settings.prepTime) || 40;
-    const gymPrep = Number(settings.gymPrep) || 20;
-    const gymWalk = Number(settings.gymWalk) || 15;
-
     const autoBlocks = [];
-    let wakeM = null;
-    let firstLeaveText = 'Дома';
-    let firstTargetText = firstItem.title;
-    let homeEveningText = '—';
+    
+    let wakeM = null, firstLeaveText = 'Дома';
 
-    // 1. ПОДЪЕМ
-    if (isLocalGym(firstItem)) {
-      const leaveForGym = toMins(firstItem.start) - gymWalk;
-      wakeM = leaveForGym - gymPrep;
-      firstLeaveText = `${fromMins(leaveForGym)} (в зал)`;
-      firstTargetText = 'Спортзал (15 мин пешком)';
-    } else if (getCampus(firstItem.loc) !== null) {
+    if (getCampus(firstItem.loc) !== null) {
       const c = getCampus(firstItem.loc);
-      const travel = getTravelMinutes(c);
-      const firstStart = toMins(firstItem.start);
-      const leaveM = firstStart - travel;
+      const leaveM = toMins(firstItem.start) - getTravelMinutes(c);
       wakeM = leaveM - prepUni;
-      firstLeaveText = (c === 'GAST' || c === 'LEN') ? `${fromMins(firstStart - 120)}–${fromMins(firstStart - 90)}` : fromMins(leaveM);
-      firstTargetText = `Вуз (${firstItem.loc.split(' ')[0]})`;
+      firstLeaveText = (c === 'GAST' || c === 'LEN') ? `${fromMins(toMins(firstItem.start) - 120)}–${fromMins(toMins(firstItem.start) - 90)}` : fromMins(leaveM);
     } else {
       wakeM = toMins(firstItem.start) - 30;
-      firstLeaveText = 'Утро дома';
-      if (settings.showAutoBlocks) autoBlocks.push({ id: 'a_wake', isAuto: true, start: fromMins(wakeM), end: firstItem.start, type: 'commute', title: '⏰ Подъем и завтрак', loc: settings.homeAddress });
+      if (settings.showAutoBlocks) autoBlocks.push({ id: 'a_w', isAuto: true, start: fromMins(wakeM), end: firstItem.start, type: 'commute', title: '⏰ Подъем', loc: settings.homeAddress });
     }
 
-    // 2. ЗАЛ
-    gymSessions.forEach((g, idx) => {
-      const gStart = toMins(g.start);
-      const leaveGymM = gStart - gymWalk;
-      const prepGymM = leaveGymM - gymPrep;
-      const backHomeM = toMins(g.end) + gymWalk;
-      if (settings.showAutoBlocks) {
-        autoBlocks.push({ id: 'g_p_'+idx, isAuto: true, start: fromMins(prepGymM), end: fromMins(leaveGymM), type: 'commute', title: g.id === firstItem.id ? '⏰ Подъем и сборы в зал' : '🎒 Сборы в зал', loc: settings.homeAddress });
-        autoBlocks.push({ id: 'g_to_'+idx, isAuto: true, start: fromMins(leaveGymM), end: g.start, type: 'commute', title: '🚶 Дорога в зал', loc: 'Дом → Зал' });
-        autoBlocks.push({ id: 'g_b_'+idx, isAuto: true, start: g.end, end: fromMins(backHomeM), type: 'commute', title: '🚶 Дорога домой', loc: 'Зал → Дом' });
-        if (uniClasses.length > 0) {
-          const leaveUniM = toMins(uniClasses[0].start) - getTravelMinutes(getCampus(uniClasses[0].loc));
-          if (leaveUniM > backHomeM && leaveUniM - backHomeM <= 1200) {
-            autoBlocks.push({ id: 'h_ref_'+idx, isAuto: true, start: fromMins(backHomeM), end: fromMins(leaveUniM), type: 'commute', title: '🚿 Дома: душ и обед', loc: settings.homeAddress });
-          }
-        }
-      }
-      homeEveningText = fromMins(backHomeM);
-    });
-
-    // 3. ВУЗ
-    let uniLeaveBanner = null;
-    if (uniClasses.length > 0) {
-      const firstUni = uniClasses[0];
-      const lastUni = uniClasses[uniClasses.length - 1];
-      const travelTo = getTravelMinutes(getCampus(firstUni.loc));
-      const leaveUniM = toMins(firstUni.start) - travelTo;
-      const arriveHomeM = toMins(lastUni.end) + getTravelMinutes(getCampus(lastUni.loc));
-
-      let leaveRangeText = fromMins(leaveUniM);
-      if (getCampus(firstUni.loc) !== 'BM') leaveRangeText = `${fromMins(toMins(firstUni.start) - 120)}–${fromMins(toMins(firstUni.start) - 90)}`;
-      uniLeaveBanner = `${leaveRangeText} (${firstUni.loc.split(' ')[0]})`;
-
-      if (settings.showAutoBlocks) {
-        if (firstUni.id === firstItem.id) autoBlocks.push({ id: 'u_w', isAuto: true, start: fromMins(leaveUniM - prepUni), end: fromMins(leaveUniM), type: 'commute', title: '⏰ Подъем и сборы', loc: settings.homeAddress });
-        autoBlocks.push({ id: 'u_l', isAuto: true, start: fromMins(leaveUniM), end: firstUni.start, type: 'commute', title: `🚇 Выезд в вуз (${firstUni.loc.split(' ')[0]})`, loc: `Дом → ${firstUni.loc}` });
-        
-        for (let i = 0; i < uniClasses.length - 1; i++) {
-          const c1 = getCampus(uniClasses[i].loc), c2 = getCampus(uniClasses[i + 1].loc);
-          if (c1 && c2 && c1 !== c2) {
-            const trStart = toMins(uniClasses[i].end);
-            const trMins = (c1 !== 'BM' && c2 !== 'BM') ? 15 : (Number(settings.transitBMLen) || 45);
-            autoBlocks.push({ id: 'u_tr_'+i, isAuto: true, start: uniClasses[i].end, end: fromMins(Math.min(toMins(uniClasses[i+1].start), trStart + trMins)), type: 'commute', title: trMins===15?'🚶 Переход':'🚇 Переезд + обед', loc: `${uniClasses[i].loc.split(' ')[0]} → ${uniClasses[i+1].loc.split(' ')[0]}` });
-          }
-        }
-        autoBlocks.push({ id: 'u_h', isAuto: true, start: lastUni.end, end: fromMins(arriveHomeM), type: 'commute', title: '🏠 Дорога домой', loc: `Вуз → Дом` });
-      }
-      if (gymSessions.length === 0 || toMins(lastUni.end) > toMins(gymSessions[gymSessions.length - 1].end)) homeEveningText = `~${fromMins(arriveHomeM)}`;
+    if (uniClasses.length > 0 && settings.showAutoBlocks) {
+      const fU = uniClasses[0], lU = uniClasses[uniClasses.length - 1];
+      const leaveUniM = toMins(fU.start) - getTravelMinutes(getCampus(fU.loc));
+      const arrHomeM = toMins(lU.end) + getTravelMinutes(getCampus(lU.loc));
+      
+      if (fU.id === firstItem.id) autoBlocks.push({ id: 'u_w', isAuto: true, start: fromMins(leaveUniM - prepUni), end: fromMins(leaveUniM), type: 'commute', title: '⏰ Подъем и сборы', loc: settings.homeAddress });
+      autoBlocks.push({ id: 'u_l', isAuto: true, start: fromMins(leaveUniM), end: fU.start, type: 'commute', title: `🚇 Выезд в вуз (${fU.loc.split(' ')[0]})`, loc: `Дом → ${fU.loc}` });
+      autoBlocks.push({ id: 'u_h', isAuto: true, start: lU.end, end: fromMins(arrHomeM), type: 'commute', title: '🏠 Дорога домой', loc: `Вуз → Дом` });
     }
 
-    return { summary: { wakeTime: wakeM !== null ? fromMins(wakeM) : 'Свободный', firstLeave: firstLeaveText, uniLeave: uniLeaveBanner, firstTarget: firstTargetText, homeTime: homeEveningText }, autoBlocks };
+    return { summary: { wakeTime: wakeM !== null ? fromMins(wakeM) : 'Свободный', firstLeave: firstLeaveText }, autoBlocks };
   }
 
   function applyTheme() {
@@ -729,65 +439,49 @@
     document.getElementById('toggle-auto-btn').innerText = settings.showAutoBlocks ? '⚡ Авто: ВКЛ' : '⚡ Авто: ВЫКЛ';
   }
   function previewTheme(val) { document.documentElement.setAttribute('data-theme', val); }
-  function toggleAutoCommute() { settings.showAutoBlocks = !settings.showAutoBlocks; localStorage.setItem('settings_1647_v3', JSON.stringify(settings)); applyTheme(); renderAll(); }
+  function toggleAutoCommute() { settings.showAutoBlocks = !settings.showAutoBlocks; localStorage.setItem('settings_1647_v4', JSON.stringify(settings)); applyTheme(); renderAll(); }
 
-  /* Отрисовка UI */
   function renderAll() {
     const datesArr = generateWeekDays(weekOffset);
-    const isEven = isEvenWeek(datesArr[0].raw);
-    currentWeekParity = isEven ? 'even' : 'odd';
+    currentWeekParity = isEvenWeek(datesArr[0].raw) ? 'even' : 'odd';
 
-    // Шапка
-    document.getElementById('week-label').innerText = isEven ? '🔵 Четная неделя' : '🔴 Нечетная неделя';
+    document.getElementById('week-label').innerText = currentWeekParity === 'even' ? '🔵 Четная неделя' : '🔴 Нечетная неделя';
     document.getElementById('week-dates').innerText = `${datesArr[0].num} ${datesArr[0].month} — ${datesArr[6].num} ${datesArr[6].month}`;
 
-    const todayDate = new Date();
-    todayDate.setHours(0,0,0,0);
+    const todayDate = new Date(); todayDate.setHours(0,0,0,0);
 
-    // Сетка
     document.getElementById('cal-grid').innerHTML = DAYS.map((dName, i) => {
       const items = [...(state[currentWeekParity][i] || [])].sort((a, b) => a.start.localeCompare(b.start));
-      const { summary } = buildAutoLogistics(items);
-      const isSelected = (i === currentDay);
-      const isRealToday = (datesArr[i].raw.getTime() === todayDate.getTime());
-      
-      const bars = items.slice(0, 4).map(it => {
+      const bars = items.slice(0, 3).map(it => {
         const hex = (TYPE_LABELS[it.type] || TYPE_LABELS.code).hex;
-        const sh = it.title.replace('Математика. Аналитическая геометрия', 'Анал. геом').replace('Математика. Математический анализ', 'Мат. анализ').replace('Основы цифровой грамотности', 'ОЦГ').replace('Основы российской государственности', 'ОРГ').replace('Безопасность жизнедеятельности', 'БЖД').replace('Физическая культура', 'Физра').replace('Иностранный язык', 'Ин. яз').replace('История (история России, всеобщая)', 'История').replace('Тренировка в зале', 'Зал');
-        return `<div class="shift-bar" style="background:${hex}">${it.start} ${sh}</div>`;
+        return `<div class="shift-bar" style="background:${hex}">${it.start}</div>`;
       }).join('');
       
       return `
-        <div class="cal-cell ${isSelected ? 'active' : ''} ${isRealToday ? 'today' : ''}" onclick="selectDay(${i})">
-          <div class="cell-top">
-            <span class="cell-day-num">${datesArr[i].num}</span>
-            ${summary ? `<span class="cell-wake">⏰${summary.wakeTime}</span>` : ''}
-          </div>
-          <div class="shift-bars">${bars || `<span style="font-size:10px;color:var(--subtext);margin-top:8px">Свободно</span>`}</div>
+        <div class="cal-cell ${i === currentDay ? 'active' : ''} ${datesArr[i].raw.getTime() === todayDate.getTime() ? 'today' : ''}" onclick="selectDay(${i})">
+          <div class="cell-day-num">${datesArr[i].num}</div>
+          <div class="shift-bars">${bars}</div>
         </div>
       `;
     }).join('');
 
-    // Лента
     const baseList = state[currentWeekParity][currentDay] || [];
     const { summary, autoBlocks } = buildAutoLogistics(baseList);
 
-    if (summary) {
+    if (summary && baseList.length > 0) {
       document.getElementById('summary-container').innerHTML = `
         <div class="summary-banner">
-          <div class="summary-header"><span>📍 Старт: ${settings.homeAddress}</span></div>
+          <div class="summary-header">📍 Старт: ${settings.homeAddress}</div>
           <div class="summary-grid">
             <div class="stat-box"><div class="stat-label">Подъем</div><div class="stat-val">${summary.wakeTime}</div></div>
-            <div class="stat-box"><div class="stat-label">1-й выход</div><div class="stat-val">${summary.firstLeave}</div></div>
-            ${summary.uniLeave ? `<div class="stat-box"><div class="stat-label">В вуз</div><div class="stat-val">${summary.uniLeave}</div></div>` : ''}
-            <div class="stat-box"><div class="stat-label">Дома</div><div class="stat-val">${summary.homeTime}</div></div>
+            <div class="stat-box"><div class="stat-label">Выход из дома</div><div class="stat-val">${summary.firstLeave}</div></div>
           </div>
         </div>`;
     } else document.getElementById('summary-container').innerHTML = '';
 
     const combined = [...baseList, ...autoBlocks].sort((a, b) => a.start.localeCompare(b.start));
     if (combined.length === 0) {
-      document.getElementById('timeline').innerHTML = `<div class="empty-state">Свободный день! Отдыхай или добавь свои планы.</div>`;
+      document.getElementById('timeline').innerHTML = `<div class="empty-state">Свободный день! Отдыхай или добавь планы.</div>`;
       return;
     }
 
@@ -796,18 +490,14 @@
       if (item.isAuto) return `
         <div class="item-card auto-card" onclick="openSettings()">
           <div class="time-col"><span class="time-start">${item.start}</span><span class="time-end">${item.end}</span></div>
-          <div>
-            <span class="badge" style="color:${t.color}">${t.text}</span>
-            <div class="title">${item.title}</div>
-            <div class="meta"><span class="pill">${item.loc}</span></div>
-          </div>
+          <div><span class="badge" style="color:${t.hex}">${t.text}</span><div class="title">${item.title}</div><div class="meta"><span class="pill">${item.loc}</span></div></div>
           <div class="actions"><button class="icon-btn">⚙️</button></div>
         </div>`;
       return `
         <div class="item-card ${item.done ? 'done' : ''}">
           <div class="time-col" onclick="editItem('${item.id}')"><span class="time-start">${item.start}</span><span class="time-end">${item.end}</span></div>
           <div onclick="editItem('${item.id}')">
-            <span class="badge" style="color:${t.color}">${t.text}</span>
+            <span class="badge" style="color:${t.hex}">${t.text}</span>
             <div class="title">${item.title}</div>
             <div class="meta">${item.loc ? `<span class="pill">${item.loc}</span>` : ''}${item.note ? `<span>${item.note}</span>` : ''}</div>
           </div>
@@ -820,10 +510,9 @@
   }
 
   function selectDay(d) { currentDay = d; renderAll(); }
-  function toggleDone(id) { const i = state[currentWeekParity][currentDay].find(x => x.id === id); if(i){ i.done = !i.done; localStorage.setItem('schedule_1647_v3', JSON.stringify(state)); renderAll(); } }
-  function deleteItem(id) { state[currentWeekParity][currentDay] = state[currentWeekParity][currentDay].filter(x => x.id !== id); localStorage.setItem('schedule_1647_v3', JSON.stringify(state)); renderAll(); }
+  function toggleDone(id) { const i = state[currentWeekParity][currentDay].find(x => x.id === id); if(i){ i.done = !i.done; localStorage.setItem('schedule_1647_v4', JSON.stringify(state)); renderAll(); } }
+  function deleteItem(id) { state[currentWeekParity][currentDay] = state[currentWeekParity][currentDay].filter(x => x.id !== id); localStorage.setItem('schedule_1647_v4', JSON.stringify(state)); renderAll(); }
 
-  /* Управление модалками */
   function openModal(item = null) {
     editingId = item ? item.id : null;
     document.getElementById('modal-title').innerText = item ? 'Редактировать' : 'Новый блок';
@@ -838,12 +527,13 @@
   function closeModal() { document.getElementById('modal').classList.remove('open'); }
   function fillTemplate(t, ty, l, n='') { document.getElementById('inp-title').value=t; document.getElementById('inp-type').value=ty; document.getElementById('inp-loc').value=l; document.getElementById('inp-note').value=n; }
   function editItem(id) { const i = state[currentWeekParity][currentDay].find(x => x.id === id); if (i) openModal(i); }
+  
   function saveItem() {
     const title = document.getElementById('inp-title').value.trim(); if (!title) return;
     const newItem = { id: editingId || 'id_' + Date.now(), title, start: document.getElementById('inp-start').value, end: document.getElementById('inp-end').value, type: document.getElementById('inp-type').value, loc: document.getElementById('inp-loc').value.trim(), note: document.getElementById('inp-note').value.trim(), done: false };
     if (editingId) { const idx = state[currentWeekParity][currentDay].findIndex(x => x.id === editingId); if (idx > -1) state[currentWeekParity][currentDay][idx] = newItem; }
     else state[currentWeekParity][currentDay].push(newItem);
-    localStorage.setItem('schedule_1647_v3', JSON.stringify(state)); closeModal(); renderAll();
+    localStorage.setItem('schedule_1647_v4', JSON.stringify(state)); closeModal(); renderAll();
   }
 
   function openSettings() {
@@ -851,20 +541,20 @@
     document.getElementById('set-home').value = settings.homeAddress;
     document.getElementById('set-bm').value = settings.timeBM; document.getElementById('set-gast').value = settings.timeGastLen;
     document.getElementById('set-prep').value = settings.prepTime; document.getElementById('set-transit').value = settings.transitBMLen;
-    document.getElementById('set-gym-prep').value = settings.gymPrep; document.getElementById('set-gym-walk').value = settings.gymWalk;
     document.getElementById('settings-modal').classList.add('open');
   }
   function saveSettings() {
     settings.theme = document.getElementById('set-theme').value;
     settings.homeAddress = document.getElementById('set-home').value.trim() || 'Арцеуловская аллея, 17';
-    settings.timeBM = Number(document.getElementById('set-bm').value) || 90; settings.timeGastLen = Number(document.getElementById('set-gast').value) || 115;
-    settings.prepTime = Number(document.getElementById('set-prep').value) || 40; settings.transitBMLen = Number(document.getElementById('set-transit').value) || 45;
-    settings.gymPrep = Number(document.getElementById('set-gym-prep').value) || 20; settings.gymWalk = Number(document.getElementById('set-gym-walk').value) || 15;
-    localStorage.setItem('settings_1647_v3', JSON.stringify(settings)); applyTheme(); document.getElementById('settings-modal').classList.remove('open'); renderAll();
+    settings.timeBM = Number(document.getElementById('set-bm').value) || 90;
+    settings.timeGastLen = Number(document.getElementById('set-gast').value) || 115;
+    settings.prepTime = Number(document.getElementById('set-prep').value) || 40;
+    settings.transitBMLen = Number(document.getElementById('set-transit').value) || 45;
+    localStorage.setItem('settings_1647_v4', JSON.stringify(settings)); applyTheme(); document.getElementById('settings-modal').classList.remove('open'); renderAll();
   }
   function resetSchedule() {
-    if (confirm('Вернуть исходное расписание пар 1647? Все добавленные дела удалятся!')) {
-      state = JSON.parse(JSON.stringify(DEFAULT_DATA)); localStorage.setItem('schedule_1647_v3', JSON.stringify(state));
+    if (confirm('Вернуть расписание пар? Свои дела удалятся!')) {
+      state = JSON.parse(JSON.stringify(DEFAULT_DATA)); localStorage.setItem('schedule_1647_v4', JSON.stringify(state));
       document.getElementById('settings-modal').classList.remove('open'); renderAll();
     }
   }
