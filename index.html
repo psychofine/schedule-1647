@@ -37,19 +37,13 @@
       user-select: none; min-height: 100vh; max-width: 720px; margin: 0 auto;
     }
 
-    @keyframes slideUpCascade {
-      from { opacity: 0; transform: translateY(25px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes modalSpring {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
-    @keyframes breathe {
-      0%, 100% { box-shadow: 0 0 4px var(--item-color); }
-      50% { box-shadow: 0 0 16px var(--item-color); }
-    }
+    /* Анимации Apple Spring */
+    @keyframes slideUpCascade { from { opacity: 0; transform: translateY(25px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes modalSpring { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    @keyframes breathe { 0%, 100% { box-shadow: 0 0 4px var(--item-color); } 50% { box-shadow: 0 0 16px var(--item-color); } }
+    @keyframes floatToken { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-40px) scale(1.4); } }
 
+    /* Шапка */
     header { display: flex; justify-content: space-between; align-items: center; padding: 6px 0 12px; }
     .brand { display: flex; flex-direction: column; gap: 2px; }
     .brand-sub { font-size: 11px; font-weight: 600; color: var(--subtext); letter-spacing: 0.3px; }
@@ -62,15 +56,20 @@
     }
     .btn-icon:active { transform: scale(0.85); }
     .badge-count {
-      position: absolute; top: -4px; right: -4px; background: var(--accent); color: #fff;
-      font-size: 10px; font-weight: 800; min-width: 17px; height: 17px; padding: 0 4px;
-      border-radius: 99px; display: flex; align-items: center; justify-content: center;
+      position: absolute; top: -4px; right: -4px; background: var(--accent); color: #fff; font-size: 10px; font-weight: 800;
+      min-width: 17px; height: 17px; padding: 0 4px; border-radius: 99px; display: flex; align-items: center; justify-content: center;
     }
 
-    .live-hud {
-      background: var(--surface); border: 1px solid var(--card-border); border-radius: 16px; padding: 12px 14px; margin-bottom: 12px;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Токены */
+    .token-bank {
+      background: var(--surface); border: 1px solid var(--code); color: var(--code); padding: 0 12px; height: 40px;
+      border-radius: 12px; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 12px rgba(234, 179, 8, 0.15); transition: transform 0.15s;
     }
+    .floating-token { position: absolute; color: var(--code); font-weight: 900; font-size: 15px; animation: floatToken 1s forwards; pointer-events: none; z-index: 50; text-shadow: 0 0 10px var(--code); }
+
+    /* HUD */
+    .live-hud { background: var(--surface); border: 1px solid var(--card-border); border-radius: 16px; padding: 12px 14px; margin-bottom: 12px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .hud-warning { border-color: var(--warning); box-shadow: 0 0 20px rgba(245, 158, 11, 0.15); }
     .hud-weather { border-color: var(--lab); box-shadow: 0 0 20px rgba(56, 189, 248, 0.15); }
     .hud-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
@@ -85,26 +84,18 @@
     .hud-bar-wrap { width: 100%; height: 4px; background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden; }
     .hud-bar-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width 0.4s ease, background 0.4s ease; }
 
-    .week-nav {
-      display: flex; justify-content: space-between; align-items: center; background: var(--surface); border: 1px solid var(--card-border);
-      border-radius: 15px; padding: 5px; margin-bottom: 12px;
-    }
-    .nav-btn {
-      background: var(--card); border: 1px solid var(--card-border); color: var(--text); width: 40px; height: 38px;
-      border-radius: 11px; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center;
-      transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+    /* Навигация недель */
+    .week-nav { display: flex; justify-content: space-between; align-items: center; background: var(--surface); border: 1px solid var(--card-border); border-radius: 15px; padding: 5px; margin-bottom: 12px; }
+    .nav-btn { background: var(--card); border: 1px solid var(--card-border); color: var(--text); width: 40px; height: 38px; border-radius: 11px; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center; transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .nav-btn:active { transform: scale(0.85); }
     .week-title { text-align: center; flex: 1; }
     #week-label { font-size: 13px; font-weight: 800; margin-bottom: 2px; }
     #week-dates { font-size: 11px; font-weight: 600; color: var(--subtext); }
 
+    /* Календарь */
     .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; text-align: center; font-size: 11px; font-weight: 700; color: var(--subtext); text-transform: uppercase; }
     .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 14px; }
-    .cal-cell {
-      background: var(--cell-bg); border: 1px solid var(--card-border); border-radius: 12px; min-height: 82px; padding: 6px 3px;
-      display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+    .cal-cell { background: var(--cell-bg); border: 1px solid var(--card-border); border-radius: 12px; min-height: 82px; padding: 6px 3px; display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .cal-cell:active { transform: scale(0.92); }
     .cal-cell.active { background: var(--cell-active); border: 1.5px solid var(--accent); }
     .cal-cell.today::after { content: ""; position: absolute; top: 5px; right: 5px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
@@ -112,6 +103,7 @@
     .shift-bars { display: flex; flex-direction: column; gap: 3px; width: 100%; align-items: center; }
     .shift-bar { width: 90%; font-size: 9px; font-weight: 800; padding: 3px 0; border-radius: 5px; text-align: center; color: #0b0b0e; }
 
+    /* Сводка */
     .summary-banner { background: var(--surface); border: 1px solid var(--card-border); border-radius: 16px; padding: 12px; margin-bottom: 14px; }
     .summary-header { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--subtext); font-weight: 700; margin-bottom: 10px; }
     .summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -119,20 +111,13 @@
     .stat-label { font-size: 11px; color: var(--subtext); margin-bottom: 2px; font-weight: 500; }
     .stat-val { font-size: 14px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; }
 
+    /* Таймлайн с каскадом */
     .timeline { display: flex; flex-direction: column; gap: 10px; }
-    .item-card {
-      background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 13px 12px 13px 14px;
-      display: grid; grid-template-columns: 56px 1fr auto; gap: 11px; align-items: center; position: relative;
-      animation: slideUpCascade 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; transition: all 0.3s ease;
-    }
-    .item-card::before {
-      content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3.5px; border-radius: 0 4px 4px 0;
-      background: var(--item-color, var(--accent)); transition: background 0.3s;
-    }
+    .item-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 13px 12px 13px 14px; display: grid; grid-template-columns: 56px 1fr auto; gap: 11px; align-items: center; position: relative; animation: slideUpCascade 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; transition: all 0.3s ease; }
+    .item-card::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3.5px; border-radius: 0 4px 4px 0; background: var(--item-color, var(--accent)); transition: background 0.3s; }
     .item-card.auto-card { background: var(--card-auto); border: 1px dashed var(--auto-border); }
     .item-card.live-now { border-color: var(--item-color); animation: breathe 3s infinite ease-in-out, slideUpCascade 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
     
-    /* ИСПРАВЛЕННАЯ ГАЛОЧКА: Мягкое затемнение, без пропадания */
     .item-card.done { opacity: 0.65; border-color: transparent; }
     .item-card.done .title { text-decoration: line-through; color: var(--subtext); }
 
@@ -148,33 +133,24 @@
     .pill { background: var(--pill-bg); padding: 3px 8px; border-radius: 6px; color: var(--pill-text); font-size: 11px; font-weight: 600; }
     
     .actions { display: flex; flex-direction: column; gap: 6px; }
-    .icon-btn {
-      background: var(--pill-bg); border: 1px solid var(--card-border); color: var(--text); width: 32px; height: 32px;
-      border-radius: 9px; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
-    }
+    .icon-btn { background: var(--pill-bg); border: 1px solid var(--card-border); color: var(--text); width: 32px; height: 32px; border-radius: 9px; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
     .icon-btn:active { transform: scale(0.7); }
     .icon-btn.check.checked { background: var(--gym); color: #000; border-color: var(--gym); transform: scale(1.05); }
     .icon-btn.del { color: var(--danger); }
 
     .empty-state { background: var(--surface); border: 1px solid var(--card-border); border-radius: 16px; padding: 34px 18px; text-align: center; color: var(--subtext); font-size: 14px; font-weight: 600; }
 
-    .fab-bar {
-      position: fixed; bottom: calc(env(safe-area-inset-bottom, 16px) + 10px); left: 12px; right: 12px; max-width: 696px; margin: 0 auto; display: flex; gap: 8px; z-index: 30; background: rgba(18, 18, 22, 0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 8px; border-radius: 18px; border: 1px solid var(--card-border);
-    }
+    /* Нижняя панель */
+    .fab-bar { position: fixed; bottom: calc(env(safe-area-inset-bottom, 16px) + 10px); left: 12px; right: 12px; max-width: 696px; margin: 0 auto; display: flex; gap: 8px; z-index: 30; background: rgba(18, 18, 22, 0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 8px; border-radius: 18px; border: 1px solid var(--card-border); }
     .btn-main { flex: 1.5; background: var(--accent); color: #fff; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: transform 0.15s; }
     .btn-main:active { transform: scale(0.96); }
     .btn-secondary { flex: 1; background: var(--pill-bg); color: var(--text); border: 1px solid var(--card-border); padding: 14px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.15s; }
     .btn-secondary:active { transform: scale(0.96); }
 
+    /* Модалки */
     .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; align-items: flex-end; justify-content: center; z-index: 100; transition: opacity 0.3s; opacity: 0; }
     .modal-backdrop.open { display: flex; opacity: 1; }
-    .modal {
-      background: var(--surface); border-top: 1px solid var(--card-border); width: 100%; max-width: 600px;
-      border-radius: 24px 24px 0 0; padding: 20px 16px calc(env(safe-area-inset-bottom, 20px) + 18px);
-      display: flex; flex-direction: column; gap: 12px; max-height: 90vh; overflow-y: auto;
-      animation: modalSpring 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards;
-    }
+    .modal { background: var(--surface); border-top: 1px solid var(--card-border); width: 100%; max-width: 600px; border-radius: 24px 24px 0 0; padding: 20px 16px calc(env(safe-area-inset-bottom, 20px) + 18px); display: flex; flex-direction: column; gap: 12px; max-height: 90vh; overflow-y: auto; animation: modalSpring 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards; }
     .modal h2 { margin: 0; font-size: 18px; font-weight: 800; }
     .row { display: flex; gap: 8px; align-items: center; }
     .field-label { font-size: 11px; color: var(--subtext); margin-bottom: -6px; font-weight: 700; text-transform: uppercase; }
@@ -205,6 +181,9 @@
       <h1>Мой Режим</h1>
     </div>
     <div class="header-controls">
+      <!-- БАНК ТОКЕНОВ -->
+      <div class="token-bank" title="Синтетические токены для отдыха">⚡ <span id="token-count" style="margin-left:4px;">0</span></div>
+      
       <button class="btn-icon" onclick="openDeadlines()" title="Дедлайны и хвосты">
         📌<span class="badge-count" id="dl-badge" style="display:none">0</span>
       </button>
@@ -246,12 +225,11 @@
         <button class="dur-btn" id="dup-week-btn" style="display:none; padding:6px 10px; flex:unset;" onclick="duplicateToOtherWeek()">⇄ На др. неделю</button>
       </div>
       <div class="quick-chips">
-        <span class="chip" onclick="fillTemplate('Тренировка в зале', 'gym', 'Спортзал', 'Силовая')">💪 Зал</span>
-        <span class="chip" onclick="fillTemplate('Саморазвитие', 'code', 'Дом', 'Фокус')">🧠 Саморазвитие</span>
-        <span class="chip" onclick="fillTemplate('Лабы / ДЗ', 'hw', 'Дом', 'Учеба')">📝 Лабы / ДЗ</span>
-        <span class="chip" onclick="fillTemplate('Уборка / Готовка', 'chores', 'Дом', 'Быт')">🧹 Быт</span>
-        <span class="chip" onclick="fillTemplate('Отдых / CS2 / Dota 2', 'rest', 'Дом', 'Чилл')">🎮 Отдых</span>
-        <span class="chip" onclick="fillTemplate('Встреча с друзьями / Прогулка', 'social', 'Город', 'Прогулка')">🚶 Прогулки</span>
+        <span class="chip" onclick="fillTemplate('Тренировка в зале', 'gym', 'Спортзал', 'Силовая')">💪 Зал (+3⚡)</span>
+        <span class="chip" onclick="fillTemplate('Саморазвитие', 'code', 'Дом', 'Фокус')">🧠 Код/ML (+3⚡)</span>
+        <span class="chip" onclick="fillTemplate('Лабы / ДЗ', 'hw', 'Дом', 'Учеба')">📝 Лабы (+3⚡)</span>
+        <span class="chip" onclick="fillTemplate('Уборка / Готовка', 'chores', 'Дом', 'Быт')">🧹 Быт (0⚡)</span>
+        <span class="chip" onclick="fillTemplate('Отдых / CS2 / Dota 2', 'rest', 'Дом', 'Чилл')">🎮 CS2 (-3⚡)</span>
       </div>
       <input type="text" id="inp-title" placeholder="Название (например: Тренировка в зале)">
       <div class="row">
@@ -264,17 +242,23 @@
       </div>
       <div class="row">
         <select id="inp-type">
-          <option value="gym">💪 Тренировка в зале</option><option value="code">🧠 Саморазвитие</option>
-          <option value="hw">📝 Лабы / ДЗ</option><option value="chores">🧹 Домашние дела / Быт</option>
-          <option value="rest">🎮 Отдых / CS2 / Dota 2</option><option value="social">🚶 Встречи / Прогулки</option>
-          <option value="commute">🚇 Режим / Обед</option><option value="prac">🟠 Практика (Вуз)</option>
-          <option value="lab">🔵 Лабораторная (Вуз)</option><option value="lec">🟣 Лекция (Вуз)</option>
+          <option value="gym">💪 Тренировка в зале (+3 ⚡)</option>
+          <option value="code">🧠 Саморазвитие (+3 ⚡)</option>
+          <option value="hw">📝 Лабы / ДЗ (+3 ⚡)</option>
+          <option value="chores">🧹 Домашние дела / Быт (0 ⚡)</option>
+          <option value="rest">🎮 Отдых / CS2 / Dota 2 (-3 ⚡)</option>
+          <option value="social">🚶 Встречи / Прогулки (0 ⚡)</option>
+          <option value="commute">🚇 Режим / Обед</option>
+          <option value="prac">🟠 Практика (Вуз)</option>
+          <option value="lab">🔵 Лабораторная (Вуз)</option>
+          <option value="lec">🟣 Лекция (Вуз)</option>
         </select>
         <input type="text" id="inp-loc" placeholder="Место (Дом / Зал / Город)">
       </div>
       <input type="text" id="inp-note" placeholder="Заметка или преподаватель">
       <div class="row" style="margin-top:4px;">
-        <button class="btn-secondary" onclick="closeModal()">Отмена</button><button class="btn-main" onclick="saveItem()">Сохранить</button>
+        <button class="btn-secondary" onclick="closeModal()">Отмена</button>
+        <button class="btn-main" onclick="saveItem()">Сохранить</button>
       </div>
     </div>
   </div>
@@ -346,7 +330,7 @@
     social: { text: 'Встречи / Прогулки', hex: 'var(--social)' }, commute: { text: 'Маршрут / Режим (Авто)', hex: 'var(--commute)' }
   };
 
-  const DEFAULT_SETTINGS = { theme: 'oled', homeAddress: 'Дом', timeBM: 90, timeGastLen: 120, prepTime: 50, transitBMLen: 45, gymPrep: 20, gymWalk: 15, showAutoBlocks: true, notifications: false };
+  const DEFAULT_SETTINGS = { theme: 'oled', homeAddress: 'Дом', timeBM: 90, timeGastLen: 120, prepTime: 50, transitBMLen: 45, gymPrep: 20, gymWalk: 15, showAutoBlocks: true, notifications: false, tokens: 0 };
   const DEFAULT_DATA = { /* Дефолтное расписание */
     even: {0:[],1:[{id:'e1_1',start:'11:10',end:'12:40',type:'lab',title:'Основы цифровой грамотности',loc:'Б.М. 12-29'},{id:'e1_2',start:'15:10',end:'16:40',type:'lec',title:'Физика',loc:'Лен. 32-13'}],2:[{id:'e2_1',start:'09:30',end:'11:00',type:'prac',title:'Математика',loc:'Гаст. 24-02'},{id:'e2_2',start:'11:10',end:'12:40',type:'prac',title:'История',loc:'Гаст. 12-04'},{id:'e2_3',start:'13:00',end:'14:30',type:'prac',title:'Математика',loc:'Гаст. 24-02'},{id:'e2_4',start:'15:10',end:'16:40',type:'prac',title:'Основы рос. гос.',loc:'Лен. 23-01'}],3:[{id:'e3_1',start:'13:00',end:'14:30',type:'lec',title:'Математика',loc:'Гаст. 12-01'},{id:'e3_2',start:'15:10',end:'16:40',type:'lec',title:'Математика',loc:'Гаст. 12-01'},{id:'e3_3',start:'17:00',end:'18:30',type:'lab',title:'Информатика',loc:'Гаст. 33-09'}],4:[{id:'e4_1',start:'11:10',end:'12:40',type:'lec',title:'История',loc:'Лен. 33-07'},{id:'e4_2',start:'13:00',end:'14:30',type:'lec',title:'История',loc:'Лен. 33-07'},{id:'e4_3',start:'15:10',end:'16:40',type:'lec',title:'История',loc:'Лен. 33-07'}],5:[{id:'e5_1',start:'09:30',end:'11:00',type:'prac',title:'Физкультура',loc:'Лен. спортзал'},{id:'e5_2',start:'11:10',end:'12:40',type:'lec',title:'Физкультура',loc:'Лен. 32-13'}],6:[]},
     odd: {0:[{id:'o0_1',start:'17:00',end:'18:30',type:'lab',title:'БЖД',loc:'Б.М. 14-05'},{id:'o0_2',start:'18:40',end:'20:10',type:'lec',title:'БЖД',loc:'Б.М. 53-07'}],1:[{id:'o1_1',start:'11:10',end:'12:40',type:'lab',title:'ОЦГ',loc:'Б.М. 12-29'},{id:'o1_2',start:'15:10',end:'16:40',type:'lec',title:'Физика',loc:'Лен. 32-13'}],2:[{id:'o2_1',start:'09:30',end:'11:00',type:'prac',title:'Математика',loc:'Гаст. 24-02'},{id:'o2_2',start:'13:00',end:'14:30',type:'prac',title:'Математика',loc:'Гаст. 24-02'},{id:'o2_3',start:'15:10',end:'16:40',type:'prac',title:'Основы рос. гос.',loc:'Лен. 23-01'}],3:[{id:'o3_1',start:'13:00',end:'14:30',type:'lec',title:'Математика',loc:'Гаст. 12-01'},{id:'o3_2',start:'15:10',end:'16:40',type:'lec',title:'Математика',loc:'Гаст. 12-01'},{id:'o3_3',start:'17:00',end:'18:30',type:'lab',title:'Информатика',loc:'Гаст. 33-09'},{id:'o3_4',start:'18:40',end:'20:10',type:'lab',title:'Физика',loc:'Гаст. 32-04'}],4:[{id:'o4_1',start:'11:10',end:'12:40',type:'prac',title:'Ин. яз',loc:'Гаст. 34-06'},{id:'o4_2',start:'13:00',end:'14:30',type:'prac',title:'Ин. яз',loc:'Гаст. 34-04'},{id:'o4_3',start:'15:10',end:'16:40',type:'lec',title:'Информатика',loc:'Лен. 32-13'}],5:[],6:[]}
@@ -354,14 +338,17 @@
 
   let state = JSON.parse(localStorage.getItem('schedule_1647_v5')) || JSON.parse(localStorage.getItem('schedule_1647_v4')) || JSON.parse(JSON.stringify(DEFAULT_DATA));
   let settings = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(localStorage.getItem('settings_1647_v5')) || {});
+  if (settings.homeAddress === 'Арцеуловская аллея, 17') settings.homeAddress = 'Дом';
+  if (settings.tokens === undefined) settings.tokens = 0; // Инициализация токенов
   let deadlines = JSON.parse(localStorage.getItem('deadlines_1647_v1')) || [];
   if (!['oled', 'graphite'].includes(settings.theme)) settings.theme = 'oled';
+
+  function updateTokensUI() { document.getElementById('token-count').innerText = settings.tokens; }
 
   async function fetchWeather() {
     try {
       let res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=59.9386&longitude=30.3141&current_weather=true');
-      let data = await res.json();
-      let code = data.current_weather.weathercode;
+      let data = await res.json(); let code = data.current_weather.weathercode;
       if ([51,53,55,61,63,65,66,67,71,73,75,77,80,81,82,85,86].includes(code)) { weatherDelay = 10; weatherAlertMsg = "🌧 Слякоть: +10 мин к дороге (Vans)."; } 
       else if (data.current_weather.temperature < -5) { weatherDelay = 10; weatherAlertMsg = "❄️ Мороз: +10 мин к сборам."; }
     } catch(e) {}
@@ -396,30 +383,23 @@
     let wakeM = null, firstLeaveText = 'Дома', homeTimeText = '—';
 
     if (isLocalGym(firstItem)) {
-      const leaveForGym = toMins(firstItem.start) - gymWalk;
-      wakeM = leaveForGym - gymPrep;
-      firstLeaveText = `${fromMins(leaveForGym)} (в зал)`;
+      const leaveForGym = toMins(firstItem.start) - gymWalk; wakeM = leaveForGym - gymPrep; firstLeaveText = `${fromMins(leaveForGym)} (в зал)`;
     } else if (getCampus(firstItem.loc) !== null) {
-      const c = getCampus(firstItem.loc);
-      const leaveM = toMins(firstItem.start) - getTravelMinutes(c);
-      wakeM = leaveM - prepUni;
+      const c = getCampus(firstItem.loc); const leaveM = toMins(firstItem.start) - getTravelMinutes(c); wakeM = leaveM - prepUni;
       firstLeaveText = (c==='GAST'||c==='LEN') ? `${fromMins(toMins(firstItem.start)-120)}–${fromMins(toMins(firstItem.start)-90)}` : fromMins(leaveM);
     } else {
-      wakeM = toMins(firstItem.start) - 30;
-      if(settings.showAutoBlocks) autoBlocks.push({ id:'a_w', isAuto:true, start:fromMins(wakeM), end:firstItem.start, type:'commute', title:'⏰ Подъем и завтрак', loc:settings.homeAddress });
+      wakeM = toMins(firstItem.start) - 30; if(settings.showAutoBlocks) autoBlocks.push({ id:'a_w', isAuto:true, start:fromMins(wakeM), end:firstItem.start, type:'commute', title:'⏰ Подъем и завтрак', loc:settings.homeAddress });
     }
 
     gymSessions.forEach((g, idx) => {
-      const leaveGymM = toMins(g.start) - gymWalk;
-      const prepGymM = leaveGymM - gymPrep;
-      const backHomeM = toMins(g.end) + gymWalk;
+      const leaveGymM = toMins(g.start) - gymWalk; const prepGymM = leaveGymM - gymPrep; const backHomeM = toMins(g.end) + gymWalk;
       if(settings.showAutoBlocks) {
-        autoBlocks.push({ id:'g_p_'+idx, isAuto:true, start:fromMins(prepGymM), end:fromMins(leaveGymM), type:'commute', title:g.id===firstItem.id?'⏰ Подъем и сборы':'🎒 Сборы в зал', loc:settings.homeAddress });
+        autoBlocks.push({ id:'g_p_'+idx, isAuto:true, start:fromMins(prepGymM), end:fromMins(leaveGymM), type:'commute', title:g.id===firstItem.id?'⏰ Подъем и сборы в зал':'🎒 Сборы в зал', loc:settings.homeAddress });
         autoBlocks.push({ id:'g_to_'+idx, isAuto:true, start:fromMins(leaveGymM), end:g.start, type:'commute', title:'🚶 Дорога в зал', loc:`Пешком ${gymWalk} мин` });
-        autoBlocks.push({ id:'g_b_'+idx, isAuto:true, start:g.end, end:fromMins(backHomeM), type:'commute', title:'🚶 Дорога домой', loc:`Пешком ${gymWalk} мин` });
+        autoBlocks.push({ id:'g_b_'+idx, isAuto:true, start:g.end, end:fromMins(backHomeM), type:'commute', title:'🚶 Дорога из зала домой', loc:`Пешком ${gymWalk} мин` });
         if(uniClasses.length>0) {
           const leaveUniM = toMins(uniClasses[0].start) - getTravelMinutes(getCampus(uniClasses[0].loc));
-          if(leaveUniM>backHomeM && leaveUniM-backHomeM<=300) autoBlocks.push({ id:'h_ref_'+idx, isAuto:true, start:fromMins(backHomeM), end:fromMins(leaveUniM), type:'commute', title:'🚿 Дома: душ и обед', loc:settings.homeAddress });
+          if(leaveUniM>backHomeM && leaveUniM-backHomeM<=300) autoBlocks.push({ id:'h_ref_'+idx, isAuto:true, start:fromMins(backHomeM), end:fromMins(leaveUniM), type:'commute', title:'🚿 Дома: душ и обед перед вузом', loc:settings.homeAddress });
         }
       }
       homeTimeText = fromMins(backHomeM);
@@ -427,17 +407,15 @@
 
     if (uniClasses.length > 0) {
       const fU = uniClasses[0], lU = uniClasses[uniClasses.length - 1];
-      const leaveUniM = toMins(fU.start) - getTravelMinutes(getCampus(fU.loc));
-      const arrHomeM = toMins(lU.end) + getTravelMinutes(getCampus(lU.loc));
+      const leaveUniM = toMins(fU.start) - getTravelMinutes(getCampus(fU.loc)); const arrHomeM = toMins(lU.end) + getTravelMinutes(getCampus(lU.loc));
       if(settings.showAutoBlocks) {
         if(fU.id===firstItem.id) autoBlocks.push({ id:'u_w', isAuto:true, start:fromMins(leaveUniM - prepUni), end:fromMins(leaveUniM), type:'commute', title:'⏰ Подъем и сборы', loc:settings.homeAddress });
         autoBlocks.push({ id:'u_l', isAuto:true, start:fromMins(leaveUniM), end:fU.start, type:'commute', title:`🚇 Выезд в вуз (${fU.loc.split(' ')[0]})`, loc:`${settings.homeAddress} → ${fU.loc}` });
         for(let i=0; i<uniClasses.length-1; i++) {
           const c1=getCampus(uniClasses[i].loc), c2=getCampus(uniClasses[i+1].loc);
           if(c1 && c2 && c1!==c2) {
-            const trStart = toMins(uniClasses[i].end);
-            const trMins = (c1!=='BM'&&c2!=='BM')?15:(Number(settings.transitBMLen)||45);
-            autoBlocks.push({ id:'u_tr_'+i, isAuto:true, start:uniClasses[i].end, end:fromMins(Math.min(toMins(uniClasses[i+1].start), trStart+trMins)), type:'commute', title:trMins===15?'🚶 Переход':'🚇 Переезд + обед', loc:`${uniClasses[i].loc.split(' ')[0]} → ${uniClasses[i+1].loc.split(' ')[0]}` });
+            const trStart = toMins(uniClasses[i].end); const trMins = (c1!=='BM'&&c2!=='BM')?15:(Number(settings.transitBMLen)||45);
+            autoBlocks.push({ id:'u_tr_'+i, isAuto:true, start:uniClasses[i].end, end:fromMins(Math.min(toMins(uniClasses[i+1].start), trStart+trMins)), type:'commute', title:trMins===15?'🚶 Переход между корпусами':'🚇 Переезд + обед', loc:`${uniClasses[i].loc.split(' ')[0]} → ${uniClasses[i+1].loc.split(' ')[0]}` });
           }
         }
         autoBlocks.push({ id:'u_h', isAuto:true, start:lU.end, end:fromMins(arrHomeM), type:'commute', title:'🏠 Дорога домой', loc:`${lU.loc.split(' ')[0]} → ${settings.homeAddress}` });
@@ -466,30 +444,22 @@
   function updateLiveRadar() {
     if(settings.notifications) checkNotifications();
 
-    const now = new Date();
-    const hr = now.getHours(); const mm = now.getMinutes();
+    const now = new Date(); const hr = now.getHours(); const mm = now.getMinutes();
     document.getElementById('hud-clock').innerText = `${String(hr).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
     const nowMins = hr * 60 + mm;
 
     const baseList = state[currentWeekParity][currentDay] || [];
     const logic = buildAutoLogistics(baseList);
     const combined = [...baseList, ...logic.autoBlocks].sort((a, b) => a.start.localeCompare(b.start));
-    const hud = document.getElementById('live-hud');
-    const hudTag = document.getElementById('hud-tag');
-    const hudMain = document.getElementById('hud-main');
-    const hudBar = document.getElementById('hud-bar');
+    const hud = document.getElementById('live-hud'); const hudTag = document.getElementById('hud-tag'); const hudMain = document.getElementById('hud-main'); const hudBar = document.getElementById('hud-bar');
 
-    hudBar.style.background = getBarGradient(hr);
-    hud.className = 'live-hud'; 
+    hudBar.style.background = getBarGradient(hr); hud.className = 'live-hud'; 
 
     const isTodaySelected = (weekOffset === 0 && currentDay === (now.getDay() + 6) % 7);
 
     if (!isTodaySelected) {
-      const doneCount = baseList.filter(x => x.done).length;
-      const pct = baseList.length ? Math.round((doneCount / baseList.length) * 100) : 0;
-      hudTag.innerText = `ПРОГРЕСС ДНЯ • ${pct}%`;
-      hudMain.innerText = baseList.length ? `Запланировано блоков: ${baseList.length}` : 'Свободный день';
-      hudBar.style.width = `${pct}%`;
+      const doneCount = baseList.filter(x => x.done).length; const pct = baseList.length ? Math.round((doneCount / baseList.length) * 100) : 0;
+      hudTag.innerText = `ПРОГРЕСС ДНЯ • ${pct}%`; hudMain.innerText = baseList.length ? `Запланировано блоков: ${baseList.length}` : 'Свободный день'; hudBar.style.width = `${pct}%`;
       if (weatherAlertMsg) { hud.classList.add('hud-weather'); hudMain.innerText = weatherAlertMsg; }
       return;
     }
@@ -501,28 +471,19 @@
     const tomItems = state[tomParity][(currentDay + 1) % 7] || [];
     const tomLogic = buildAutoLogistics(tomItems, false);
     const tomWakeM = tomLogic.summary.wakeTime !== 'Свободный' ? toMins(tomLogic.summary.wakeTime) : 600; 
-    let sleepMinsToday = tomWakeM - 480; 
-    if(sleepMinsToday < 0) sleepMinsToday += 1440; 
+    let sleepMinsToday = tomWakeM - 480; if(sleepMinsToday < 0) sleepMinsToday += 1440; 
     
     let isSleepWarning = false;
     if (active && active.type === 'rest') {
-       let minsToSleep = sleepMinsToday - nowMins;
-       if (minsToSleep < 0) minsToSleep += 1440;
+       let minsToSleep = sleepMinsToday - nowMins; if (minsToSleep < 0) minsToSleep += 1440;
        if (minsToSleep <= 55 && minsToSleep > 0) {
-          isSleepWarning = true;
-          hud.classList.add('hud-warning');
-          hudTag.innerText = `ДО ОТБОЯ ${minsToSleep} МИН`;
-          hudMain.innerText = "⚠️ Времени только на быструю в CS2. Не сорви 8 часов сна!";
+          isSleepWarning = true; hud.classList.add('hud-warning'); hudTag.innerText = `ДО ОТБОЯ ${minsToSleep} МИН`; hudMain.innerText = "⚠️ Времени только на быструю в CS2. Не сорви 8 часов сна!";
        }
     }
 
     if (active) {
-      const total = Math.max(1, toMins(active.end) - toMins(active.start));
-      const passed = nowMins - toMins(active.start);
-      const pct = Math.min(100, Math.round((passed / total) * 100));
-      
-      const left = toMins(active.end) - nowMins;
-      const hLeft = Math.floor(left / 60), mLeft = left % 60;
+      const total = Math.max(1, toMins(active.end) - toMins(active.start)); const passed = nowMins - toMins(active.start); const pct = Math.min(100, Math.round((passed / total) * 100));
+      const left = toMins(active.end) - nowMins; const hLeft = Math.floor(left / 60), mLeft = left % 60;
       const leftStr = hLeft > 0 ? (mLeft > 0 ? `${hLeft}Ч ${mLeft}М` : `${hLeft}Ч`) : `${mLeft} МИН`;
 
       if(!isSleepWarning) {
@@ -531,48 +492,31 @@
       }
       hudBar.style.width = `${pct}%`;
     } else if (next) {
-      const diff = toMins(next.start) - nowMins;
-      const h = Math.floor(diff / 60), m = diff % 60;
+      const diff = toMins(next.start) - nowMins; const h = Math.floor(diff / 60), m = diff % 60;
       const leftStr = h > 0 ? (m > 0 ? `${h}Ч ${m}М` : `${h}Ч`) : `${m} МИН`;
-      hudTag.innerText = `ДАЛЕЕ ЧЕРЕЗ ${leftStr}`;
-      hudMain.innerText = `${next.start} — ${next.title}`;
-      hudBar.style.width = `12%`;
+      hudTag.innerText = `ДАЛЕЕ ЧЕРЕЗ ${leftStr}`; hudMain.innerText = `${next.start} — ${next.title}`; hudBar.style.width = `12%`;
       if(weatherAlertMsg && next.type==='commute' && diff < 60) { hud.classList.add('hud-weather'); hudMain.innerText = weatherAlertMsg; }
     } else {
-      hudTag.innerText = `ДЕНЬ ЗАВЕРШЕН`;
-      hudMain.innerText = `Все дела выполнены. Режим отдыха активирован.`;
-      hudBar.style.width = `100%`;
+      hudTag.innerText = `ДЕНЬ ЗАВЕРШЕН`; hudMain.innerText = `Все дела выполнены. Режим отдыха активирован.`; hudBar.style.width = `100%`;
     }
   }
 
-  function enablePush() {
-    if (!('Notification' in window)) { alert('Уведомления не поддерживаются в этом браузере.'); return; }
-    Notification.requestPermission().then(p => { if (p==='granted'){ settings.notifications=true; saveSettings(); alert('PWA Пуши включены!'); }});
-  }
+  function enablePush() { if (!('Notification' in window)) { alert('Уведомления не поддерживаются в этом браузере.'); return; } Notification.requestPermission().then(p => { if (p==='granted'){ settings.notifications=true; saveSettings(); alert('PWA Пуши включены!'); }}); }
 
   function checkNotifications() {
     if (!settings.notifications || Notification.permission !== 'granted') return;
-    const nowMins = new Date().getHours() * 60 + new Date().getMinutes();
-    const uidPref = new Date().toDateString() + '_';
+    const nowMins = new Date().getHours() * 60 + new Date().getMinutes(); const uidPref = new Date().toDateString() + '_';
     const c = [...(state[currentWeekParity][currentDay]||[]), ...buildAutoLogistics(state[currentWeekParity][currentDay]||[]).autoBlocks];
-    
-    c.forEach(item => {
-      if (toMins(item.start) - nowMins === 15) {
-        const id = uidPref + item.id;
-        if (!notifiedBlocks[id]) { new Notification("Скоро: " + item.title, { body: item.loc||'' }); notifiedBlocks[id] = true; }
-      }
-    });
+    c.forEach(item => { if (toMins(item.start) - nowMins === 15) { const id = uidPref + item.id; if (!notifiedBlocks[id]) { new Notification("Скоро: " + item.title, { body: item.loc||'' }); notifiedBlocks[id] = true; } } });
   }
 
   function renderAll() {
-    const datesArr = generateWeekDays(weekOffset);
-    currentWeekParity = isEvenWeek(datesArr[0].raw) ? 'even' : 'odd';
-
+    updateTokensUI(); renderDeadlinesBadge();
+    const datesArr = generateWeekDays(weekOffset); currentWeekParity = isEvenWeek(datesArr[0].raw) ? 'even' : 'odd';
     document.getElementById('week-label').innerText = currentWeekParity === 'even' ? '🔵 Четная неделя' : '🔴 Нечетная неделя';
     document.getElementById('week-dates').innerText = `${datesArr[0].num} ${datesArr[0].month} — ${datesArr[6].num} ${datesArr[6].month}`;
 
-    const todayDate = new Date(); todayDate.setHours(0,0,0,0);
-    const nowMins = new Date().getHours() * 60 + new Date().getMinutes();
+    const todayDate = new Date(); todayDate.setHours(0,0,0,0); const nowMins = new Date().getHours() * 60 + new Date().getMinutes();
     const isTodaySelected = (weekOffset === 0 && currentDay === (new Date().getDay() + 6) % 7);
 
     document.getElementById('cal-grid').innerHTML = DAYS.map((dName, i) => {
@@ -592,24 +536,14 @@
          if(tL.summary.wakeTime !== 'Свободный') slp = fromMins((toMins(tL.summary.wakeTime)-480+1440)%1440);
       }
       document.getElementById('summary-container').innerHTML = `
-        <div class="summary-banner">
-          <div class="summary-header"><span>📍 ${settings.homeAddress}</span><span>💤 Отбой (8ч сна): ${slp}</span></div>
-          <div class="summary-grid">
-            <div class="stat-box"><div class="stat-label">Подъем</div><div class="stat-val">${summary.wakeTime}</div></div>
-            <div class="stat-box"><div class="stat-label">Выход</div><div class="stat-val">${summary.firstLeave}</div></div>
-          </div>
-        </div>`;
+        <div class="summary-banner"><div class="summary-header"><span>📍 ${settings.homeAddress}</span><span>💤 Отбой (8ч сна): ${slp}</span></div><div class="summary-grid"><div class="stat-box"><div class="stat-label">Подъем</div><div class="stat-val">${summary.wakeTime}</div></div><div class="stat-box"><div class="stat-label">Выход</div><div class="stat-val">${summary.firstLeave}</div></div></div></div>`;
     } else document.getElementById('summary-container').innerHTML = '';
 
     const combined = [...baseList, ...autoBlocks].sort((a,b) => a.start.localeCompare(b.start));
-    if (combined.length === 0) {
-      document.getElementById('timeline').innerHTML = `<div class="empty-state">Свободный день. Добавь тренировку, код, прогулку или отдых.</div>`;
-      updateLiveRadar(); return;
-    }
+    if (combined.length === 0) { document.getElementById('timeline').innerHTML = `<div class="empty-state">Свободный день. Добавь тренировку, код, прогулку или отдых.</div>`; updateLiveRadar(); return; }
 
     document.getElementById('timeline').innerHTML = combined.map((item, idx) => {
-      const t = TYPE_LABELS[item.type];
-      const dur = formatDuration(item.start, item.end);
+      const t = TYPE_LABELS[item.type]; const dur = formatDuration(item.start, item.end);
       const isLive = isTodaySelected && (nowMins >= toMins(item.start) && nowMins < toMins(item.end));
       const delay = idx * 0.04;
 
@@ -626,7 +560,7 @@
           <div onclick="editItem('${item.id}')"><div class="badge-row"><span class="badge" style="color:${t.hex}">${t.text}</span>${isLive?`<span class="live-pill">LIVE</span>`:''}</div><div class="title">${item.title}</div><div class="meta">${item.loc?`<span class="pill">${item.loc}</span>`:''}${item.note?`<span>${item.note}</span>`:''}</div></div>
           <div class="actions">
              <button class="icon-btn check ${item.done?'checked':''}" onclick="toggleDone('${item.id}', this, event)">✓</button>
-             <button class="icon-btn del" onclick="deleteItem('${item.id}')">✕</button>
+             <button class="icon-btn del" onclick="deleteItem('${item.id}', event)">✕</button>
           </div>
         </div>`;
     }).join('');
@@ -636,30 +570,49 @@
 
   function selectDay(d) { currentDay=d; renderAll(); }
   
-  // ИСПРАВЛЕНО: Обновление галочки НА МЕСТЕ без перезагрузки списка
   function toggleDone(id, btn, event) { 
-    if (event) event.stopPropagation(); // Не открываем меню редактирования
+    if (event) event.stopPropagation();
     const i = state[currentWeekParity][currentDay].find(x => x.id === id); 
     if (i) { 
       i.done = !i.done; 
-      localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); 
       
-      // Меняем классы прямо в HTML, чтобы карточки не прыгали
-      const card = btn.closest('.item-card');
-      if (i.done) {
-        card.classList.add('done');
-        btn.classList.add('checked');
-      } else {
-        card.classList.remove('done');
-        btn.classList.remove('checked');
+      // Экономика Дофамина
+      if (['gym', 'code', 'hw'].includes(i.type)) {
+         settings.tokens += i.done ? 3 : -3;
+         if (settings.tokens < 0) settings.tokens = 0;
+         
+         // Вылетающая анимация +3 ⚡
+         if (i.done) {
+            const floater = document.createElement('div');
+            floater.innerText = '+3 ⚡'; floater.className = 'floating-token';
+            btn.appendChild(floater); setTimeout(() => floater.remove(), 1000);
+         }
       }
+
+      localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); 
+      localStorage.setItem('settings_1647_v5', JSON.stringify(settings)); 
       
-      // Обновляем только радар сверху
-      updateLiveRadar(); 
+      const card = btn.closest('.item-card');
+      if (i.done) { card.classList.add('done'); btn.classList.add('checked'); btn.style.transform = 'scale(0.8)'; setTimeout(() => btn.style.transform = 'scale(1)', 150); } 
+      else { card.classList.remove('done'); btn.classList.remove('checked'); }
+      
+      updateTokensUI(); updateLiveRadar(); 
     }
   }
   
-  function deleteItem(id) { state[currentWeekParity][currentDay] = state[currentWeekParity][currentDay].filter(x => x.id !== id); localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); renderAll(); }
+  function deleteItem(id, event) { 
+    if (event) event.stopPropagation();
+    const idx = state[currentWeekParity][currentDay].findIndex(x => x.id === id);
+    if (idx > -1) {
+       const item = state[currentWeekParity][currentDay][idx];
+       if (item.type === 'rest') settings.tokens += 3; // Возврат токенов за удаленный отдых
+       if (item.done && ['gym', 'code', 'hw'].includes(item.type)) { settings.tokens -= 3; if (settings.tokens < 0) settings.tokens = 0; } // Защита от читерства
+       state[currentWeekParity][currentDay].splice(idx, 1); 
+       localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); 
+       localStorage.setItem('settings_1647_v5', JSON.stringify(settings)); 
+       renderAll();
+    }
+  }
 
   function setDuration(mins) { document.getElementById('inp-end').value = fromMins(toMins(document.getElementById('inp-start').value||'10:00') + mins); }
   function shiftBlock(mins) { const s=document.getElementById('inp-start').value||'10:00', e=document.getElementById('inp-end').value||'11:30'; document.getElementById('inp-start').value=fromMins(toMins(s)+mins); document.getElementById('inp-end').value=fromMins(toMins(e)+mins); }
@@ -668,33 +621,49 @@
     if (!editingId) return;
     const item = state[currentWeekParity][currentDay].find(x => x.id === editingId);
     if (!item) return;
+
+    if (item.type === 'rest') {
+       if (settings.tokens < 3) { alert('⚡ Недостаточно токенов для копирования отдыха (Нужно 3 ⚡)!'); return; }
+       settings.tokens -= 3;
+    }
+
     const targetWeek = currentWeekParity === 'even' ? 'odd' : 'even';
     state[targetWeek][currentDay].push(Object.assign({}, item, { id: 'id_' + Date.now(), done: false }));
-    localStorage.setItem('schedule_1647_v5', JSON.stringify(state));
-    closeModal(); alert(`Скопировано на ${targetWeek==='even'?'четную':'нечетную'} неделю!`);
+    localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); localStorage.setItem('settings_1647_v5', JSON.stringify(settings));
+    closeModal(); alert(`Скопировано на ${targetWeek==='even'?'четную':'нечетную'} неделю!`); renderAll();
   }
 
   function openModal(item = null) {
-    editingId = item ? item.id : null;
-    document.getElementById('modal-title').innerText = item ? 'Редактировать' : 'Новый блок';
+    editingId = item ? item.id : null; document.getElementById('modal-title').innerText = item ? 'Редактировать' : 'Новый блок';
     document.getElementById('dup-week-btn').style.display = item ? 'block' : 'none';
     document.getElementById('inp-title').value = item ? item.title : '';
-    document.getElementById('inp-start').value = item ? item.start : '10:00';
-    document.getElementById('inp-end').value = item ? item.end : '12:30';
-    document.getElementById('inp-type').value = item ? item.type : 'gym';
-    document.getElementById('inp-loc').value = item ? item.loc : 'Спортзал';
-    document.getElementById('inp-note').value = item ? item.note : '';
-    document.getElementById('modal').classList.add('open');
+    document.getElementById('inp-start').value = item ? item.start : '10:00'; document.getElementById('inp-end').value = item ? item.end : '12:30';
+    document.getElementById('inp-type').value = item ? item.type : 'gym'; document.getElementById('inp-loc').value = item ? item.loc : 'Спортзал';
+    document.getElementById('inp-note').value = item ? item.note : ''; document.getElementById('modal').classList.add('open');
   }
   function closeModal() { document.getElementById('modal').classList.remove('open'); }
   function fillTemplate(t, ty, l, n='') { document.getElementById('inp-title').value=t; document.getElementById('inp-type').value=ty; document.getElementById('inp-loc').value=l; document.getElementById('inp-note').value=n; }
   
   function saveItem() {
     const title = document.getElementById('inp-title').value.trim(); if (!title) return;
-    const newItem = { id: editingId || 'id_'+Date.now(), title, start: document.getElementById('inp-start').value, end: document.getElementById('inp-end').value, type: document.getElementById('inp-type').value, loc: document.getElementById('inp-loc').value.trim(), note: document.getElementById('inp-note').value.trim(), done: false };
+    const newType = document.getElementById('inp-type').value;
+
+    const oldItem = editingId ? state[currentWeekParity][currentDay].find(x => x.id === editingId) : null;
+    const wasRest = oldItem && oldItem.type === 'rest';
+    const isRest = newType === 'rest';
+
+    if (isRest && !wasRest) {
+      if (settings.tokens < 3) { alert('⚡ Недостаточно токенов для отдыха! Учеба или зал принесут тебе +3 ⚡.'); return; }
+      settings.tokens -= 3;
+    }
+    if (!isRest && wasRest) settings.tokens += 3; // Возврат токенов, если передумал отдыхать
+
+    const newItem = { id: editingId || 'id_'+Date.now(), title, start: document.getElementById('inp-start').value, end: document.getElementById('inp-end').value, type: newType, loc: document.getElementById('inp-loc').value.trim(), note: document.getElementById('inp-note').value.trim(), done: oldItem ? oldItem.done : false };
     if (editingId) { const idx = state[currentWeekParity][currentDay].findIndex(x => x.id === editingId); if (idx > -1) state[currentWeekParity][currentDay][idx] = newItem; }
     else state[currentWeekParity][currentDay].push(newItem);
-    localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); closeModal(); renderAll();
+    
+    localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); localStorage.setItem('settings_1647_v5', JSON.stringify(settings));
+    closeModal(); renderAll();
   }
 
   /* Дедлайны */
@@ -702,9 +671,7 @@
   function closeDeadlines() { document.getElementById('deadlines-modal').classList.remove('open'); }
   function addDeadline() {
     const text = document.getElementById('dl-text').value.trim(), subj = document.getElementById('dl-subj').value;
-    if (!text) return;
-    deadlines.unshift({ id: 'dl_'+Date.now(), subj, text, done: false });
-    document.getElementById('dl-text').value = '';
+    if (!text) return; deadlines.unshift({ id: 'dl_'+Date.now(), subj, text, done: false }); document.getElementById('dl-text').value = '';
     localStorage.setItem('deadlines_1647_v1', JSON.stringify(deadlines)); renderDeadlinesList(); renderDeadlinesBadge();
   }
   function toggleDeadline(id) { const dl=deadlines.find(x=>x.id===id); if(dl){ dl.done=!dl.done; localStorage.setItem('deadlines_1647_v1', JSON.stringify(deadlines)); renderDeadlinesList(); renderDeadlinesBadge(); } }
@@ -733,25 +700,21 @@
   function resetSchedule() { if (confirm('Сбросить до исходного расписания 1647?')) { state = JSON.parse(JSON.stringify(DEFAULT_DATA)); localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); document.getElementById('settings-modal').classList.remove('open'); renderAll(); } }
 
   function exportICS() {
-    let ics = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//1647 OS//RU\n";
-    const datesArr = generateWeekDays(weekOffset);
+    let ics = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//1647 OS//RU\n"; const datesArr = generateWeekDays(weekOffset);
     for(let i=0; i<7; i++) {
       let dayItems = state[currentWeekParity][i] || [];
       let d = datesArr[i].raw; let dateStr = d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
       dayItems.forEach(item => {
-         ics += "BEGIN:VEVENT\nSUMMARY:"+item.title+"\n";
-         if(item.loc) ics += "LOCATION:"+item.loc+"\n";
+         ics += "BEGIN:VEVENT\nSUMMARY:"+item.title+"\n"; if(item.loc) ics += "LOCATION:"+item.loc+"\n";
          ics += "DTSTART:"+dateStr+"T"+item.start.replace(':','')+"00\nDTEND:"+dateStr+"T"+item.end.replace(':','')+"00\nBEGIN:VALARM\nTRIGGER:-PT15M\nACTION:DISPLAY\nDESCRIPTION:Напоминание\nEND:VALARM\nEND:VEVENT\n";
       });
     }
     ics += "END:VCALENDAR";
-    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
-    a.download = `Schedule_1647.ics`; a.click();
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' })); a.download = `Schedule_1647.ics`; a.click();
   }
 
   function exportBackup() {
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([JSON.stringify({ state, settings, deadlines })], { type: 'application/json' }));
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify({ state, settings, deadlines })], { type: 'application/json' }));
     a.download = `1647_backup_${new Date().toLocaleDateString('ru-RU')}.json`; a.click();
   }
   function importBackup(e) {
