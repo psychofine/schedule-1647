@@ -37,7 +37,6 @@
       user-select: none; min-height: 100vh; max-width: 720px; margin: 0 auto;
     }
 
-    /* Анимации */
     @keyframes slideUpCascade { from { opacity: 0; transform: translateY(25px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes modalSpring { from { transform: translateY(100%); } to { transform: translateY(0); } }
     @keyframes breathe { 0%, 100% { box-shadow: 0 0 4px var(--item-color); } 50% { box-shadow: 0 0 16px var(--item-color); } }
@@ -59,7 +58,6 @@
       min-width: 17px; height: 17px; padding: 0 4px; border-radius: 99px; display: flex; align-items: center; justify-content: center;
     }
 
-    /* Токены */
     .token-bank {
       background: var(--surface); border: 1px solid var(--code); color: var(--code); padding: 0 12px; height: 40px;
       border-radius: 12px; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center;
@@ -68,7 +66,6 @@
     .token-bank:active { transform: scale(0.9); }
     .floating-token { position: absolute; color: var(--code); font-weight: 900; font-size: 15px; animation: floatToken 1s forwards; pointer-events: none; z-index: 50; text-shadow: 0 0 10px var(--code); }
 
-    /* HUD */
     .live-hud { background: var(--surface); border: 1px solid var(--card-border); border-radius: 16px; padding: 12px 14px; margin-bottom: 12px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .hud-warning { border-color: var(--warning); box-shadow: 0 0 20px rgba(245, 158, 11, 0.15); }
     .hud-weather { border-color: var(--lab); box-shadow: 0 0 20px rgba(56, 189, 248, 0.15); }
@@ -84,7 +81,6 @@
     .hud-bar-wrap { width: 100%; height: 4px; background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden; }
     .hud-bar-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width 0.4s ease, background 0.4s ease; }
 
-    /* Навигация недель */
     .week-nav { display: flex; justify-content: space-between; align-items: center; background: var(--surface); border: 1px solid var(--card-border); border-radius: 15px; padding: 5px; margin-bottom: 12px; }
     .nav-btn { background: var(--card); border: 1px solid var(--card-border); color: var(--text); width: 40px; height: 38px; border-radius: 11px; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center; transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .nav-btn:active { transform: scale(0.85); }
@@ -92,7 +88,6 @@
     #week-label { font-size: 13px; font-weight: 800; margin-bottom: 2px; }
     #week-dates { font-size: 11px; font-weight: 600; color: var(--subtext); }
 
-    /* Календарь */
     .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; text-align: center; font-size: 11px; font-weight: 700; color: var(--subtext); text-transform: uppercase; }
     .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 14px; }
     .cal-cell { background: var(--cell-bg); border: 1px solid var(--card-border); border-radius: 12px; min-height: 82px; padding: 6px 3px; display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -103,7 +98,6 @@
     .shift-bars { display: flex; flex-direction: column; gap: 3px; width: 100%; align-items: center; }
     .shift-bar { width: 90%; font-size: 9px; font-weight: 800; padding: 3px 0; border-radius: 5px; text-align: center; color: #0b0b0e; }
 
-    /* Сводка */
     .summary-banner { background: var(--surface); border: 1px solid var(--card-border); border-radius: 16px; padding: 12px; margin-bottom: 14px; }
     .summary-header { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--subtext); font-weight: 700; margin-bottom: 10px; }
     .summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -111,7 +105,6 @@
     .stat-label { font-size: 11px; color: var(--subtext); margin-bottom: 2px; font-weight: 500; }
     .stat-val { font-size: 14px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; }
 
-    /* Таймлайн */
     .timeline { display: flex; flex-direction: column; gap: 10px; }
     .item-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 13px 12px 13px 14px; display: grid; grid-template-columns: 56px 1fr auto; gap: 11px; align-items: center; position: relative; animation: slideUpCascade 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; transition: all 0.3s ease; }
     .item-card::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3.5px; border-radius: 0 4px 4px 0; background: var(--item-color, var(--accent)); transition: background 0.3s; }
@@ -139,14 +132,12 @@
 
     .empty-state { background: var(--surface); border: 1px solid var(--card-border); border-radius: 16px; padding: 34px 18px; text-align: center; color: var(--subtext); font-size: 14px; font-weight: 600; }
 
-    /* Нижняя панель */
     .fab-bar { position: fixed; bottom: calc(env(safe-area-inset-bottom, 16px) + 10px); left: 12px; right: 12px; max-width: 696px; margin: 0 auto; display: flex; gap: 8px; z-index: 30; background: rgba(18, 18, 22, 0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 8px; border-radius: 18px; border: 1px solid var(--card-border); }
     .btn-main { flex: 1.5; background: var(--accent); color: #fff; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: transform 0.15s; }
     .btn-main:active { transform: scale(0.96); }
     .btn-secondary { flex: 1; background: var(--pill-bg); color: var(--text); border: 1px solid var(--card-border); padding: 14px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.15s; }
     .btn-secondary:active { transform: scale(0.96); }
 
-    /* Модалки */
     .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; align-items: flex-end; justify-content: center; z-index: 100; transition: opacity 0.3s; opacity: 0; }
     .modal-backdrop.open { display: flex; opacity: 1; }
     .modal { background: var(--surface); border-top: 1px solid var(--card-border); width: 100%; max-width: 600px; border-radius: 24px 24px 0 0; padding: 20px 16px calc(env(safe-area-inset-bottom, 20px) + 18px); display: flex; flex-direction: column; gap: 12px; max-height: 90vh; overflow-y: auto; animation: modalSpring 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards; }
@@ -180,9 +171,7 @@
       <h1>Мой Режим</h1>
     </div>
     <div class="header-controls">
-      <!-- БАНК ТОКЕНОВ ВЕРНУЛСЯ НА МЕСТО -->
       <div class="token-bank" title="Синтетические токены для отдыха">⚡ <span id="token-count" style="margin-left:4px;">0</span></div>
-      
       <button class="btn-icon" onclick="openDeadlines()" title="Дедлайны и хвосты">
         📌<span class="badge-count" id="dl-badge" style="display:none">0</span>
       </button>
@@ -331,7 +320,7 @@
   };
 
   const DEFAULT_SETTINGS = { theme: 'oled', homeAddress: 'Дом', timeBM: 90, timeGastLen: 120, prepTime: 50, transitBMLen: 45, gymPrep: 20, gymWalk: 15, showAutoBlocks: true, notifications: false, tokens: 0 };
-  const DEFAULT_DATA = { /* Дефолтное расписание */
+  const DEFAULT_DATA = { 
     even: {0:[],1:[{id:'e1_1',start:'11:10',end:'12:40',type:'lab',title:'Основы цифровой грамотности',loc:'Б.М. 12-29'},{id:'e1_2',start:'15:10',end:'16:40',type:'lec',title:'Физика',loc:'Лен. 32-13'}],2:[{id:'e2_1',start:'09:30',end:'11:00',type:'prac',title:'Математика',loc:'Гаст. 24-02'},{id:'e2_2',start:'11:10',end:'12:40',type:'prac',title:'История',loc:'Гаст. 12-04'},{id:'e2_3',start:'13:00',end:'14:30',type:'prac',title:'Математика',loc:'Гаст. 24-02'},{id:'e2_4',start:'15:10',end:'16:40',type:'prac',title:'Основы рос. гос.',loc:'Лен. 23-01'}],3:[{id:'e3_1',start:'13:00',end:'14:30',type:'lec',title:'Математика',loc:'Гаст. 12-01'},{id:'e3_2',start:'15:10',end:'16:40',type:'lec',title:'Математика',loc:'Гаст. 12-01'},{id:'e3_3',start:'17:00',end:'18:30',type:'lab',title:'Информатика',loc:'Гаст. 33-09'}],4:[{id:'e4_1',start:'11:10',end:'12:40',type:'lec',title:'История',loc:'Лен. 33-07'},{id:'e4_2',start:'13:00',end:'14:30',type:'lec',title:'История',loc:'Лен. 33-07'},{id:'e4_3',start:'15:10',end:'16:40',type:'lec',title:'История',loc:'Лен. 33-07'}],5:[{id:'e5_1',start:'09:30',end:'11:00',type:'prac',title:'Физкультура',loc:'Лен. спортзал'},{id:'e5_2',start:'11:10',end:'12:40',type:'lec',title:'Физкультура',loc:'Лен. 32-13'}],6:[]},
     odd: {0:[{id:'o0_1',start:'17:00',end:'18:30',type:'lab',title:'БЖД',loc:'Б.М. 14-05'},{id:'o0_2',start:'18:40',end:'20:10',type:'lec',title:'БЖД',loc:'Б.М. 53-07'}],1:[{id:'o1_1',start:'11:10',end:'12:40',type:'lab',title:'ОЦГ',loc:'Б.М. 12-29'},{id:'o1_2',start:'15:10',end:'16:40',type:'lec',title:'Физика',loc:'Лен. 32-13'}],2:[{id:'o2_1',start:'09:30',end:'11:00',type:'prac',title:'Математика',loc:'Гаст. 24-02'},{id:'o2_2',start:'13:00',end:'14:30',type:'prac',title:'Математика',loc:'Гаст. 24-02'},{id:'o2_3',start:'15:10',end:'16:40',type:'prac',title:'Основы рос. гос.',loc:'Лен. 23-01'}],3:[{id:'o3_1',start:'13:00',end:'14:30',type:'lec',title:'Математика',loc:'Гаст. 12-01'},{id:'o3_2',start:'15:10',end:'16:40',type:'lec',title:'Математика',loc:'Гаст. 12-01'},{id:'o3_3',start:'17:00',end:'18:30',type:'lab',title:'Информатика',loc:'Гаст. 33-09'},{id:'o3_4',start:'18:40',end:'20:10',type:'lab',title:'Физика',loc:'Гаст. 32-04'}],4:[{id:'o4_1',start:'11:10',end:'12:40',type:'prac',title:'Ин. яз',loc:'Гаст. 34-06'},{id:'o4_2',start:'13:00',end:'14:30',type:'prac',title:'Ин. яз',loc:'Гаст. 34-04'},{id:'o4_3',start:'15:10',end:'16:40',type:'lec',title:'Информатика',loc:'Лен. 32-13'}],5:[],6:[]}
   };
@@ -339,11 +328,10 @@
   let state = JSON.parse(localStorage.getItem('schedule_1647_v5')) || JSON.parse(localStorage.getItem('schedule_1647_v4')) || JSON.parse(JSON.stringify(DEFAULT_DATA));
   let settings = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(localStorage.getItem('settings_1647_v5')) || {});
   if (settings.homeAddress === 'Арцеуловская аллея, 17') settings.homeAddress = 'Дом';
-  if (settings.tokens === undefined) settings.tokens = 0; // Инициализация
+  if (settings.tokens === undefined) settings.tokens = 0; 
   let deadlines = JSON.parse(localStorage.getItem('deadlines_1647_v1')) || [];
   if (!['oled', 'graphite'].includes(settings.theme)) settings.theme = 'oled';
 
-  // ИСПРАВЛЕНИЕ: Добавлена проверка if (el) чтобы код не падал, если элемента нет
   function updateTokensUI() { const el = document.getElementById('token-count'); if (el) el.innerText = settings.tokens; }
 
   async function fetchWeather() {
@@ -459,7 +447,7 @@
     const hudMain = document.getElementById('hud-main'); 
     const hudBar = document.getElementById('hud-bar');
 
-    if (!hud || !hudTag || !hudMain || !hudBar) return; // Защита от ошибок
+    if (!hud || !hudTag || !hudMain || !hudBar) return; 
 
     hudBar.style.background = getBarGradient(hr); hud.className = 'live-hud'; 
 
@@ -478,7 +466,9 @@
     const tomParity = (currentDay === 6) ? (currentWeekParity==='even'?'odd':'even') : currentWeekParity;
     const tomItems = state[tomParity][(currentDay + 1) % 7] || [];
     const tomLogic = buildAutoLogistics(tomItems, false);
-    const tomWakeM = tomLogic.summary.wakeTime !== 'Свободный' ? toMins(tomLogic.summary.wakeTime) : 600; 
+    
+    // БЕЗОПАСНОЕ ОБРАЩЕНИЕ: Проверяем, есть ли у завтрашнего дня данные о пробуждении
+    const tomWakeM = (tomLogic.summary && tomLogic.summary.wakeTime !== 'Свободный') ? toMins(tomLogic.summary.wakeTime) : 600; 
     let sleepMinsToday = tomWakeM - 480; if(sleepMinsToday < 0) sleepMinsToday += 1440; 
     
     let isSleepWarning = false;
@@ -549,7 +539,9 @@
         if (slp === '—') {
            const tomParity = (currentDay === 6) ? (currentWeekParity==='even'?'odd':'even') : currentWeekParity;
            const tL = buildAutoLogistics(state[tomParity][(currentDay + 1) % 7] || [], false);
-           if(tL.summary.wakeTime !== 'Свободный') slp = fromMins((toMins(tL.summary.wakeTime)-480+1440)%1440);
+           
+           // БЕЗОПАСНОЕ ОБРАЩЕНИЕ: Проверяем, есть ли данные
+           if(tL.summary && tL.summary.wakeTime !== 'Свободный') slp = fromMins((toMins(tL.summary.wakeTime)-480+1440)%1440);
         }
         summaryContainer.innerHTML = `
           <div class="summary-banner"><div class="summary-header"><span>📍 ${settings.homeAddress}</span><span>💤 Отбой (8ч сна): ${slp}</span></div><div class="summary-grid"><div class="stat-box"><div class="stat-label">Подъем</div><div class="stat-val">${summary.wakeTime}</div></div><div class="stat-box"><div class="stat-label">Выход</div><div class="stat-val">${summary.firstLeave}</div></div></div></div>`;
@@ -741,7 +733,7 @@
   }
 
   applyTheme(); 
-  renderAll(); // Первый рендер сразу после загрузки страницы
+  renderAll(); 
   setInterval(updateLiveRadar, 5000);
 </script>
 </body>
