@@ -37,13 +37,12 @@
       user-select: none; min-height: 100vh; max-width: 720px; margin: 0 auto;
     }
 
-    /* Анимации Apple Spring */
+    /* Анимации */
     @keyframes slideUpCascade { from { opacity: 0; transform: translateY(25px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes modalSpring { from { transform: translateY(100%); } to { transform: translateY(0); } }
     @keyframes breathe { 0%, 100% { box-shadow: 0 0 4px var(--item-color); } 50% { box-shadow: 0 0 16px var(--item-color); } }
     @keyframes floatToken { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-40px) scale(1.4); } }
 
-    /* Шапка */
     header { display: flex; justify-content: space-between; align-items: center; padding: 6px 0 12px; }
     .brand { display: flex; flex-direction: column; gap: 2px; }
     .brand-sub { font-size: 11px; font-weight: 600; color: var(--subtext); letter-spacing: 0.3px; }
@@ -64,8 +63,9 @@
     .token-bank {
       background: var(--surface); border: 1px solid var(--code); color: var(--code); padding: 0 12px; height: 40px;
       border-radius: 12px; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 0 12px rgba(234, 179, 8, 0.15); transition: transform 0.15s;
+      box-shadow: 0 0 12px rgba(234, 179, 8, 0.15); transition: transform 0.15s; cursor: pointer;
     }
+    .token-bank:active { transform: scale(0.9); }
     .floating-token { position: absolute; color: var(--code); font-weight: 900; font-size: 15px; animation: floatToken 1s forwards; pointer-events: none; z-index: 50; text-shadow: 0 0 10px var(--code); }
 
     /* HUD */
@@ -111,13 +111,12 @@
     .stat-label { font-size: 11px; color: var(--subtext); margin-bottom: 2px; font-weight: 500; }
     .stat-val { font-size: 14px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; }
 
-    /* Таймлайн с каскадом */
+    /* Таймлайн */
     .timeline { display: flex; flex-direction: column; gap: 10px; }
     .item-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 13px 12px 13px 14px; display: grid; grid-template-columns: 56px 1fr auto; gap: 11px; align-items: center; position: relative; animation: slideUpCascade 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; transition: all 0.3s ease; }
     .item-card::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3.5px; border-radius: 0 4px 4px 0; background: var(--item-color, var(--accent)); transition: background 0.3s; }
     .item-card.auto-card { background: var(--card-auto); border: 1px dashed var(--auto-border); }
     .item-card.live-now { border-color: var(--item-color); animation: breathe 3s infinite ease-in-out, slideUpCascade 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
-    
     .item-card.done { opacity: 0.65; border-color: transparent; }
     .item-card.done .title { text-decoration: line-through; color: var(--subtext); }
 
@@ -181,7 +180,7 @@
       <h1>Мой Режим</h1>
     </div>
     <div class="header-controls">
-      <!-- БАНК ТОКЕНОВ -->
+      <!-- БАНК ТОКЕНОВ ВЕРНУЛСЯ НА МЕСТО -->
       <div class="token-bank" title="Синтетические токены для отдыха">⚡ <span id="token-count" style="margin-left:4px;">0</span></div>
       
       <button class="btn-icon" onclick="openDeadlines()" title="Дедлайны и хвосты">
@@ -218,6 +217,7 @@
     <button class="btn-secondary" id="toggle-auto-btn" onclick="toggleAutoCommute()">⚡ Авто: ВКЛ</button>
   </div>
 
+  <!-- Модалки (Новый блок) -->
   <div class="modal-backdrop" id="modal">
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -339,11 +339,12 @@
   let state = JSON.parse(localStorage.getItem('schedule_1647_v5')) || JSON.parse(localStorage.getItem('schedule_1647_v4')) || JSON.parse(JSON.stringify(DEFAULT_DATA));
   let settings = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(localStorage.getItem('settings_1647_v5')) || {});
   if (settings.homeAddress === 'Арцеуловская аллея, 17') settings.homeAddress = 'Дом';
-  if (settings.tokens === undefined) settings.tokens = 0; // Инициализация токенов
+  if (settings.tokens === undefined) settings.tokens = 0; // Инициализация
   let deadlines = JSON.parse(localStorage.getItem('deadlines_1647_v1')) || [];
   if (!['oled', 'graphite'].includes(settings.theme)) settings.theme = 'oled';
 
-  function updateTokensUI() { document.getElementById('token-count').innerText = settings.tokens; }
+  // ИСПРАВЛЕНИЕ: Добавлена проверка if (el) чтобы код не падал, если элемента нет
+  function updateTokensUI() { const el = document.getElementById('token-count'); if (el) el.innerText = settings.tokens; }
 
   async function fetchWeather() {
     try {
@@ -445,13 +446,20 @@
     if(settings.notifications) checkNotifications();
 
     const now = new Date(); const hr = now.getHours(); const mm = now.getMinutes();
-    document.getElementById('hud-clock').innerText = `${String(hr).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
+    const clockEl = document.getElementById('hud-clock');
+    if (clockEl) clockEl.innerText = `${String(hr).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
     const nowMins = hr * 60 + mm;
 
     const baseList = state[currentWeekParity][currentDay] || [];
     const logic = buildAutoLogistics(baseList);
     const combined = [...baseList, ...logic.autoBlocks].sort((a, b) => a.start.localeCompare(b.start));
-    const hud = document.getElementById('live-hud'); const hudTag = document.getElementById('hud-tag'); const hudMain = document.getElementById('hud-main'); const hudBar = document.getElementById('hud-bar');
+    
+    const hud = document.getElementById('live-hud'); 
+    const hudTag = document.getElementById('hud-tag'); 
+    const hudMain = document.getElementById('hud-main'); 
+    const hudBar = document.getElementById('hud-bar');
+
+    if (!hud || !hudTag || !hudMain || !hudBar) return; // Защита от ошибок
 
     hudBar.style.background = getBarGradient(hr); hud.className = 'live-hud'; 
 
@@ -513,36 +521,54 @@
   function renderAll() {
     updateTokensUI(); renderDeadlinesBadge();
     const datesArr = generateWeekDays(weekOffset); currentWeekParity = isEvenWeek(datesArr[0].raw) ? 'even' : 'odd';
-    document.getElementById('week-label').innerText = currentWeekParity === 'even' ? '🔵 Четная неделя' : '🔴 Нечетная неделя';
-    document.getElementById('week-dates').innerText = `${datesArr[0].num} ${datesArr[0].month} — ${datesArr[6].num} ${datesArr[6].month}`;
+    
+    const weekLabelEl = document.getElementById('week-label');
+    const weekDatesEl = document.getElementById('week-dates');
+    if (weekLabelEl) weekLabelEl.innerText = currentWeekParity === 'even' ? '🔵 Четная неделя' : '🔴 Нечетная неделя';
+    if (weekDatesEl) weekDatesEl.innerText = `${datesArr[0].num} ${datesArr[0].month} — ${datesArr[6].num} ${datesArr[6].month}`;
 
     const todayDate = new Date(); todayDate.setHours(0,0,0,0); const nowMins = new Date().getHours() * 60 + new Date().getMinutes();
     const isTodaySelected = (weekOffset === 0 && currentDay === (new Date().getDay() + 6) % 7);
 
-    document.getElementById('cal-grid').innerHTML = DAYS.map((dName, i) => {
-      const items = [...(state[currentWeekParity][i] || [])].sort((a,b) => a.start.localeCompare(b.start));
-      const bars = items.slice(0, 3).map(it => `<div class="shift-bar" style="background:${TYPE_LABELS[it.type].hex}">${it.start}</div>`).join('');
-      return `<div class="cal-cell ${i===currentDay?'active':''} ${datesArr[i].raw.getTime()===todayDate.getTime()?'today':''}" onclick="selectDay(${i})"><div class="cell-day-num">${datesArr[i].num}</div><div class="shift-bars">${bars}</div></div>`;
-    }).join('');
+    const calGrid = document.getElementById('cal-grid');
+    if (calGrid) {
+      calGrid.innerHTML = DAYS.map((dName, i) => {
+        const items = [...(state[currentWeekParity][i] || [])].sort((a,b) => a.start.localeCompare(b.start));
+        const bars = items.slice(0, 3).map(it => `<div class="shift-bar" style="background:${TYPE_LABELS[it.type].hex}">${it.start}</div>`).join('');
+        return `<div class="cal-cell ${i===currentDay?'active':''} ${datesArr[i].raw.getTime()===todayDate.getTime()?'today':''}" onclick="selectDay(${i})"><div class="cell-day-num">${datesArr[i].num}</div><div class="shift-bars">${bars}</div></div>`;
+      }).join('');
+    }
 
     const baseList = state[currentWeekParity][currentDay] || [];
     const { summary, autoBlocks } = buildAutoLogistics(baseList);
 
-    if (summary && baseList.length > 0) {
-      let slp = summary.sleepTime;
-      if (slp === '—') {
-         const tomParity = (currentDay === 6) ? (currentWeekParity==='even'?'odd':'even') : currentWeekParity;
-         const tL = buildAutoLogistics(state[tomParity][(currentDay + 1) % 7] || [], false);
-         if(tL.summary.wakeTime !== 'Свободный') slp = fromMins((toMins(tL.summary.wakeTime)-480+1440)%1440);
+    const summaryContainer = document.getElementById('summary-container');
+    if (summaryContainer) {
+      if (summary && baseList.length > 0) {
+        let slp = summary.sleepTime;
+        if (slp === '—') {
+           const tomParity = (currentDay === 6) ? (currentWeekParity==='even'?'odd':'even') : currentWeekParity;
+           const tL = buildAutoLogistics(state[tomParity][(currentDay + 1) % 7] || [], false);
+           if(tL.summary.wakeTime !== 'Свободный') slp = fromMins((toMins(tL.summary.wakeTime)-480+1440)%1440);
+        }
+        summaryContainer.innerHTML = `
+          <div class="summary-banner"><div class="summary-header"><span>📍 ${settings.homeAddress}</span><span>💤 Отбой (8ч сна): ${slp}</span></div><div class="summary-grid"><div class="stat-box"><div class="stat-label">Подъем</div><div class="stat-val">${summary.wakeTime}</div></div><div class="stat-box"><div class="stat-label">Выход</div><div class="stat-val">${summary.firstLeave}</div></div></div></div>`;
+      } else {
+        summaryContainer.innerHTML = '';
       }
-      document.getElementById('summary-container').innerHTML = `
-        <div class="summary-banner"><div class="summary-header"><span>📍 ${settings.homeAddress}</span><span>💤 Отбой (8ч сна): ${slp}</span></div><div class="summary-grid"><div class="stat-box"><div class="stat-label">Подъем</div><div class="stat-val">${summary.wakeTime}</div></div><div class="stat-box"><div class="stat-label">Выход</div><div class="stat-val">${summary.firstLeave}</div></div></div></div>`;
-    } else document.getElementById('summary-container').innerHTML = '';
+    }
+
+    const timeline = document.getElementById('timeline');
+    if (!timeline) return;
 
     const combined = [...baseList, ...autoBlocks].sort((a,b) => a.start.localeCompare(b.start));
-    if (combined.length === 0) { document.getElementById('timeline').innerHTML = `<div class="empty-state">Свободный день. Добавь тренировку, код, прогулку или отдых.</div>`; updateLiveRadar(); return; }
+    if (combined.length === 0) { 
+      timeline.innerHTML = `<div class="empty-state">Свободный день. Добавь тренировку, код, прогулку или отдых.</div>`; 
+      updateLiveRadar(); 
+      return; 
+    }
 
-    document.getElementById('timeline').innerHTML = combined.map((item, idx) => {
+    timeline.innerHTML = combined.map((item, idx) => {
       const t = TYPE_LABELS[item.type]; const dur = formatDuration(item.start, item.end);
       const isLive = isTodaySelected && (nowMins >= toMins(item.start) && nowMins < toMins(item.end));
       const delay = idx * 0.04;
@@ -576,12 +602,9 @@
     if (i) { 
       i.done = !i.done; 
       
-      // Экономика Дофамина
       if (['gym', 'code', 'hw'].includes(i.type)) {
          settings.tokens += i.done ? 3 : -3;
          if (settings.tokens < 0) settings.tokens = 0;
-         
-         // Вылетающая анимация +3 ⚡
          if (i.done) {
             const floater = document.createElement('div');
             floater.innerText = '+3 ⚡'; floater.className = 'floating-token';
@@ -605,11 +628,10 @@
     const idx = state[currentWeekParity][currentDay].findIndex(x => x.id === id);
     if (idx > -1) {
        const item = state[currentWeekParity][currentDay][idx];
-       if (item.type === 'rest') settings.tokens += 3; // Возврат токенов за удаленный отдых
-       if (item.done && ['gym', 'code', 'hw'].includes(item.type)) { settings.tokens -= 3; if (settings.tokens < 0) settings.tokens = 0; } // Защита от читерства
+       if (item.type === 'rest') settings.tokens += 3; 
+       if (item.done && ['gym', 'code', 'hw'].includes(item.type)) { settings.tokens -= 3; if (settings.tokens < 0) settings.tokens = 0; } 
        state[currentWeekParity][currentDay].splice(idx, 1); 
-       localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); 
-       localStorage.setItem('settings_1647_v5', JSON.stringify(settings)); 
+       localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); localStorage.setItem('settings_1647_v5', JSON.stringify(settings)); 
        renderAll();
     }
   }
@@ -618,15 +640,8 @@
   function shiftBlock(mins) { const s=document.getElementById('inp-start').value||'10:00', e=document.getElementById('inp-end').value||'11:30'; document.getElementById('inp-start').value=fromMins(toMins(s)+mins); document.getElementById('inp-end').value=fromMins(toMins(e)+mins); }
 
   function duplicateToOtherWeek() {
-    if (!editingId) return;
-    const item = state[currentWeekParity][currentDay].find(x => x.id === editingId);
-    if (!item) return;
-
-    if (item.type === 'rest') {
-       if (settings.tokens < 3) { alert('⚡ Недостаточно токенов для копирования отдыха (Нужно 3 ⚡)!'); return; }
-       settings.tokens -= 3;
-    }
-
+    if (!editingId) return; const item = state[currentWeekParity][currentDay].find(x => x.id === editingId); if (!item) return;
+    if (item.type === 'rest') { if (settings.tokens < 3) { alert('⚡ Недостаточно токенов для копирования отдыха (Нужно 3 ⚡)!'); return; } settings.tokens -= 3; }
     const targetWeek = currentWeekParity === 'even' ? 'odd' : 'even';
     state[targetWeek][currentDay].push(Object.assign({}, item, { id: 'id_' + Date.now(), done: false }));
     localStorage.setItem('schedule_1647_v5', JSON.stringify(state)); localStorage.setItem('settings_1647_v5', JSON.stringify(settings));
@@ -649,14 +664,10 @@
     const newType = document.getElementById('inp-type').value;
 
     const oldItem = editingId ? state[currentWeekParity][currentDay].find(x => x.id === editingId) : null;
-    const wasRest = oldItem && oldItem.type === 'rest';
-    const isRest = newType === 'rest';
+    const wasRest = oldItem && oldItem.type === 'rest'; const isRest = newType === 'rest';
 
-    if (isRest && !wasRest) {
-      if (settings.tokens < 3) { alert('⚡ Недостаточно токенов для отдыха! Учеба или зал принесут тебе +3 ⚡.'); return; }
-      settings.tokens -= 3;
-    }
-    if (!isRest && wasRest) settings.tokens += 3; // Возврат токенов, если передумал отдыхать
+    if (isRest && !wasRest) { if (settings.tokens < 3) { alert('⚡ Недостаточно токенов для отдыха! Учеба или зал принесут тебе +3 ⚡.'); return; } settings.tokens -= 3; }
+    if (!isRest && wasRest) settings.tokens += 3;
 
     const newItem = { id: editingId || 'id_'+Date.now(), title, start: document.getElementById('inp-start').value, end: document.getElementById('inp-end').value, type: newType, loc: document.getElementById('inp-loc').value.trim(), note: document.getElementById('inp-note').value.trim(), done: oldItem ? oldItem.done : false };
     if (editingId) { const idx = state[currentWeekParity][currentDay].findIndex(x => x.id === editingId); if (idx > -1) state[currentWeekParity][currentDay][idx] = newItem; }
@@ -666,7 +677,6 @@
     closeModal(); renderAll();
   }
 
-  /* Дедлайны */
   function openDeadlines() { renderDeadlinesList(); document.getElementById('deadlines-modal').classList.add('open'); }
   function closeDeadlines() { document.getElementById('deadlines-modal').classList.remove('open'); }
   function addDeadline() {
@@ -682,7 +692,6 @@
     box.innerHTML = deadlines.map(d => `<div class="todo-item ${d.done?'done':''}"><div class="todo-text" onclick="toggleDeadline('${d.id}')"><span class="todo-subj">${d.subj}</span>${d.text}</div><button class="icon-btn check ${d.done?'checked':''}" onclick="toggleDeadline('${d.id}')">✓</button><button class="icon-btn del" onclick="removeDeadline('${d.id}')">✕</button></div>`).join('');
   }
 
-  /* Настройки */
   function openSettings() {
     document.getElementById('set-theme').value = settings.theme || 'oled'; document.getElementById('set-home').value = settings.homeAddress;
     document.getElementById('set-bm').value = settings.timeBM; document.getElementById('set-gast').value = settings.timeGastLen;
@@ -731,7 +740,8 @@
     }; r.readAsText(f);
   }
 
-  applyTheme(); renderAll();
+  applyTheme(); 
+  renderAll(); // Первый рендер сразу после загрузки страницы
   setInterval(updateLiveRadar, 5000);
 </script>
 </body>
