@@ -57,7 +57,7 @@
     .token-bank {
       background: var(--surface); border: 1px solid var(--code); color: var(--code); padding: 0 12px; height: 40px;
       border-radius: 12px; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 0 12px rgba(234, 179, 8, 0.15); transition: transform 0.15s;
+      box-shadow: 0 0 12px rgba(234, 179, 8, 0.15); transition: transform 0.15s; cursor: pointer;
     }
     .token-bank:active { transform: scale(0.92); }
     .floating-token { position: absolute; color: var(--code); font-weight: 900; font-size: 14px; animation: floatToken 0.95s forwards; pointer-events: none; z-index: 50; text-shadow: 0 0 10px var(--code); }
@@ -65,7 +65,7 @@
     .btn-icon {
       position: relative; background: var(--surface); border: 1px solid var(--card-border); color: var(--text);
       width: 40px; height: 40px; border-radius: 12px; font-size: 16px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer; transition: transform 0.15s;
     }
     .btn-icon:active { transform: scale(0.85); }
     .badge-count {
@@ -113,11 +113,11 @@
     .stat-val { font-size: 14px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; }
 
     .timeline { display: flex; flex-direction: column; gap: 10px; }
-    .item-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 13px 12px 13px 14px; display: grid; grid-template-columns: 56px 1fr auto; gap: 11px; align-items: center; position: relative; animation: slideUpCascade 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; transition: opacity 0.25s ease, border-color 0.25s ease; }
+    .item-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 13px 12px 13px 14px; display: grid; grid-template-columns: 56px 1fr auto; gap: 11px; align-items: center; position: relative; animation: slideUpCascade 0.35s ease both; }
     .item-card::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3.5px; border-radius: 0 4px 4px 0; background: var(--item-color, var(--accent)); }
     .item-card.auto-card { background: var(--card-auto); border: 1px dashed var(--auto-border); }
     .item-card.live-now { border-color: var(--item-color, var(--accent)); animation: breathe 3s infinite ease-in-out; }
-    .item-card.done { opacity: 0.65; }
+    .item-card.done { opacity: 0.65; border-color: transparent; }
     .item-card.done .title { text-decoration: line-through; color: var(--subtext); }
 
     .time-col { display: flex; flex-direction: column; align-items: center; border-right: 1px solid var(--card-border); padding-right: 10px; font-variant-numeric: tabular-nums; cursor: pointer; }
@@ -130,7 +130,7 @@
     .title { font-size: 15px; font-weight: 700; margin-bottom: 5px; line-height: 1.25; cursor: pointer; transition: color 0.2s; }
     .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--subtext); align-items: center; cursor: pointer; }
     .pill { background: var(--pill-bg); padding: 3px 8px; border-radius: 6px; color: var(--pill-text); font-size: 11px; font-weight: 600; }
-
+    
     .actions { display: flex; flex-direction: column; gap: 6px; position: relative; }
     .icon-btn { background: var(--pill-bg); border: 1px solid var(--card-border); color: var(--text); width: 32px; height: 32px; border-radius: 9px; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.15s ease, background 0.2s ease; }
     .icon-btn:active { transform: scale(0.75); }
@@ -140,19 +140,23 @@
     .empty-state { background: var(--surface); border: 1px solid var(--card-border); border-radius: 16px; padding: 34px 18px; text-align: center; color: var(--subtext); font-size: 14px; font-weight: 600; }
 
     .fab-bar { position: fixed; bottom: calc(env(safe-area-inset-bottom, 16px) + 10px); left: 12px; right: 12px; max-width: 696px; margin: 0 auto; display: flex; gap: 8px; z-index: 30; background: rgba(18, 18, 22, 0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 8px; border-radius: 18px; border: 1px solid var(--card-border); }
-    .btn-main { flex: 1.5; background: var(--accent); color: #fff; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; }
-    .btn-secondary { flex: 1; background: var(--pill-bg); color: var(--text); border: 1px solid var(--card-border); padding: 14px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .btn-main { flex: 1.5; background: var(--accent); color: #fff; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: transform 0.1s; }
+    .btn-main:active { transform: scale(0.97); }
+    .btn-secondary { flex: 1; background: var(--pill-bg); color: var(--text); border: 1px solid var(--card-border); padding: 14px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.1s; }
+    .btn-secondary:active { transform: scale(0.97); }
 
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; align-items: flex-end; justify-content: center; z-index: 100; }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(6px); display: none; align-items: flex-end; justify-content: center; z-index: 100; }
     .modal-backdrop.open { display: flex; }
-    .modal { background: var(--surface); border-top: 1px solid var(--card-border); width: 100%; max-width: 600px; border-radius: 24px 24px 0 0; padding: 20px 16px calc(env(safe-area-inset-bottom, 20px) + 18px); display: flex; flex-direction: column; gap: 16px; max-height: 90vh; overflow-y: auto; animation: modalSpring 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.08) forwards; }
+    .modal { background: var(--surface); border-top: 1px solid var(--card-border); width: 100%; max-width: 600px; border-radius: 24px 24px 0 0; padding: 20px 16px calc(env(safe-area-inset-bottom, 20px) + 18px); display: flex; flex-direction: column; gap: 16px; max-height: 90vh; overflow-y: auto; animation: modalSpring 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.08) forwards; }
     .modal h2 { margin: 0; font-size: 18px; font-weight: 800; }
+    
     .row { display: flex; gap: 12px; align-items: flex-start; }
     
-    /* ИСПРАВЛЕНО: margin-bottom заменен с -6px на 6px, чтобы не обрезался текст */
-    .field-label { font-size: 11px; color: var(--subtext); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    /* ИСПРАВЛЕННЫЙ ОТСТУП ДЛЯ ТЕКСТА НАСТРОЕК */
+    .settings-group { margin-bottom: 16px; }
+    .field-label { font-size: 11px; color: var(--subtext); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: block; }
     
-    input, select { width: 100%; background: var(--card); border: 1px solid var(--card-border); color: var(--text); padding: 13px; border-radius: 12px; font-size: 15px; font-weight: 500; outline: none; }
+    input, select { width: 100%; background: var(--card); border: 1px solid var(--card-border); color: var(--text); padding: 13px; border-radius: 12px; font-size: 15px; outline: none; }
     input:focus, select:focus { border-color: var(--accent); }
 
     .quick-chips { display: flex; gap: 7px; overflow-x: auto; padding: 2px 0; }
@@ -211,7 +215,7 @@
     <button class="btn-secondary" id="toggle-auto-btn" onclick="toggleAutoCommute()">⚡ Авто: ВКЛ</button>
   </div>
 
-  <!-- Модальное окно блока -->
+  <!-- Модалка блока -->
   <div class="modal-backdrop" id="modal">
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -271,7 +275,7 @@
     </div>
   </div>
 
-  <!-- Модальное окно дедлайнов -->
+  <!-- Модалка дедлайнов -->
   <div class="modal-backdrop" id="deadlines-modal">
     <div class="modal">
       <h2>📌 Дедлайны и хвосты</h2>
@@ -297,13 +301,13 @@
     </div>
   </div>
 
-  <!-- Модальное окно настроек -->
+  <!-- ЧИСТАЯ МОДАЛКА НАСТРОЕК БЕЗ НАКЛАДЫВАНИЯ ТЕКСТА И С КНОПКОЙ ИМПОРТА -->
   <div class="modal-backdrop" id="settings-modal">
     <div class="modal">
       <h2>⚙️ Настройки</h2>
 
-      <div>
-        <div class="field-label">Оформление</div>
+      <div class="settings-group">
+        <label class="field-label">Оформление</label>
         <select id="set-theme" onchange="previewTheme(this.value)">
           <option value="oled">🌑 OLED Чёрная (Строгая)</option>
           <option value="graphite">🪨 Графитовая iOS Pro</option>
@@ -311,64 +315,62 @@
         </select>
       </div>
 
-      <div>
-        <div class="field-label">Уведомления и Синхронизация</div>
+      <div class="settings-group">
+        <label class="field-label">Уведомления и Синхронизация</label>
         <div class="row" style="align-items: stretch;">
-          <button class="btn-secondary" style="flex:1; font-size:12.5px; padding:12px;" onclick="enablePush()">🔔 PWA Пуши</button>
-          <button class="btn-secondary" style="flex:1; font-size:12.5px; padding:12px; color:var(--accent);" onclick="exportICS()">📅 В Календарь</button>
+          <button class="btn-secondary" style="flex:1; padding:12px;" onclick="enablePush()">🔔 PWA Пуши</button>
+          <button class="btn-secondary" style="flex:1; padding:12px; color:var(--accent);" onclick="exportICS()">📅 В Календарь</button>
         </div>
       </div>
 
-      <div>
-        <div class="field-label">Локация старта</div>
+      <div class="settings-group">
+        <label class="field-label">Локация старта</label>
         <input type="text" id="set-home" value="Дом">
       </div>
 
-      <div class="row">
+      <div class="row settings-group">
         <div style="flex:1">
-          <div class="field-label">До Б.М. (мин)</div>
+          <label class="field-label">До Б.М. (мин)</label>
           <input type="number" id="set-bm" min="30" max="180" step="5" value="90">
         </div>
         <div style="flex:1">
-          <div class="field-label">До Гаст (мин)</div>
+          <label class="field-label">До Гаст/Лен (мин)</label>
           <input type="number" id="set-gast" min="60" max="180" step="5" value="120">
         </div>
       </div>
 
-      <div class="row">
+      <div class="row settings-group">
         <div style="flex:1">
-          <div class="field-label">Сборы в вуз (мин)</div>
+          <label class="field-label">Сборы в вуз (мин)</label>
           <input type="number" id="set-prep" min="15" max="120" step="5" value="50">
         </div>
         <div style="flex:1">
-          <div class="field-label">Б.М. ↔ Лен. (мин)</div>
+          <label class="field-label">Б.М. ↔ Лен. (мин)</label>
           <input type="number" id="set-transit" min="20" max="90" step="5" value="45">
         </div>
       </div>
 
-      <div class="row">
+      <div class="row settings-group">
         <div style="flex:1">
-          <div class="field-label">Сборы в зал (мин)</div>
+          <label class="field-label">Сборы в зал (мин)</label>
           <input type="number" id="set-gym-prep" min="5" max="60" step="5" value="20">
         </div>
         <div style="flex:1">
-          <div class="field-label">До зала пешком</div>
+          <label class="field-label">До зала пешком (мин)</label>
           <input type="number" id="set-gym-walk" min="5" max="60" step="5" value="15">
         </div>
       </div>
 
-      <div>
-        <div class="field-label">Резервная копия (.JSON)</div>
+      <div class="settings-group">
+        <label class="field-label">Резервная копия (.JSON)</label>
         <div class="row" style="align-items: stretch;">
-          <button class="btn-secondary" style="flex:1; font-size:13px;" onclick="exportBackup()">📥 Скачать</button>
-          <label class="btn-secondary" style="flex:1; font-size:13px; text-align:center; cursor:pointer;">
-            📤 Загрузить
-            <input type="file" style="display:none" accept=".json" onchange="importBackup(event)">
-          </label>
+          <button class="btn-secondary" style="flex:1;" onclick="exportBackup()">📥 Скачать</button>
+          <button class="btn-secondary" style="flex:1;" onclick="document.getElementById('import-file').click()">📤 Загрузить</button>
+          <input type="file" id="import-file" style="display:none" accept=".json" onchange="importBackup(event)">
         </div>
       </div>
 
-      <div class="row" style="margin-top:4px; align-items: stretch;">
+      <div class="row" style="margin-top:8px; align-items: stretch;">
         <button class="btn-secondary" style="color:var(--danger); flex:1" onclick="resetSchedule()">Сброс пар</button>
         <button class="btn-main" style="flex:1.5" onclick="saveSettings()">Сохранить</button>
       </div>
@@ -478,13 +480,14 @@
   let settings = Object.assign({}, DEFAULT_SETTINGS);
   let deadlines = [];
 
+  // ИСПРАВЛЕНИЕ: Загрузка сохраненных данных по правильному ключу v5
   try {
-    const savedState = JSON.parse(localStorage.getItem('schedule_1647_v6'));
+    const savedState = JSON.parse(localStorage.getItem('schedule_1647_v5') || localStorage.getItem('schedule_1647_v4'));
     if (savedState && savedState.even && savedState.odd) state = savedState;
   } catch (e) {}
 
   try {
-    const savedSettings = JSON.parse(localStorage.getItem('settings_1647_v6'));
+    const savedSettings = JSON.parse(localStorage.getItem('settings_1647_v5'));
     if (savedSettings) settings = Object.assign({}, DEFAULT_SETTINGS, savedSettings);
     if (!settings.homeAddress || settings.homeAddress.includes('Арцеуловская')) settings.homeAddress = 'Дом';
     if (typeof settings.tokens !== 'number' || isNaN(settings.tokens)) settings.tokens = 0;
@@ -492,14 +495,14 @@
   } catch (e) {}
 
   try {
-    const savedDeadlines = JSON.parse(localStorage.getItem('deadlines_1647_v2'));
+    const savedDeadlines = JSON.parse(localStorage.getItem('deadlines_1647_v1'));
     if (Array.isArray(savedDeadlines)) deadlines = savedDeadlines;
   } catch (e) {}
 
   function saveAllStorage() {
-    localStorage.setItem('schedule_1647_v6', JSON.stringify(state));
-    localStorage.setItem('settings_1647_v6', JSON.stringify(settings));
-    localStorage.setItem('deadlines_1647_v2', JSON.stringify(deadlines));
+    localStorage.setItem('schedule_1647_v5', JSON.stringify(state));
+    localStorage.setItem('settings_1647_v5', JSON.stringify(settings));
+    localStorage.setItem('deadlines_1647_v1', JSON.stringify(deadlines));
   }
 
   function updateTokensUI() {
@@ -1329,6 +1332,7 @@
       } catch (err) {
         alert('Ошибка чтения файла!');
       }
+      e.target.value = ''; // Сбрасываем инпут, чтобы можно было загрузить тот же файл еще раз
     };
     r.readAsText(f);
   }
