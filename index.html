@@ -139,7 +139,7 @@
 
     .empty-state { background: var(--surface); border: 1px solid var(--card-border); border-radius: 16px; padding: 34px 18px; text-align: center; color: var(--subtext); font-size: 14px; font-weight: 600; }
 
-    .fab-bar { position: fixed; bottom: calc(env(safe-area-inset-bottom, 16px) + 10px); left: 12px; right: 12px; max-width: 696px; margin: 0 auto; display: flex; gap: 8px; z-index: 30; background: rgba(18, 18, 22, 0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 8px; border-radius: 18px; border: 1px solid var(--card-border); }
+    .fab-bar { position: fixed; bottom: calc(env(safe-area-inset-bottom, 16px) + 10px); left: 12px; right: 12px; max-width: 696px; margin: 0 auto; display: flex; gap: 8px; z-index: 30; background: rgba(18, 18, 22, 0.88); backdrop-filter: blur(20px); padding: 8px; border-radius: 18px; border: 1px solid var(--card-border); }
     .btn-main { flex: 1.5; background: var(--accent); color: #fff; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; transition: transform 0.1s; }
     .btn-main:active { transform: scale(0.97); }
     .btn-secondary { flex: 1; background: var(--pill-bg); color: var(--text); border: 1px solid var(--card-border); padding: 14px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.1s; }
@@ -151,12 +151,10 @@
     .modal h2 { margin: 0; font-size: 18px; font-weight: 800; }
     
     .row { display: flex; gap: 12px; align-items: flex-start; }
-    
-    /* ИСПРАВЛЕННЫЙ ОТСТУП ДЛЯ ТЕКСТА НАСТРОЕК */
     .settings-group { margin-bottom: 16px; }
     .field-label { font-size: 11px; color: var(--subtext); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: block; }
     
-    input, select { width: 100%; background: var(--card); border: 1px solid var(--card-border); color: var(--text); padding: 13px; border-radius: 12px; font-size: 15px; outline: none; }
+    input, select { width: 100%; background: var(--card); border: 1px solid var(--card-border); color: var(--text); padding: 13px; border-radius: 12px; font-size: 15px; outline: none; box-sizing: border-box; }
     input:focus, select:focus { border-color: var(--accent); }
 
     .quick-chips { display: flex; gap: 7px; overflow-x: auto; padding: 2px 0; }
@@ -225,17 +223,20 @@
 
       <div class="quick-chips">
         <span class="chip" onclick="fillTemplate('Тренировка в зале', 'gym', 'Спортзал', 'Силовая')">💪 Зал (+3⚡)</span>
-        <span class="chip" onclick="fillTemplate('Саморазвитие', 'code', 'Дом', 'Фокус')">🧠 Саморазвитие (+3⚡)</span>
+        <span class="chip" onclick="fillTemplate('Саморазвитие', 'code', 'Дом', 'Фокус')">🧠 Код (+3⚡)</span>
         <span class="chip" onclick="fillTemplate('Лабы / ДЗ', 'hw', 'Дом', 'Учеба')">📝 Лабы (+3⚡)</span>
         <span class="chip" onclick="fillTemplate('Уборка / Готовка', 'chores', 'Дом', 'Быт')">🧹 Быт (0⚡)</span>
         <span class="chip" onclick="fillTemplate('Отдых / CS2 / Dota 2', 'rest', 'Дом', 'Чилл')">🎮 Отдых (-3⚡)</span>
+        <!-- ВОЗВРАЩЕННЫЙ ЧИП ПРОГУЛОК -->
+        <span class="chip" onclick="fillTemplate('Встреча с друзьями / Прогулка', 'social', 'Город', 'Прогулка')">🚶 Прогулки (0⚡)</span>
       </div>
 
       <input type="text" id="inp-title" placeholder="Название (например: Тренировка в зале)">
 
-      <div class="row">
-        <div style="flex:1;"><input type="time" id="inp-start" value="10:00"></div>
-        <div style="flex:1;"><input type="time" id="inp-end" value="12:30"></div>
+      <!-- ИСПРАВЛЕННЫЕ ИНПУТЫ ВРЕМЕНИ -->
+      <div class="row" style="align-items: center;">
+        <input type="time" id="inp-start" value="10:00" style="flex:1; min-width:0;">
+        <input type="time" id="inp-end" value="12:30" style="flex:1; min-width:0;">
       </div>
 
       <div class="dur-presets">
@@ -246,24 +247,20 @@
         <button class="dur-btn" onclick="shiftBlock(30)">Сдвиг +30м</button>
       </div>
 
-      <div class="row">
-        <div style="flex:1.2;">
-          <select id="inp-type">
-            <option value="gym">💪 Тренировка в зале (+3 ⚡)</option>
-            <option value="code">🧠 Саморазвитие (+3 ⚡)</option>
-            <option value="hw">📝 Лабы / ДЗ (+3 ⚡)</option>
-            <option value="chores">🧹 Домашние дела / Быт (0 ⚡)</option>
-            <option value="rest">🎮 Отдых / CS2 (-3 ⚡)</option>
-            <option value="social">🚶 Встречи / Прогулки (0 ⚡)</option>
-            <option value="commute">🚇 Режим / Обед</option>
-            <option value="prac">🟠 Практика (Вуз)</option>
-            <option value="lab">🔵 Лабораторная (Вуз)</option>
-            <option value="lec">🟣 Лекция (Вуз)</option>
-          </select>
-        </div>
-        <div style="flex:1;">
-          <input type="text" id="inp-loc" placeholder="Место (Дом / Зал / Город)">
-        </div>
+      <div class="row" style="align-items: center;">
+        <select id="inp-type" style="flex:1.2; min-width:0;">
+          <option value="gym">💪 Тренировка в зале (+3 ⚡)</option>
+          <option value="code">🧠 Саморазвитие (+3 ⚡)</option>
+          <option value="hw">📝 Лабы / ДЗ (+3 ⚡)</option>
+          <option value="chores">🧹 Домашние дела / Быт (0 ⚡)</option>
+          <option value="rest">🎮 Отдых / CS2 (-3 ⚡)</option>
+          <option value="social">🚶 Встречи / Прогулки (0 ⚡)</option>
+          <option value="commute">🚇 Режим / Обед</option>
+          <option value="prac">🟠 Практика (Вуз)</option>
+          <option value="lab">🔵 Лабораторная (Вуз)</option>
+          <option value="lec">🟣 Лекция (Вуз)</option>
+        </select>
+        <input type="text" id="inp-loc" placeholder="Место (Дом/Зал)" style="flex:1; min-width:0;">
       </div>
 
       <input type="text" id="inp-note" placeholder="Заметка или преподаватель">
@@ -280,20 +277,16 @@
     <div class="modal">
       <h2>📌 Дедлайны и хвосты</h2>
       <div class="row" style="align-items: center;">
-        <div style="flex:0.9;">
-          <select id="dl-subj">
-            <option value="Информатика">Информатика</option>
-            <option value="ОЦГ">ОЦГ</option>
-            <option value="Физика">Физика</option>
-            <option value="Вышмат">Вышмат</option>
-            <option value="История / ОРГ">История / ОРГ</option>
-            <option value="БЖД">БЖД</option>
-            <option value="Личное">Личное</option>
-          </select>
-        </div>
-        <div style="flex:1.5;">
-          <input type="text" id="dl-text" placeholder="Что нужно сделать...">
-        </div>
+        <select id="dl-subj" style="flex:0.9; min-width:0;">
+          <option value="Информатика">Информатика</option>
+          <option value="ОЦГ">ОЦГ</option>
+          <option value="Физика">Физика</option>
+          <option value="Вышмат">Вышмат</option>
+          <option value="История / ОРГ">История / ОРГ</option>
+          <option value="БЖД">БЖД</option>
+          <option value="Личное">Личное</option>
+        </select>
+        <input type="text" id="dl-text" placeholder="Что нужно сделать..." style="flex:1.5; min-width:0;">
       </div>
       <button class="btn-main" style="padding:12px;" onclick="addDeadline()">+ Добавить</button>
       <div class="todo-list" id="todo-list"></div>
@@ -301,7 +294,7 @@
     </div>
   </div>
 
-  <!-- ЧИСТАЯ МОДАЛКА НАСТРОЕК БЕЗ НАКЛАДЫВАНИЯ ТЕКСТА И С КНОПКОЙ ИМПОРТА -->
+  <!-- Модалка настроек -->
   <div class="modal-backdrop" id="settings-modal">
     <div class="modal">
       <h2>⚙️ Настройки</h2>
@@ -328,35 +321,35 @@
         <input type="text" id="set-home" value="Дом">
       </div>
 
-      <div class="row settings-group">
-        <div style="flex:1">
+      <div class="row settings-group" style="align-items: center;">
+        <div style="flex:1; min-width:0;">
           <label class="field-label">До Б.М. (мин)</label>
           <input type="number" id="set-bm" min="30" max="180" step="5" value="90">
         </div>
-        <div style="flex:1">
+        <div style="flex:1; min-width:0;">
           <label class="field-label">До Гаст/Лен (мин)</label>
           <input type="number" id="set-gast" min="60" max="180" step="5" value="120">
         </div>
       </div>
 
-      <div class="row settings-group">
-        <div style="flex:1">
+      <div class="row settings-group" style="align-items: center;">
+        <div style="flex:1; min-width:0;">
           <label class="field-label">Сборы в вуз (мин)</label>
           <input type="number" id="set-prep" min="15" max="120" step="5" value="50">
         </div>
-        <div style="flex:1">
+        <div style="flex:1; min-width:0;">
           <label class="field-label">Б.М. ↔ Лен. (мин)</label>
           <input type="number" id="set-transit" min="20" max="90" step="5" value="45">
         </div>
       </div>
 
-      <div class="row settings-group">
-        <div style="flex:1">
+      <div class="row settings-group" style="align-items: center;">
+        <div style="flex:1; min-width:0;">
           <label class="field-label">Сборы в зал (мин)</label>
           <input type="number" id="set-gym-prep" min="5" max="60" step="5" value="20">
         </div>
-        <div style="flex:1">
-          <label class="field-label">До зала пешком (мин)</label>
+        <div style="flex:1; min-width:0;">
+          <label class="field-label">До зала пешком</label>
           <input type="number" id="set-gym-walk" min="5" max="60" step="5" value="15">
         </div>
       </div>
@@ -404,75 +397,27 @@
   };
 
   const DEFAULT_SETTINGS = {
-    theme: 'oled',
-    homeAddress: 'Дом',
-    timeBM: 90,
-    timeGastLen: 120,
-    prepTime: 50,
-    transitBMLen: 45,
-    gymPrep: 20,
-    gymWalk: 15,
-    showAutoBlocks: true,
-    notifications: false,
-    tokens: 0
+    theme: 'oled', homeAddress: 'Дом', timeBM: 90, timeGastLen: 120, prepTime: 50,
+    transitBMLen: 45, gymPrep: 20, gymWalk: 15, showAutoBlocks: true, notifications: false, tokens: 0
   };
 
   const DEFAULT_DATA = {
     even: {
       0: [],
-      1: [
-        { id: 'e1_1', start: '11:10', end: '12:40', type: 'lab', title: 'Основы цифровой грамотности', loc: 'Б.М. 12-29', note: 'Трифонова Ю.В.' },
-        { id: 'e1_2', start: '15:10', end: '16:40', type: 'lec', title: 'Физика', loc: 'Лен. 32-13', note: 'Лавровская Н.П.' }
-      ],
-      2: [
-        { id: 'e2_1', start: '09:30', end: '11:00', type: 'prac', title: 'Математика. Аналитическая геометрия', loc: 'Гаст. 24-02', note: 'Титов В.Е.' },
-        { id: 'e2_2', start: '11:10', end: '12:40', type: 'prac', title: 'История', loc: 'Гаст. 12-04', note: 'Меркулова А.Э.' },
-        { id: 'e2_3', start: '13:00', end: '14:30', type: 'prac', title: 'Математика. Математический анализ', loc: 'Гаст. 24-02', note: 'Титов В.Е.' },
-        { id: 'e2_4', start: '15:10', end: '16:40', type: 'prac', title: 'Основы российской государственности', loc: 'Лен. 23-01', note: 'Захарова Я.А.' }
-      ],
-      3: [
-        { id: 'e3_1', start: '13:00', end: '14:30', type: 'lec', title: 'Математика. Аналитическая геометрия', loc: 'Гаст. 12-01', note: 'Состина Е.В.' },
-        { id: 'e3_2', start: '15:10', end: '16:40', type: 'lec', title: 'Математика. Математический анализ', loc: 'Гаст. 12-01', note: 'Состина Е.В.' },
-        { id: 'e3_3', start: '17:00', end: '18:30', type: 'lab', title: 'Информатика', loc: 'Гаст. 33-09', note: 'Степанов В.Е.' }
-      ],
-      4: [
-        { id: 'e4_1', start: '11:10', end: '12:40', type: 'lec', title: 'История', loc: 'Лен. 33-07', note: 'Меркулова А.Э.' },
-        { id: 'e4_2', start: '13:00', end: '14:30', type: 'lec', title: 'История', loc: 'Лен. 33-07', note: 'Меркулова А.Э.' },
-        { id: 'e4_3', start: '15:10', end: '16:40', type: 'lec', title: 'История', loc: 'Лен. 33-07', note: 'Меркулова А.Э.' }
-      ],
-      5: [
-        { id: 'e5_1', start: '09:30', end: '11:00', type: 'prac', title: 'Физическая культура', loc: 'Лен. спортзал' },
-        { id: 'e5_2', start: '11:10', end: '12:40', type: 'lec', title: 'Физическая культура', loc: 'Лен. 32-13' }
-      ],
+      1: [{ id: 'e1_1', start: '11:10', end: '12:40', type: 'lab', title: 'Основы цифровой грамотности', loc: 'Б.М. 12-29' }, { id: 'e1_2', start: '15:10', end: '16:40', type: 'lec', title: 'Физика', loc: 'Лен. 32-13' }],
+      2: [{ id: 'e2_1', start: '09:30', end: '11:00', type: 'prac', title: 'Математика. Аналитическая геометрия', loc: 'Гаст. 24-02' }, { id: 'e2_2', start: '11:10', end: '12:40', type: 'prac', title: 'История', loc: 'Гаст. 12-04' }, { id: 'e2_3', start: '13:00', end: '14:30', type: 'prac', title: 'Математика. Математический анализ', loc: 'Гаст. 24-02' }, { id: 'e2_4', start: '15:10', end: '16:40', type: 'prac', title: 'Основы российской государственности', loc: 'Лен. 23-01' }],
+      3: [{ id: 'e3_1', start: '13:00', end: '14:30', type: 'lec', title: 'Математика. Аналитическая геометрия', loc: 'Гаст. 12-01' }, { id: 'e3_2', start: '15:10', end: '16:40', type: 'lec', title: 'Математика. Математический анализ', loc: 'Гаст. 12-01' }, { id: 'e3_3', start: '17:00', end: '18:30', type: 'lab', title: 'Информатика', loc: 'Гаст. 33-09' }],
+      4: [{ id: 'e4_1', start: '11:10', end: '12:40', type: 'lec', title: 'История', loc: 'Лен. 33-07' }, { id: 'e4_2', start: '13:00', end: '14:30', type: 'lec', title: 'История', loc: 'Лен. 33-07' }, { id: 'e4_3', start: '15:10', end: '16:40', type: 'lec', title: 'История', loc: 'Лен. 33-07' }],
+      5: [{ id: 'e5_1', start: '09:30', end: '11:00', type: 'prac', title: 'Физическая культура', loc: 'Лен. спортзал' }, { id: 'e5_2', start: '11:10', end: '12:40', type: 'lec', title: 'Физическая культура', loc: 'Лен. 32-13' }],
       6: []
     },
     odd: {
-      0: [
-        { id: 'o0_1', start: '17:00', end: '18:30', type: 'lab', title: 'Безопасность жизнедеятельности', loc: 'Б.М. 14-05', note: 'Калашникова М.В.' },
-        { id: 'o0_2', start: '18:40', end: '20:10', type: 'lec', title: 'Безопасность жизнедеятельности', loc: 'Б.М. 53-07', note: 'Туманов А.Ю.' }
-      ],
-      1: [
-        { id: 'o1_1', start: '11:10', end: '12:40', type: 'lab', title: 'Основы цифровой грамотности', loc: 'Б.М. 12-29', note: 'Трифонова Ю.В.' },
-        { id: 'o1_2', start: '15:10', end: '16:40', type: 'lec', title: 'Физика', loc: 'Лен. 32-13', note: 'Лавровская Н.П.' }
-      ],
-      2: [
-        { id: 'o2_1', start: '09:30', end: '11:00', type: 'prac', title: 'Математика. Аналитическая геометрия', loc: 'Гаст. 24-02', note: 'Титов В.Е.' },
-        { id: 'o2_2', start: '13:00', end: '14:30', type: 'prac', title: 'Математика. Математический анализ', loc: 'Гаст. 24-02', note: 'Титов В.Е.' },
-        { id: 'o2_3', start: '15:10', end: '16:40', type: 'prac', title: 'Основы российской государственности', loc: 'Лен. 23-01', note: 'Захарова Я.А.' }
-      ],
-      3: [
-        { id: 'o3_1', start: '13:00', end: '14:30', type: 'lec', title: 'Математика. Аналитическая геометрия', loc: 'Гаст. 12-01', note: 'Состина Е.В.' },
-        { id: 'o3_2', start: '15:10', end: '16:40', type: 'lec', title: 'Математика. Математический анализ', loc: 'Гаст. 12-01', note: 'Состина Е.В.' },
-        { id: 'o3_3', start: '17:00', end: '18:30', type: 'lab', title: 'Информатика', loc: 'Гаст. 33-09', note: 'Степанов В.Е.' },
-        { id: 'o3_4', start: '18:40', end: '20:10', type: 'lab', title: 'Физика', loc: 'Гаст. 32-04', note: 'Коваленко И.И.' }
-      ],
-      4: [
-        { id: 'o4_1', start: '11:10', end: '12:40', type: 'prac', title: 'Иностранный язык', loc: 'Гаст. 34-06', note: 'Масыч Т.Л.' },
-        { id: 'o4_2', start: '13:00', end: '14:30', type: 'prac', title: 'Иностранный язык', loc: 'Гаст. 34-04', note: 'Масыч Т.Л.' },
-        { id: 'o4_3', start: '15:10', end: '16:40', type: 'lec', title: 'Информатика', loc: 'Лен. 32-13', note: 'Степанов В.Е.' }
-      ],
-      5: [],
-      6: []
+      0: [{ id: 'o0_1', start: '17:00', end: '18:30', type: 'lab', title: 'Безопасность жизнедеятельности', loc: 'Б.М. 14-05' }, { id: 'o0_2', start: '18:40', end: '20:10', type: 'lec', title: 'Безопасность жизнедеятельности', loc: 'Б.М. 53-07' }],
+      1: [{ id: 'o1_1', start: '11:10', end: '12:40', type: 'lab', title: 'Основы цифровой грамотности', loc: 'Б.М. 12-29' }, { id: 'o1_2', start: '15:10', end: '16:40', type: 'lec', title: 'Физика', loc: 'Лен. 32-13' }],
+      2: [{ id: 'o2_1', start: '09:30', end: '11:00', type: 'prac', title: 'Математика. Аналитическая геометрия', loc: 'Гаст. 24-02' }, { id: 'o2_2', start: '13:00', end: '14:30', type: 'prac', title: 'Математика. Математический анализ', loc: 'Гаст. 24-02' }, { id: 'o2_3', start: '15:10', end: '16:40', type: 'prac', title: 'Основы российской государственности', loc: 'Лен. 23-01' }],
+      3: [{ id: 'o3_1', start: '13:00', end: '14:30', type: 'lec', title: 'Математика. Аналитическая геометрия', loc: 'Гаст. 12-01' }, { id: 'o3_2', start: '15:10', end: '16:40', type: 'lec', title: 'Математика. Математический анализ', loc: 'Гаст. 12-01' }, { id: 'o3_3', start: '17:00', end: '18:30', type: 'lab', title: 'Информатика', loc: 'Гаст. 33-09' }, { id: 'o3_4', start: '18:40', end: '20:10', type: 'lab', title: 'Физика', loc: 'Гаст. 32-04' }],
+      4: [{ id: 'o4_1', start: '11:10', end: '12:40', type: 'prac', title: 'Иностранный язык', loc: 'Гаст. 34-06' }, { id: 'o4_2', start: '13:00', end: '14:30', type: 'prac', title: 'Иностранный язык', loc: 'Гаст. 34-04' }, { id: 'o4_3', start: '15:10', end: '16:40', type: 'lec', title: 'Информатика', loc: 'Лен. 32-13' }],
+      5: [], 6: []
     }
   };
 
@@ -480,7 +425,7 @@
   let settings = Object.assign({}, DEFAULT_SETTINGS);
   let deadlines = [];
 
-  // ИСПРАВЛЕНИЕ: Загрузка сохраненных данных по правильному ключу v5
+  // ЗАГРУЗКА ИЗ ПАМЯТИ ПО КЛЮЧАМ V5
   try {
     const savedState = JSON.parse(localStorage.getItem('schedule_1647_v5') || localStorage.getItem('schedule_1647_v4'));
     if (savedState && savedState.even && savedState.odd) state = savedState;
@@ -514,12 +459,8 @@
     const badge = document.getElementById('dl-badge');
     if (!badge) return;
     const pending = deadlines.filter(d => !d.done).length;
-    if (pending > 0) {
-      badge.style.display = 'flex';
-      badge.innerText = pending;
-    } else {
-      badge.style.display = 'none';
-    }
+    if (pending > 0) { badge.style.display = 'flex'; badge.innerText = pending; }
+    else { badge.style.display = 'none'; }
   }
 
   async function fetchWeather() {
@@ -529,92 +470,24 @@
       if (data && data.current_weather) {
         const code = data.current_weather.weathercode;
         const temp = data.current_weather.temperature;
-        if ([51,53,55,61,63,65,66,67,71,73,75,77,80,81,82,85,86].includes(code)) {
-          weatherDelay = 10;
-          weatherAlertMsg = "🌧 Слякоть: +10 мин к дороге (Vans)";
-        } else if (temp < -5) {
-          weatherDelay = 10;
-          weatherAlertMsg = "❄️ Мороз: +10 мин к сборам";
-        }
+        if ([51,53,55,61,63,65,66,67,71,73,75,77,80,81,82,85,86].includes(code)) { weatherDelay = 10; weatherAlertMsg = "🌧 Слякоть: +10 мин к дороге"; } 
+        else if (temp < -5) { weatherDelay = 10; weatherAlertMsg = "❄️ Мороз: +10 мин к сборам"; }
         renderAll();
       }
     } catch (e) {}
   }
 
-  function getMondayOfWeek(offset = 0) {
-    const now = new Date();
-    now.setHours(0, 0, 0, 0);
-    const day = (now.getDay() + 6) % 7;
-    return new Date(now.getFullYear(), now.getMonth(), now.getDate() - day + (offset * 7));
-  }
-
-  function isEvenWeek(date) {
-    const day = (date.getDay() + 6) % 7;
-    const monday = new Date(date.getFullYear(), date.getMonth(), date.getDate() - day);
-    const sDay = (SEMESTER_START.getDay() + 6) % 7;
-    const sMonday = new Date(SEMESTER_START.getFullYear(), SEMESTER_START.getMonth(), SEMESTER_START.getDate() - sDay);
-    const diffWeeks = Math.round((monday.getTime() - sMonday.getTime()) / (7 * 24 * 60 * 60 * 1000));
-    return (diffWeeks % 2 !== 0);
-  }
-
-  function generateWeekDays(offset) {
-    const monday = getMondayOfWeek(offset);
-    const daysArr = [];
-    for (let i = 0; i < 7; i++) {
-      const d = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i);
-      daysArr.push({ raw: d, num: d.getDate(), month: MONTHS[d.getMonth()] });
-    }
-    return daysArr;
-  }
-
-  function changeWeek(dir) {
-    weekOffset += dir;
-    currentDay = dir > 0 ? 0 : 6;
-    renderAll();
-  }
-
-  function resetToToday() {
-    weekOffset = 0;
-    currentDay = (new Date().getDay() + 6) % 7;
-    renderAll();
-  }
-
-  function toMins(t) {
-    if (!t || typeof t !== 'string' || !t.includes(':')) return 0;
-    const [h, m] = t.split(':').map(Number);
-    return (h || 0) * 60 + (m || 0);
-  }
-
-  function fromMins(m) {
-    const cl = ((m % 1440) + 1440) % 1440;
-    return `${String(Math.floor(cl / 60)).padStart(2, '0')}:${String(cl % 60).padStart(2, '0')}`;
-  }
-
-  function formatDuration(start, end) {
-    const diff = toMins(end) - toMins(start);
-    if (diff <= 0) return '';
-    const h = Math.floor(diff / 60);
-    const m = diff % 60;
-    return h > 0 ? (m > 0 ? `${h}ч ${m}м` : `${h}ч`) : `${m}м`;
-  }
-
-  function getCampus(loc = '') {
-    const l = (loc || '').toLowerCase();
-    if (l.includes('б.м') || l.includes('большая морская')) return 'BM';
-    if (l.includes('гаст')) return 'GAST';
-    if (l.includes('лен')) return 'LEN';
-    return null;
-  }
-
-  function getTravelMinutes(campus) {
-    if (campus === 'BM') return Number(settings.timeBM) || 90;
-    if (campus === 'GAST' || campus === 'LEN') return Number(settings.timeGastLen) || 120;
-    return 0;
-  }
-
-  function isLocalGym(item) {
-    return item && getCampus(item.loc) === null && item.type === 'gym';
-  }
+  function getMondayOfWeek(offset = 0) { const now = new Date(); now.setHours(0, 0, 0, 0); const day = (now.getDay() + 6) % 7; return new Date(now.getFullYear(), now.getMonth(), now.getDate() - day + (offset * 7)); }
+  function isEvenWeek(date) { const day = (date.getDay() + 6) % 7; const monday = new Date(date.getFullYear(), date.getMonth(), date.getDate() - day); const sDay = (SEMESTER_START.getDay() + 6) % 7; const sMonday = new Date(SEMESTER_START.getFullYear(), SEMESTER_START.getMonth(), SEMESTER_START.getDate() - sDay); return (Math.round((monday.getTime() - sMonday.getTime()) / (7 * 24 * 60 * 60 * 1000)) % 2 !== 0); }
+  function generateWeekDays(offset) { const monday = getMondayOfWeek(offset); const daysArr = []; for (let i = 0; i < 7; i++) { const d = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i); daysArr.push({ raw: d, num: d.getDate(), month: MONTHS[d.getMonth()] }); } return daysArr; }
+  function changeWeek(dir) { weekOffset += dir; currentDay = dir > 0 ? 0 : 6; renderAll(); }
+  function resetToToday() { weekOffset = 0; currentDay = (new Date().getDay() + 6) % 7; renderAll(); }
+  function toMins(t) { if (!t || typeof t !== 'string' || !t.includes(':')) return 0; const [h, m] = t.split(':').map(Number); return (h || 0) * 60 + (m || 0); }
+  function fromMins(m) { const cl = ((m % 1440) + 1440) % 1440; return `${String(Math.floor(cl / 60)).padStart(2, '0')}:${String(cl % 60).padStart(2, '0')}`; }
+  function formatDuration(start, end) { const diff = toMins(end) - toMins(start); if (diff <= 0) return ''; const h = Math.floor(diff / 60); const m = diff % 60; return h > 0 ? (m > 0 ? `${h}ч ${m}м` : `${h}ч`) : `${m}м`; }
+  function getCampus(loc = '') { const l = (loc || '').toLowerCase(); if (l.includes('б.м') || l.includes('большая морская')) return 'BM'; if (l.includes('гаст')) return 'GAST'; if (l.includes('лен')) return 'LEN'; return null; }
+  function getTravelMinutes(campus) { if (campus === 'BM') return Number(settings.timeBM) || 90; if (campus === 'GAST' || campus === 'LEN') return Number(settings.timeGastLen) || 120; return 0; }
+  function isLocalGym(item) { return item && getCampus(item.loc) === null && item.type === 'gym'; }
 
   function buildAutoLogistics(dayItems, includeWeather = true) {
     if (!dayItems || dayItems.length === 0) return { summary: null, autoBlocks: [] };
@@ -629,134 +502,60 @@
     const gymWalk = Number(settings.gymWalk) || 15;
 
     const autoBlocks = [];
-    let wakeM = null;
-    let firstLeaveText = 'Дома';
-    let homeTimeText = '—';
+    let wakeM = null, firstLeaveText = 'Дома', homeTimeText = '—';
 
     if (isLocalGym(firstItem)) {
-      const leaveForGym = toMins(firstItem.start) - gymWalk;
-      wakeM = leaveForGym - gymPrep;
-      firstLeaveText = `${fromMins(leaveForGym)} (в зал)`;
+      const leaveForGym = toMins(firstItem.start) - gymWalk; wakeM = leaveForGym - gymPrep; firstLeaveText = `${fromMins(leaveForGym)} (в зал)`;
     } else if (getCampus(firstItem.loc) !== null) {
-      const c = getCampus(firstItem.loc);
-      const leaveM = toMins(firstItem.start) - getTravelMinutes(c);
-      wakeM = leaveM - prepUni;
-      firstLeaveText = (c === 'GAST' || c === 'LEN')
-        ? `${fromMins(toMins(firstItem.start) - 120)}–${fromMins(toMins(firstItem.start) - 90)}`
-        : fromMins(leaveM);
+      const c = getCampus(firstItem.loc); const leaveM = toMins(firstItem.start) - getTravelMinutes(c); wakeM = leaveM - prepUni;
+      firstLeaveText = (c === 'GAST' || c === 'LEN') ? `${fromMins(toMins(firstItem.start) - 120)}–${fromMins(toMins(firstItem.start) - 90)}` : fromMins(leaveM);
     } else {
-      wakeM = toMins(firstItem.start) - 30;
-      if (settings.showAutoBlocks) {
-        autoBlocks.push({
-          id: 'a_w', isAuto: true, start: fromMins(wakeM), end: firstItem.start,
-          type: 'commute', title: '⏰ Подъем и завтрак', loc: settings.homeAddress
-        });
-      }
+      wakeM = toMins(firstItem.start) - 30; if (settings.showAutoBlocks) autoBlocks.push({ id: 'a_w', isAuto: true, start: fromMins(wakeM), end: firstItem.start, type: 'commute', title: '⏰ Подъем и завтрак', loc: settings.homeAddress });
     }
 
     gymSessions.forEach((g, idx) => {
-      const leaveGymM = toMins(g.start) - gymWalk;
-      const prepGymM = leaveGymM - gymPrep;
-      const backHomeM = toMins(g.end) + gymWalk;
+      const leaveGymM = toMins(g.start) - gymWalk; const prepGymM = leaveGymM - gymPrep; const backHomeM = toMins(g.end) + gymWalk;
       if (settings.showAutoBlocks) {
-        autoBlocks.push({
-          id: 'g_p_' + idx, isAuto: true, start: fromMins(prepGymM), end: fromMins(leaveGymM),
-          type: 'commute', title: g.id === firstItem.id ? '⏰ Подъем и сборы в зал' : '🎒 Сборы в зал', loc: settings.homeAddress
-        });
-        autoBlocks.push({
-          id: 'g_to_' + idx, isAuto: true, start: fromMins(leaveGymM), end: g.start,
-          type: 'commute', title: '🚶 Дорога в зал', loc: `Пешком ${gymWalk} мин`
-        });
-        autoBlocks.push({
-          id: 'g_b_' + idx, isAuto: true, start: g.end, end: fromMins(backHomeM),
-          type: 'commute', title: '🚶 Дорога из зала домой', loc: `Пешком ${gymWalk} мин`
-        });
+        autoBlocks.push({ id: 'g_p_' + idx, isAuto: true, start: fromMins(prepGymM), end: fromMins(leaveGymM), type: 'commute', title: g.id === firstItem.id ? '⏰ Подъем и сборы в зал' : '🎒 Сборы в зал', loc: settings.homeAddress });
+        autoBlocks.push({ id: 'g_to_' + idx, isAuto: true, start: fromMins(leaveGymM), end: g.start, type: 'commute', title: '🚶 Дорога в зал', loc: `Пешком ${gymWalk} мин` });
+        autoBlocks.push({ id: 'g_b_' + idx, isAuto: true, start: g.end, end: fromMins(backHomeM), type: 'commute', title: '🚶 Дорога из зала домой', loc: `Пешком ${gymWalk} мин` });
         if (uniClasses.length > 0) {
           const leaveUniM = toMins(uniClasses[0].start) - getTravelMinutes(getCampus(uniClasses[0].loc));
-          if (leaveUniM > backHomeM && leaveUniM - backHomeM <= 300) {
-            autoBlocks.push({
-              id: 'h_ref_' + idx, isAuto: true, start: fromMins(backHomeM), end: fromMins(leaveUniM),
-              type: 'commute', title: '🚿 Дома: душ и обед перед вузом', loc: settings.homeAddress
-            });
-          }
+          if (leaveUniM > backHomeM && leaveUniM - backHomeM <= 300) autoBlocks.push({ id: 'h_ref_' + idx, isAuto: true, start: fromMins(backHomeM), end: fromMins(leaveUniM), type: 'commute', title: '🚿 Дома: душ и обед перед вузом', loc: settings.homeAddress });
         }
       }
       homeTimeText = fromMins(backHomeM);
     });
 
     if (uniClasses.length > 0) {
-      const fU = uniClasses[0];
-      const lU = uniClasses[uniClasses.length - 1];
-      const leaveUniM = toMins(fU.start) - getTravelMinutes(getCampus(fU.loc));
-      const arrHomeM = toMins(lU.end) + getTravelMinutes(getCampus(lU.loc));
-
+      const fU = uniClasses[0], lU = uniClasses[uniClasses.length - 1];
+      const leaveUniM = toMins(fU.start) - getTravelMinutes(getCampus(fU.loc)); const arrHomeM = toMins(lU.end) + getTravelMinutes(getCampus(lU.loc));
       if (settings.showAutoBlocks) {
-        if (fU.id === firstItem.id) {
-          autoBlocks.push({
-            id: 'u_w', isAuto: true, start: fromMins(leaveUniM - prepUni), end: fromMins(leaveUniM),
-            type: 'commute', title: '⏰ Подъем и сборы', loc: settings.homeAddress
-          });
-        }
-        autoBlocks.push({
-          id: 'u_l', isAuto: true, start: fromMins(leaveUniM), end: fU.start,
-          type: 'commute', title: `🚇 Выезд в вуз (${(fU.loc || '').split(' ')[0]})`, loc: `${settings.homeAddress} → ${fU.loc}`
-        });
+        if (fU.id === firstItem.id) autoBlocks.push({ id: 'u_w', isAuto: true, start: fromMins(leaveUniM - prepUni), end: fromMins(leaveUniM), type: 'commute', title: '⏰ Подъем и сборы', loc: settings.homeAddress });
+        autoBlocks.push({ id: 'u_l', isAuto: true, start: fromMins(leaveUniM), end: fU.start, type: 'commute', title: `🚇 Выезд в вуз (${(fU.loc || '').split(' ')[0]})`, loc: `${settings.homeAddress} → ${fU.loc}` });
         for (let i = 0; i < uniClasses.length - 1; i++) {
-          const c1 = getCampus(uniClasses[i].loc);
-          const c2 = getCampus(uniClasses[i + 1].loc);
+          const c1 = getCampus(uniClasses[i].loc), c2 = getCampus(uniClasses[i + 1].loc);
           if (c1 && c2 && c1 !== c2) {
-            const trStart = toMins(uniClasses[i].end);
-            const trMins = (c1 !== 'BM' && c2 !== 'BM') ? 15 : (Number(settings.transitBMLen) || 45);
-            autoBlocks.push({
-              id: 'u_tr_' + i, isAuto: true, start: uniClasses[i].end,
-              end: fromMins(Math.min(toMins(uniClasses[i + 1].start), trStart + trMins)),
-              type: 'commute',
-              title: trMins === 15 ? '🚶 Переход между корпусами' : '🚇 Переезд + обед',
-              loc: `${(uniClasses[i].loc || '').split(' ')[0]} → ${(uniClasses[i + 1].loc || '').split(' ')[0]}`
-            });
+            const trStart = toMins(uniClasses[i].end); const trMins = (c1 !== 'BM' && c2 !== 'BM') ? 15 : (Number(settings.transitBMLen) || 45);
+            autoBlocks.push({ id: 'u_tr_' + i, isAuto: true, start: uniClasses[i].end, end: fromMins(Math.min(toMins(uniClasses[i + 1].start), trStart + trMins)), type: 'commute', title: trMins === 15 ? '🚶 Переход между корпусами' : '🚇 Переезд + обед', loc: `${(uniClasses[i].loc || '').split(' ')[0]} → ${(uniClasses[i + 1].loc || '').split(' ')[0]}` });
           }
         }
-        autoBlocks.push({
-          id: 'u_h', isAuto: true, start: lU.end, end: fromMins(arrHomeM),
-          type: 'commute', title: '🏠 Дорога домой', loc: `${(lU.loc || '').split(' ')[0]} → ${settings.homeAddress}`
-        });
+        autoBlocks.push({ id: 'u_h', isAuto: true, start: lU.end, end: fromMins(arrHomeM), type: 'commute', title: '🏠 Дорога домой', loc: `${(lU.loc || '').split(' ')[0]} → ${settings.homeAddress}` });
       }
-      if (gymSessions.length === 0 || toMins(lU.end) > toMins(gymSessions[gymSessions.length - 1].end)) {
-        homeTimeText = `~${fromMins(arrHomeM)}`;
-      }
+      if (gymSessions.length === 0 || toMins(lU.end) > toMins(gymSessions[gymSessions.length - 1].end)) homeTimeText = `~${fromMins(arrHomeM)}`;
     }
 
     const sleepM = wakeM !== null ? wakeM - 480 : null;
-    return {
-      summary: {
-        wakeTime: wakeM !== null ? fromMins(wakeM) : 'Свободный',
-        sleepTime: sleepM !== null ? fromMins(sleepM) : '—',
-        firstLeave: firstLeaveText,
-        homeTime: homeTimeText
-      },
-      autoBlocks
-    };
+    return { summary: { wakeTime: wakeM !== null ? fromMins(wakeM) : 'Свободный', sleepTime: sleepM !== null ? fromMins(sleepM) : '—', firstLeave: firstLeaveText, homeTime: homeTimeText }, autoBlocks };
   }
 
   function applyTheme() {
     document.documentElement.setAttribute('data-theme', settings.theme || 'oled');
     const btn = document.getElementById('toggle-auto-btn');
-    if (btn) {
-      btn.style.opacity = settings.showAutoBlocks ? '1' : '0.55';
-      btn.innerText = settings.showAutoBlocks ? '⚡ Авто: ВКЛ' : '⚡ Авто: ВЫКЛ';
-    }
+    if (btn) { btn.style.opacity = settings.showAutoBlocks ? '1' : '0.55'; btn.innerText = settings.showAutoBlocks ? '⚡ Авто: ВКЛ' : '⚡ Авто: ВЫКЛ'; }
   }
-
-  function previewTheme(val) {
-    document.documentElement.setAttribute('data-theme', val);
-  }
-
-  function toggleAutoCommute() {
-    settings.showAutoBlocks = !settings.showAutoBlocks;
-    saveAllStorage();
-    applyTheme();
-    renderAll();
-  }
+  function previewTheme(val) { document.documentElement.setAttribute('data-theme', val); }
+  function toggleAutoCommute() { settings.showAutoBlocks = !settings.showAutoBlocks; saveAllStorage(); applyTheme(); renderAll(); }
 
   function getBarGradient(hr) {
     if (hr < 12) return 'linear-gradient(90deg, #34d399, #38bdf8)';
@@ -767,39 +566,24 @@
   function updateLiveRadar() {
     try {
       if (settings.notifications) checkNotifications();
-
-      const now = new Date();
-      const hr = now.getHours();
-      const mm = now.getMinutes();
-      const clockEl = document.getElementById('hud-clock');
-      if (clockEl) clockEl.innerText = `${String(hr).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
-
+      const now = new Date(); const hr = now.getHours(); const mm = now.getMinutes();
+      const clockEl = document.getElementById('hud-clock'); if (clockEl) clockEl.innerText = `${String(hr).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
       const nowMins = hr * 60 + mm;
+
       const baseList = (state[currentWeekParity] && state[currentWeekParity][currentDay]) ? state[currentWeekParity][currentDay] : [];
       const logic = buildAutoLogistics(baseList);
       const combined = [...baseList, ...logic.autoBlocks].sort((a, b) => (a.start || '').localeCompare(b.start || ''));
 
-      const hud = document.getElementById('live-hud');
-      const hudTag = document.getElementById('hud-tag');
-      const hudMain = document.getElementById('hud-main');
-      const hudBar = document.getElementById('hud-bar');
+      const hud = document.getElementById('live-hud'); const hudTag = document.getElementById('hud-tag'); const hudMain = document.getElementById('hud-main'); const hudBar = document.getElementById('hud-bar');
       if (!hud || !hudTag || !hudMain || !hudBar) return;
 
-      hudBar.style.background = getBarGradient(hr);
-      hud.className = 'live-hud';
-
+      hudBar.style.background = getBarGradient(hr); hud.className = 'live-hud';
       const isTodaySelected = (weekOffset === 0 && currentDay === (now.getDay() + 6) % 7);
 
       if (!isTodaySelected) {
-        const doneCount = baseList.filter(x => x.done).length;
-        const pct = baseList.length ? Math.round((doneCount / baseList.length) * 100) : 0;
-        hudTag.innerText = `ПРОГРЕСС ДНЯ • ${pct}%`;
-        hudMain.innerText = baseList.length ? `Запланировано блоков: ${baseList.length}` : 'Свободный день';
-        hudBar.style.width = `${pct}%`;
-        if (weatherAlertMsg) {
-          hud.classList.add('hud-weather');
-          hudMain.innerText = weatherAlertMsg;
-        }
+        const doneCount = baseList.filter(x => x.done).length; const pct = baseList.length ? Math.round((doneCount / baseList.length) * 100) : 0;
+        hudTag.innerText = `ПРОГРЕСС ДНЯ • ${pct}%`; hudMain.innerText = baseList.length ? `Запланировано блоков: ${baseList.length}` : 'Свободный день'; hudBar.style.width = `${pct}%`;
+        if (weatherAlertMsg) { hud.classList.add('hud-weather'); hudMain.innerText = weatherAlertMsg; }
         return;
       }
 
@@ -810,74 +594,38 @@
       const tomItems = (state[tomParity] && state[tomParity][(currentDay + 1) % 7]) ? state[tomParity][(currentDay + 1) % 7] : [];
       const tomLogic = buildAutoLogistics(tomItems, false);
       const tomWakeM = (tomLogic.summary && tomLogic.summary.wakeTime !== 'Свободный') ? toMins(tomLogic.summary.wakeTime) : 600;
-      let sleepMinsToday = tomWakeM - 480;
-      if (sleepMinsToday < 0) sleepMinsToday += 1440;
+      let sleepMinsToday = tomWakeM - 480; if (sleepMinsToday < 0) sleepMinsToday += 1440;
 
       let isSleepWarning = false;
       if (active && active.type === 'rest') {
-        let minsToSleep = sleepMinsToday - nowMins;
-        if (minsToSleep < 0) minsToSleep += 1440;
+        let minsToSleep = sleepMinsToday - nowMins; if (minsToSleep < 0) minsToSleep += 1440;
         if (minsToSleep <= 55 && minsToSleep > 0) {
-          isSleepWarning = true;
-          hud.classList.add('hud-warning');
-          hudTag.innerText = `ДО ОТБОЯ ${minsToSleep} МИН`;
-          hudMain.innerText = "⚠️ Времени только на быструю в CS2. Доту не запускай — сорвешь режим!";
+          isSleepWarning = true; hud.classList.add('hud-warning'); hudTag.innerText = `ДО ОТБОЯ ${minsToSleep} МИН`; hudMain.innerText = "⚠️ Времени только на быструю в CS2. Доту не запускай — сорвешь режим!";
         }
       }
 
       if (active) {
-        const total = Math.max(1, toMins(active.end) - toMins(active.start));
-        const passed = nowMins - toMins(active.start);
-        const pct = Math.min(100, Math.round((passed / total) * 100));
-
-        const left = toMins(active.end) - nowMins;
-        const hLeft = Math.floor(left / 60);
-        const mLeft = left % 60;
+        const total = Math.max(1, toMins(active.end) - toMins(active.start)); const passed = nowMins - toMins(active.start); const pct = Math.min(100, Math.round((passed / total) * 100));
+        const left = toMins(active.end) - nowMins; const hLeft = Math.floor(left / 60); const mLeft = left % 60;
         const leftStr = hLeft > 0 ? (mLeft > 0 ? `${hLeft}Ч ${mLeft}М` : `${hLeft}Ч`) : `${mLeft} МИН`;
 
         if (!isSleepWarning) {
-          if (weatherAlertMsg && active.type === 'commute') {
-            hud.classList.add('hud-weather');
-            hudTag.innerText = `СЕЙЧАС ИДЕТ • ОСТАЛОСЬ ${leftStr}`;
-            hudMain.innerText = weatherAlertMsg;
-          } else {
-            hudTag.innerText = `СЕЙЧАС ИДЕТ • ОСТАЛОСЬ ${leftStr}`;
-            hudMain.innerText = active.title;
-          }
+          if (weatherAlertMsg && active.type === 'commute') { hud.classList.add('hud-weather'); hudTag.innerText = `СЕЙЧАС ИДЕТ • ОСТАЛОСЬ ${leftStr}`; hudMain.innerText = weatherAlertMsg; }
+          else { hudTag.innerText = `СЕЙЧАС ИДЕТ • ОСТАЛОСЬ ${leftStr}`; hudMain.innerText = active.title; }
         }
         hudBar.style.width = `${pct}%`;
       } else if (next) {
-        const diff = toMins(next.start) - nowMins;
-        const h = Math.floor(diff / 60);
-        const m = diff % 60;
+        const diff = toMins(next.start) - nowMins; const h = Math.floor(diff / 60); const m = diff % 60;
         const leftStr = h > 0 ? (m > 0 ? `${h}Ч ${m}М` : `${h}Ч`) : `${m} МИН`;
-        hudTag.innerText = `ДАЛЕЕ ЧЕРЕЗ ${leftStr}`;
-        hudMain.innerText = `${next.start} — ${next.title}`;
-        hudBar.style.width = `12%`;
-        if (weatherAlertMsg && next.type === 'commute' && diff < 60) {
-          hud.classList.add('hud-weather');
-          hudMain.innerText = weatherAlertMsg;
-        }
-      } else {
-        hudTag.innerText = `ДЕНЬ ЗАВЕРШЕН`;
-        hudMain.innerText = `Все дела на сегодня выполнены`;
-        hudBar.style.width = `100%`;
-      }
+        hudTag.innerText = `ДАЛЕЕ ЧЕРЕЗ ${leftStr}`; hudMain.innerText = `${next.start} — ${next.title}`; hudBar.style.width = `12%`;
+        if (weatherAlertMsg && next.type === 'commute' && diff < 60) { hud.classList.add('hud-weather'); hudMain.innerText = weatherAlertMsg; }
+      } else { hudTag.innerText = `ДЕНЬ ЗАВЕРШЕН`; hudMain.innerText = `Все дела на сегодня выполнены`; hudBar.style.width = `100%`; }
     } catch (e) {}
   }
 
   function enablePush() {
-    if (!('Notification' in window)) {
-      alert('Уведомления не поддерживаются в этом браузере.');
-      return;
-    }
-    Notification.requestPermission().then(p => {
-      if (p === 'granted') {
-        settings.notifications = true;
-        saveAllStorage();
-        alert('PWA Пуши включены! Напоминания будут приходить за 15 минут до начала блока.');
-      }
-    });
+    if (!('Notification' in window)) { alert('Уведомления не поддерживаются.'); return; }
+    Notification.requestPermission().then(p => { if (p === 'granted') { settings.notifications = true; saveAllStorage(); alert('Пуши включены!'); } });
   }
 
   function checkNotifications() {
@@ -890,10 +638,7 @@
       c.forEach(item => {
         if (toMins(item.start) - nowMins === 15) {
           const id = uidPref + item.id;
-          if (!notifiedBlocks[id]) {
-            new Notification("Скоро: " + item.title, { body: `В ${item.start} • ${item.loc || ''}` });
-            notifiedBlocks[id] = true;
-          }
+          if (!notifiedBlocks[id]) { new Notification("Скоро: " + item.title, { body: `В ${item.start} • ${item.loc || ''}` }); notifiedBlocks[id] = true; }
         }
       });
     } catch (e) {}
@@ -901,20 +646,14 @@
 
   function renderAll() {
     try {
-      updateTokensUI();
-      renderDeadlinesBadge();
-
-      const datesArr = generateWeekDays(weekOffset);
-      currentWeekParity = isEvenWeek(datesArr[0].raw) ? 'even' : 'odd';
-
-      const weekLabelEl = document.getElementById('week-label');
-      const weekDatesEl = document.getElementById('week-dates');
+      updateTokensUI(); renderDeadlinesBadge();
+      const datesArr = generateWeekDays(weekOffset); currentWeekParity = isEvenWeek(datesArr[0].raw) ? 'even' : 'odd';
+      
+      const weekLabelEl = document.getElementById('week-label'); const weekDatesEl = document.getElementById('week-dates');
       if (weekLabelEl) weekLabelEl.innerText = currentWeekParity === 'even' ? '🔵 Четная неделя' : '🔴 Нечетная неделя';
       if (weekDatesEl) weekDatesEl.innerText = `${datesArr[0].num} ${datesArr[0].month} — ${datesArr[6].num} ${datesArr[6].month}`;
 
-      const todayDate = new Date();
-      todayDate.setHours(0, 0, 0, 0);
-      const nowMins = new Date().getHours() * 60 + new Date().getMinutes();
+      const todayDate = new Date(); todayDate.setHours(0, 0, 0, 0); const nowMins = new Date().getHours() * 60 + new Date().getMinutes();
       const isTodaySelected = (weekOffset === 0 && currentDay === (new Date().getDay() + 6) % 7);
 
       const calGrid = document.getElementById('cal-grid');
@@ -922,16 +661,8 @@
         calGrid.innerHTML = DAYS.map((dName, i) => {
           const dayArr = (state[currentWeekParity] && state[currentWeekParity][i]) ? state[currentWeekParity][i] : [];
           const items = [...dayArr].sort((a, b) => (a.start || '').localeCompare(b.start || ''));
-          const bars = items.slice(0, 3).map(it => {
-            const tInfo = TYPE_LABELS[it.type] || TYPE_LABELS.code;
-            return `<div class="shift-bar" style="background:${tInfo.hex}">${it.start}</div>`;
-          }).join('');
-          return `
-            <div class="cal-cell ${i === currentDay ? 'active' : ''} ${datesArr[i].raw.getTime() === todayDate.getTime() ? 'today' : ''}" onclick="selectDay(${i})">
-              <div class="cell-day-num">${datesArr[i].num}</div>
-              <div class="shift-bars">${bars}</div>
-            </div>
-          `;
+          const bars = items.slice(0, 3).map(it => { const tInfo = TYPE_LABELS[it.type] || TYPE_LABELS.code; return `<div class="shift-bar" style="background:${tInfo.hex}">${it.start}</div>`; }).join('');
+          return `<div class="cal-cell ${i === currentDay ? 'active' : ''} ${datesArr[i].raw.getTime() === todayDate.getTime() ? 'today' : ''}" onclick="selectDay(${i})"><div class="cell-day-num">${datesArr[i].num}</div><div class="shift-bars">${bars}</div></div>`;
         }).join('');
       }
 
@@ -941,20 +672,8 @@
       const summaryContainer = document.getElementById('summary-container');
       if (summaryContainer) {
         if (summary && baseList.length > 0) {
-          summaryContainer.innerHTML = `
-            <div class="summary-banner">
-              <div class="summary-header">
-                <span>📍 ${settings.homeAddress}</span>
-                <span>💤 Отбой (8ч сна): ${summary.sleepTime}</span>
-              </div>
-              <div class="summary-grid">
-                <div class="stat-box"><div class="stat-label">Подъем</div><div class="stat-val">${summary.wakeTime}</div></div>
-                <div class="stat-box"><div class="stat-label">Выход</div><div class="stat-val">${summary.firstLeave}</div></div>
-              </div>
-            </div>`;
-        } else {
-          summaryContainer.innerHTML = '';
-        }
+          summaryContainer.innerHTML = `<div class="summary-banner"><div class="summary-header"><span>📍 ${settings.homeAddress}</span><span>💤 Отбой (8ч сна): ${summary.sleepTime}</span></div><div class="summary-grid"><div class="stat-box"><div class="stat-label">Подъем</div><div class="stat-val">${summary.wakeTime}</div></div><div class="stat-box"><div class="stat-label">Выход</div><div class="stat-val">${summary.firstLeave}</div></div></div></div>`;
+        } else { summaryContainer.innerHTML = ''; }
       }
 
       const timeline = document.getElementById('timeline');
@@ -963,8 +682,7 @@
       const combined = [...baseList, ...autoBlocks].sort((a, b) => (a.start || '').localeCompare(b.start || ''));
       if (combined.length === 0) {
         timeline.innerHTML = `<div class="empty-state">Свободный день. Добавь тренировку, саморазвитие, прогулку или отдых.</div>`;
-        updateLiveRadar();
-        return;
+        updateLiveRadar(); return;
       }
 
       timeline.innerHTML = combined.map((item, idx) => {
@@ -974,57 +692,17 @@
         const delay = idx * 0.035;
 
         if (item.isAuto) {
-          return `
-            <div class="item-card auto-card ${isLive ? 'live-now' : ''}" style="--item-color:${t.hex}; animation-delay:${delay}s" onclick="openSettings()">
-              <div class="time-col">
-                <span class="time-start">${item.start}</span>
-                <span class="time-end">${item.end}</span>
-                ${dur ? `<span class="dur-tag">${dur}</span>` : ''}
-              </div>
-              <div>
-                <div class="badge-row">
-                  <span class="badge" style="color:${t.hex}">${t.text}</span>
-                  ${isLive ? `<span class="live-pill">СЕЙЧАС</span>` : ''}
-                </div>
-                <div class="title">${item.title}</div>
-                <div class="meta"><span class="pill">${item.loc}</span></div>
-              </div>
-              <div class="actions"><button class="icon-btn">⚙️</button></div>
-            </div>`;
+          return `<div class="item-card auto-card ${isLive ? 'live-now' : ''}" style="--item-color:${t.hex}; animation-delay:${delay}s" onclick="openSettings()"><div class="time-col"><span class="time-start">${item.start}</span><span class="time-end">${item.end}</span>${dur ? `<span class="dur-tag">${dur}</span>` : ''}</div><div><div class="badge-row"><span class="badge" style="color:${t.hex}">${t.text}</span>${isLive ? `<span class="live-pill">СЕЙЧАС</span>` : ''}</div><div class="title">${item.title}</div><div class="meta"><span class="pill">${item.loc}</span></div></div><div class="actions"><button class="icon-btn">⚙️</button></div></div>`;
         }
 
-        return `
-          <div class="item-card ${item.done ? 'done' : ''} ${isLive ? 'live-now' : ''}" style="--item-color:${t.hex}; animation-delay:${delay}s">
-            <div class="time-col" onclick="editItem('${item.id}')">
-              <span class="time-start">${item.start}</span>
-              <span class="time-end">${item.end}</span>
-              ${dur ? `<span class="dur-tag">${dur}</span>` : ''}
-            </div>
-            <div onclick="editItem('${item.id}')">
-              <div class="badge-row">
-                <span class="badge" style="color:${t.hex}">${t.text}</span>
-                ${isLive ? `<span class="live-pill">СЕЙЧАС</span>` : ''}
-              </div>
-              <div class="title">${item.title}</div>
-              <div class="meta">${item.loc ? `<span class="pill">${item.loc}</span>` : ''}${item.note ? `<span>${item.note}</span>` : ''}</div>
-            </div>
-            <div class="actions">
-              <button class="icon-btn check ${item.done ? 'checked' : ''}" onclick="toggleDone('${item.id}', this, event)">✓</button>
-              <button class="icon-btn del" onclick="deleteItem('${item.id}', event)">✕</button>
-            </div>
-          </div>`;
+        return `<div class="item-card ${item.done ? 'done' : ''} ${isLive ? 'live-now' : ''}" style="--item-color:${t.hex}; animation-delay:${delay}s"><div class="time-col" onclick="editItem('${item.id}')"><span class="time-start">${item.start}</span><span class="time-end">${item.end}</span>${dur ? `<span class="dur-tag">${dur}</span>` : ''}</div><div onclick="editItem('${item.id}')"><div class="badge-row"><span class="badge" style="color:${t.hex}">${t.text}</span>${isLive ? `<span class="live-pill">СЕЙЧАС</span>` : ''}</div><div class="title">${item.title}</div><div class="meta">${item.loc ? `<span class="pill">${item.loc}</span>` : ''}${item.note ? `<span>${item.note}</span>` : ''}</div></div><div class="actions"><button class="icon-btn check ${item.done ? 'checked' : ''}" onclick="toggleDone('${item.id}', this, event)">✓</button><button class="icon-btn del" onclick="deleteItem('${item.id}', event)">✕</button></div></div>`;
       }).join('');
 
       updateLiveRadar();
-    } catch (err) {
-      console.error('Ошибка рендера:', err);
-    }
+    } catch (err) { console.error('Ошибка рендера:', err); }
   }
 
-  function selectDay(d) {
-    currentDay = d;
-    renderAll();
-  }
+  function selectDay(d) { currentDay = d; renderAll(); }
 
   function toggleDone(id, btn, event) {
     if (event) event.stopPropagation();
@@ -1037,33 +715,22 @@
     if (['gym', 'code', 'hw'].includes(item.type)) {
       settings.tokens = (settings.tokens || 0) + (item.done ? 3 : -3);
       if (settings.tokens < 0) settings.tokens = 0;
-
       if (item.done && btn) {
         const floater = document.createElement('div');
-        floater.innerText = '+3 ⚡';
-        floater.className = 'floating-token';
-        btn.parentElement.appendChild(floater);
-        setTimeout(() => floater.remove(), 950);
+        floater.innerText = '+3 ⚡'; floater.className = 'floating-token';
+        btn.parentElement.appendChild(floater); setTimeout(() => floater.remove(), 950);
       }
     }
-
     saveAllStorage();
 
     if (btn) {
       const card = btn.closest('.item-card');
       if (card) {
-        if (item.done) {
-          card.classList.add('done');
-          btn.classList.add('checked');
-        } else {
-          card.classList.remove('done');
-          btn.classList.remove('checked');
-        }
+        if (item.done) { card.classList.add('done'); btn.classList.add('checked'); }
+        else { card.classList.remove('done'); btn.classList.remove('checked'); }
       }
     }
-
-    updateTokensUI();
-    updateLiveRadar();
+    updateTokensUI(); updateLiveRadar();
   }
 
   function deleteItem(id, event) {
@@ -1072,15 +739,9 @@
     const idx = list.findIndex(x => x.id === id);
     if (idx > -1) {
       const item = list[idx];
-      if (item.type === 'rest') {
-        settings.tokens = (settings.tokens || 0) + 3;
-      }
-      if (item.done && ['gym', 'code', 'hw'].includes(item.type)) {
-        settings.tokens = Math.max(0, (settings.tokens || 0) - 3);
-      }
-      list.splice(idx, 1);
-      saveAllStorage();
-      renderAll();
+      if (item.type === 'rest') settings.tokens = (settings.tokens || 0) + 3;
+      if (item.done && ['gym', 'code', 'hw'].includes(item.type)) settings.tokens = Math.max(0, (settings.tokens || 0) - 3);
+      list.splice(idx, 1); saveAllStorage(); renderAll();
     }
   }
 
@@ -1088,33 +749,19 @@
     const startVal = document.getElementById('inp-start').value || '10:00';
     document.getElementById('inp-end').value = fromMins(toMins(startVal) + mins);
   }
-
   function shiftBlock(mins) {
-    const s = document.getElementById('inp-start').value || '10:00';
-    const e = document.getElementById('inp-end').value || '11:30';
-    document.getElementById('inp-start').value = fromMins(toMins(s) + mins);
-    document.getElementById('inp-end').value = fromMins(toMins(e) + mins);
+    const s = document.getElementById('inp-start').value || '10:00'; const e = document.getElementById('inp-end').value || '11:30';
+    document.getElementById('inp-start').value = fromMins(toMins(s) + mins); document.getElementById('inp-end').value = fromMins(toMins(e) + mins);
   }
 
   function duplicateToOtherWeek() {
     if (!editingId) return;
     const item = (state[currentWeekParity][currentDay] || []).find(x => x.id === editingId);
     if (!item) return;
-
-    if (item.type === 'rest') {
-      if ((settings.tokens || 0) < 3) {
-        alert('⚡ Недостаточно токенов для копирования отдыха (нужно 3 ⚡)!');
-        return;
-      }
-      settings.tokens -= 3;
-    }
-
+    if (item.type === 'rest') { if ((settings.tokens || 0) < 3) { alert('⚡ Недостаточно токенов (нужно 3 ⚡)!'); return; } settings.tokens -= 3; }
     const targetWeek = currentWeekParity === 'even' ? 'odd' : 'even';
     state[targetWeek][currentDay].push(Object.assign({}, item, { id: 'id_' + Date.now(), done: false }));
-    saveAllStorage();
-    closeModal();
-    renderAll();
-    alert(`Скопировано на ${targetWeek === 'even' ? 'четную' : 'нечетную'} неделю!`);
+    saveAllStorage(); closeModal(); renderAll(); alert(`Скопировано на ${targetWeek === 'even' ? 'четную' : 'нечетную'} неделю!`);
   }
 
   function editItem(id) {
@@ -1127,217 +774,115 @@
     document.getElementById('modal-title').innerText = item ? 'Редактировать блок' : 'Новый блок';
     document.getElementById('dup-week-btn').style.display = item ? 'block' : 'none';
     document.getElementById('inp-title').value = item ? item.title : '';
-    document.getElementById('inp-start').value = item ? item.start : '10:00';
-    document.getElementById('inp-end').value = item ? item.end : '12:30';
-    document.getElementById('inp-type').value = item ? item.type : 'gym';
-    document.getElementById('inp-loc').value = item ? item.loc : 'Спортзал';
+    document.getElementById('inp-start').value = item ? item.start : '10:00'; document.getElementById('inp-end').value = item ? item.end : '12:30';
+    document.getElementById('inp-type').value = item ? item.type : 'gym'; document.getElementById('inp-loc').value = item ? item.loc : 'Спортзал';
     document.getElementById('inp-note').value = item ? (item.note || '') : '';
     document.getElementById('modal').classList.add('open');
   }
 
-  function closeModal() {
-    document.getElementById('modal').classList.remove('open');
-  }
+  function closeModal() { document.getElementById('modal').classList.remove('open'); }
 
   function fillTemplate(t, ty, l, n = '') {
-    document.getElementById('inp-title').value = t;
-    document.getElementById('inp-type').value = ty;
-    document.getElementById('inp-loc').value = l;
-    document.getElementById('inp-note').value = n;
+    document.getElementById('inp-title').value = t; document.getElementById('inp-type').value = ty;
+    document.getElementById('inp-loc').value = l; document.getElementById('inp-note').value = n;
   }
 
   function saveItem() {
-    const title = document.getElementById('inp-title').value.trim();
-    if (!title) return;
+    const title = document.getElementById('inp-title').value.trim(); if (!title) return;
     const newType = document.getElementById('inp-type').value;
-
     const list = state[currentWeekParity][currentDay] || [];
     const oldItem = editingId ? list.find(x => x.id === editingId) : null;
-    const wasRest = oldItem && oldItem.type === 'rest';
-    const isRest = newType === 'rest';
+    const wasRest = oldItem && oldItem.type === 'rest'; const isRest = newType === 'rest';
 
     if (isRest && !wasRest) {
-      if ((settings.tokens || 0) < 3) {
-        alert('⚡ Недостаточно токенов для отдыха (нужно 3 ⚡)! Выполни тренировку, саморазвитие или лабы, чтобы заработать +3 ⚡.');
-        return;
-      }
+      if ((settings.tokens || 0) < 3) { alert('⚡ Недостаточно токенов для отдыха (нужно 3 ⚡)! Выполни лабы, чтобы заработать.'); return; }
       settings.tokens -= 3;
     }
-    if (!isRest && wasRest) {
-      settings.tokens = (settings.tokens || 0) + 3;
-    }
+    if (!isRest && wasRest) settings.tokens = (settings.tokens || 0) + 3;
 
     const newItem = {
-      id: editingId || 'id_' + Date.now(),
-      title,
-      start: document.getElementById('inp-start').value,
-      end: document.getElementById('inp-end').value,
-      type: newType,
-      loc: document.getElementById('inp-loc').value.trim(),
-      note: document.getElementById('inp-note').value.trim(),
-      done: oldItem ? oldItem.done : false
+      id: editingId || 'id_' + Date.now(), title, start: document.getElementById('inp-start').value,
+      end: document.getElementById('inp-end').value, type: newType, loc: document.getElementById('inp-loc').value.trim(),
+      note: document.getElementById('inp-note').value.trim(), done: oldItem ? oldItem.done : false
     };
 
     if (editingId) {
       const idx = list.findIndex(x => x.id === editingId);
       if (idx > -1) list[idx] = newItem;
-    } else {
-      list.push(newItem);
-    }
-
-    saveAllStorage();
-    closeModal();
-    renderAll();
+    } else { list.push(newItem); }
+    saveAllStorage(); closeModal(); renderAll();
   }
 
-  function openDeadlines() {
-    renderDeadlinesList();
-    document.getElementById('deadlines-modal').classList.add('open');
-  }
-
-  function closeDeadlines() {
-    document.getElementById('deadlines-modal').classList.remove('open');
-  }
-
+  function openDeadlines() { renderDeadlinesList(); document.getElementById('deadlines-modal').classList.add('open'); }
+  function closeDeadlines() { document.getElementById('deadlines-modal').classList.remove('open'); }
   function addDeadline() {
-    const text = document.getElementById('dl-text').value.trim();
-    const subj = document.getElementById('dl-subj').value;
-    if (!text) return;
-    deadlines.unshift({ id: 'dl_' + Date.now(), subj, text, done: false });
-    document.getElementById('dl-text').value = '';
-    saveAllStorage();
-    renderDeadlinesList();
-    renderDeadlinesBadge();
+    const text = document.getElementById('dl-text').value.trim(), subj = document.getElementById('dl-subj').value;
+    if (!text) return; deadlines.unshift({ id: 'dl_' + Date.now(), subj, text, done: false });
+    document.getElementById('dl-text').value = ''; saveAllStorage(); renderDeadlinesList(); renderDeadlinesBadge();
   }
-
-  function toggleDeadline(id) {
-    const dl = deadlines.find(x => x.id === id);
-    if (dl) {
-      dl.done = !dl.done;
-      saveAllStorage();
-      renderDeadlinesList();
-      renderDeadlinesBadge();
-    }
-  }
-
-  function removeDeadline(id) {
-    deadlines = deadlines.filter(x => x.id !== id);
-    saveAllStorage();
-    renderDeadlinesList();
-    renderDeadlinesBadge();
-  }
-
+  function toggleDeadline(id) { const dl = deadlines.find(x => x.id === id); if (dl) { dl.done = !dl.done; saveAllStorage(); renderDeadlinesList(); renderDeadlinesBadge(); } }
+  function removeDeadline(id) { deadlines = deadlines.filter(x => x.id !== id); saveAllStorage(); renderDeadlinesList(); renderDeadlinesBadge(); }
   function renderDeadlinesList() {
-    const box = document.getElementById('todo-list');
-    if (!box) return;
-    if (deadlines.length === 0) {
-      box.innerHTML = `<div style="text-align:center;color:var(--subtext);padding:18px;font-size:13px;">Хвостов и дедлайнов нет!</div>`;
-      return;
-    }
-    box.innerHTML = deadlines.map(d => `
-      <div class="todo-item ${d.done ? 'done' : ''}">
-        <div class="todo-text" onclick="toggleDeadline('${d.id}')">
-          <span class="todo-subj">${d.subj}</span>
-          ${d.text}
-        </div>
-        <button class="icon-btn check ${d.done ? 'checked' : ''}" onclick="toggleDeadline('${d.id}')">✓</button>
-        <button class="icon-btn del" onclick="removeDeadline('${d.id}')">✕</button>
-      </div>
-    `).join('');
+    const box = document.getElementById('todo-list'); if (!box) return;
+    if (deadlines.length === 0) { box.innerHTML = `<div style="text-align:center;color:var(--subtext);padding:18px;font-size:13px;">Хвостов нет!</div>`; return; }
+    box.innerHTML = deadlines.map(d => `<div class="todo-item ${d.done ? 'done' : ''}"><div class="todo-text" onclick="toggleDeadline('${d.id}')"><span class="todo-subj">${d.subj}</span>${d.text}</div><button class="icon-btn check ${d.done ? 'checked' : ''}" onclick="toggleDeadline('${d.id}')">✓</button><button class="icon-btn del" onclick="removeDeadline('${d.id}')">✕</button></div>`).join('');
   }
 
   function openSettings() {
-    document.getElementById('set-theme').value = settings.theme || 'oled';
-    document.getElementById('set-home').value = settings.homeAddress || 'Дом';
-    document.getElementById('set-bm').value = settings.timeBM || 90;
-    document.getElementById('set-gast').value = settings.timeGastLen || 120;
-    document.getElementById('set-prep').value = settings.prepTime || 50;
-    document.getElementById('set-transit').value = settings.transitBMLen || 45;
-    document.getElementById('set-gym-prep').value = settings.gymPrep || 20;
-    document.getElementById('set-gym-walk').value = settings.gymWalk || 15;
+    document.getElementById('set-theme').value = settings.theme || 'oled'; document.getElementById('set-home').value = settings.homeAddress || 'Дом';
+    document.getElementById('set-bm').value = settings.timeBM || 90; document.getElementById('set-gast').value = settings.timeGastLen || 120;
+    document.getElementById('set-prep').value = settings.prepTime || 50; document.getElementById('set-transit').value = settings.transitBMLen || 45;
+    document.getElementById('set-gym-prep').value = settings.gymPrep || 20; document.getElementById('set-gym-walk').value = settings.gymWalk || 15;
     document.getElementById('settings-modal').classList.add('open');
   }
 
   function saveSettings() {
-    settings.theme = document.getElementById('set-theme').value;
-    settings.homeAddress = document.getElementById('set-home').value.trim() || 'Дом';
-    settings.timeBM = Number(document.getElementById('set-bm').value) || 90;
-    settings.timeGastLen = Number(document.getElementById('set-gast').value) || 120;
-    settings.prepTime = Number(document.getElementById('set-prep').value) || 50;
-    settings.transitBMLen = Number(document.getElementById('set-transit').value) || 45;
-    settings.gymPrep = Number(document.getElementById('set-gym-prep').value) || 20;
-    settings.gymWalk = Number(document.getElementById('set-gym-walk').value) || 15;
-    saveAllStorage();
-    applyTheme();
-    document.getElementById('settings-modal').classList.remove('open');
-    renderAll();
+    settings.theme = document.getElementById('set-theme').value; settings.homeAddress = document.getElementById('set-home').value.trim() || 'Дом';
+    settings.timeBM = Number(document.getElementById('set-bm').value) || 90; settings.timeGastLen = Number(document.getElementById('set-gast').value) || 120;
+    settings.prepTime = Number(document.getElementById('set-prep').value) || 50; settings.transitBMLen = Number(document.getElementById('set-transit').value) || 45;
+    settings.gymPrep = Number(document.getElementById('set-gym-prep').value) || 20; settings.gymWalk = Number(document.getElementById('set-gym-walk').value) || 15;
+    saveAllStorage(); applyTheme(); document.getElementById('settings-modal').classList.remove('open'); renderAll();
   }
 
   function resetSchedule() {
-    if (confirm('Вернуть исходное расписание пар 1647? Свои блоки удалятся!')) {
-      state = JSON.parse(JSON.stringify(DEFAULT_DATA));
-      saveAllStorage();
-      document.getElementById('settings-modal').classList.remove('open');
-      renderAll();
-    }
+    if (confirm('Сбросить до исходного расписания 1647?')) { state = JSON.parse(JSON.stringify(DEFAULT_DATA)); saveAllStorage(); document.getElementById('settings-modal').classList.remove('open'); renderAll(); }
   }
 
   function exportICS() {
-    let ics = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//1647 OS//RU\n";
-    const datesArr = generateWeekDays(weekOffset);
+    let ics = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//1647 OS//RU\n"; const datesArr = generateWeekDays(weekOffset);
     for (let i = 0; i < 7; i++) {
       const dayItems = state[currentWeekParity][i] || [];
-      const d = datesArr[i].raw;
-      const dateStr = d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
+      const d = datesArr[i].raw; const dateStr = d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
       dayItems.forEach(item => {
-        ics += "BEGIN:VEVENT\nSUMMARY:" + item.title + "\n";
-        if (item.loc) ics += "LOCATION:" + item.loc + "\n";
-        if (item.note) ics += "DESCRIPTION:" + item.note + "\n";
-        ics += "DTSTART:" + dateStr + "T" + item.start.replace(':', '') + "00\n";
-        ics += "DTEND:" + dateStr + "T" + item.end.replace(':', '') + "00\n";
-        ics += "BEGIN:VALARM\nTRIGGER:-PT15M\nACTION:DISPLAY\nDESCRIPTION:Напоминание\nEND:VALARM\nEND:VEVENT\n";
+        ics += "BEGIN:VEVENT\nSUMMARY:" + item.title + "\n"; if (item.loc) ics += "LOCATION:" + item.loc + "\n";
+        ics += "DTSTART:" + dateStr + "T" + item.start.replace(':', '') + "00\nDTEND:" + dateStr + "T" + item.end.replace(':', '') + "00\nEND:VEVENT\n";
       });
     }
     ics += "END:VCALENDAR";
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
-    a.download = `Schedule_1647.ics`;
-    a.click();
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' })); a.download = `Schedule_1647.ics`; a.click();
   }
 
   function exportBackup() {
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([JSON.stringify({ state, settings, deadlines })], { type: 'application/json' }));
-    a.download = `1647_backup_${new Date().toLocaleDateString('ru-RU')}.json`;
-    a.click();
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify({ state, settings, deadlines })], { type: 'application/json' }));
+    a.download = `1647_backup_${new Date().toLocaleDateString('ru-RU')}.json`; a.click();
   }
 
   function importBackup(e) {
-    const f = e.target.files[0];
-    if (!f) return;
+    const f = e.target.files[0]; if (!f) return;
     const r = new FileReader();
     r.onload = ev => {
       try {
         const imp = JSON.parse(ev.target.result);
         if (imp.state && imp.settings) {
-          state = imp.state;
-          settings = Object.assign({}, DEFAULT_SETTINGS, imp.settings);
-          if (imp.deadlines) deadlines = imp.deadlines;
-          saveAllStorage();
-          applyTheme();
-          renderAll();
-          document.getElementById('settings-modal').classList.remove('open');
-          alert('Данные успешно восстановлены!');
+          state = imp.state; settings = Object.assign({}, DEFAULT_SETTINGS, imp.settings); if (imp.deadlines) deadlines = imp.deadlines;
+          saveAllStorage(); applyTheme(); renderAll(); document.getElementById('settings-modal').classList.remove('open'); alert('Успешно восстановлено!');
         }
-      } catch (err) {
-        alert('Ошибка чтения файла!');
-      }
-      e.target.value = ''; // Сбрасываем инпут, чтобы можно было загрузить тот же файл еще раз
+      } catch (err) { alert('Ошибка файла!'); }
+      e.target.value = '';
     };
     r.readAsText(f);
   }
 
-  // Запуск системы
   applyTheme();
   renderAll();
   fetchWeather();
