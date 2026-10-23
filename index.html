@@ -227,13 +227,11 @@
         <span class="chip" onclick="fillTemplate('Лабы / ДЗ', 'hw', 'Дом', 'Учеба')">📝 Лабы (+3⚡)</span>
         <span class="chip" onclick="fillTemplate('Уборка / Готовка', 'chores', 'Дом', 'Быт')">🧹 Быт (0⚡)</span>
         <span class="chip" onclick="fillTemplate('Отдых / CS2 / Dota 2', 'rest', 'Дом', 'Чилл')">🎮 Отдых (-3⚡)</span>
-        <!-- ВОЗВРАЩЕННЫЙ ЧИП ПРОГУЛОК -->
         <span class="chip" onclick="fillTemplate('Встреча с друзьями / Прогулка', 'social', 'Город', 'Прогулка')">🚶 Прогулки (0⚡)</span>
       </div>
 
       <input type="text" id="inp-title" placeholder="Название (например: Тренировка в зале)">
 
-      <!-- ИСПРАВЛЕННЫЕ ИНПУТЫ ВРЕМЕНИ -->
       <div class="row" style="align-items: center;">
         <input type="time" id="inp-start" value="10:00" style="flex:1; min-width:0;">
         <input type="time" id="inp-end" value="12:30" style="flex:1; min-width:0;">
@@ -260,7 +258,7 @@
           <option value="lab">🔵 Лабораторная (Вуз)</option>
           <option value="lec">🟣 Лекция (Вуз)</option>
         </select>
-        <input type="text" id="inp-loc" placeholder="Место (Дом/Зал)" style="flex:1; min-width:0;">
+        <input type="text" id="inp-loc" placeholder="Место (Дом / Зал / Город)" style="flex:1; min-width:0;">
       </div>
 
       <input type="text" id="inp-note" placeholder="Заметка или преподаватель">
@@ -425,7 +423,6 @@
   let settings = Object.assign({}, DEFAULT_SETTINGS);
   let deadlines = [];
 
-  // ЗАГРУЗКА ИЗ ПАМЯТИ ПО КЛЮЧАМ V5
   try {
     const savedState = JSON.parse(localStorage.getItem('schedule_1647_v5') || localStorage.getItem('schedule_1647_v4'));
     if (savedState && savedState.even && savedState.odd) state = savedState;
